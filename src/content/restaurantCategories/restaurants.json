@@ -1,0 +1,9 @@
+{
+  "id": "restaurants",
+  "name": "Restaurants",
+  "description": "Restaurants de toutes catégories",
+  "slug": "restaurants",
+  "icon": "silverware-fork-knife",
+  "order": 2,
+  "published": true
+}

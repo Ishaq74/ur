@@ -1,0 +1,9 @@
+{
+  "id": "sports",
+  "name": "Sports",
+  "description": "Activités sportives et outdoor",
+  "slug": "sports",
+  "icon": "run-fast",
+  "order": 1,
+  "published": true
+}

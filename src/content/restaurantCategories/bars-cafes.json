@@ -1,0 +1,9 @@
+{
+  "id": "bars-cafes",
+  "name": "Bars & Cafés",
+  "description": "Bars, cafés et brasseries",
+  "slug": "bars-cafes",
+  "icon": "coffee",
+  "order": 1,
+  "published": true
+}

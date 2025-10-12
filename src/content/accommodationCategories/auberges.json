@@ -1,0 +1,9 @@
+{
+  "id": "auberges",
+  "name": "Auberges",
+  "description": "Auberges traditionnelles et familiales",
+  "slug": "auberges",
+  "icon": "home",
+  "order": 2,
+  "published": true
+}

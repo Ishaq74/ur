@@ -1,0 +1,9 @@
+{
+  "id": "loisirs",
+  "name": "Loisirs",
+  "description": "Parcs, jardins et centres de loisirs",
+  "slug": "loisirs",
+  "icon": "emoticon-happy",
+  "order": 3,
+  "published": true
+}

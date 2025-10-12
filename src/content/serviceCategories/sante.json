@@ -1,0 +1,9 @@
+{
+  "id": "sante",
+  "name": "Santé",
+  "description": "Services de santé et pharmacies",
+  "slug": "sante",
+  "icon": "medical-bag",
+  "order": 1,
+  "published": true
+}

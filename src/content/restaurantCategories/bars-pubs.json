@@ -1,0 +1,9 @@
+{
+  "id": "bars-pubs",
+  "name": "Bars-Pubs",
+  "description": "Bars et pubs",
+  "slug": "bars-pubs",
+  "parentId": "bars-cafes",
+  "order": 1,
+  "published": true
+}

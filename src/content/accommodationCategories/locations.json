@@ -1,0 +1,9 @@
+{
+  "id": "locations",
+  "name": "Locations",
+  "description": "Appartements, maisons et chalets en location",
+  "slug": "locations",
+  "icon": "home-city",
+  "order": 3,
+  "published": true
+}

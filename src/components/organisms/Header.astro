@@ -2,9 +2,39 @@
 import Icon from '../atoms/Icon.astro';
 import Button from '../atoms/Button.astro';
 import { useTranslations, getLangFromUrl, getLocalizedPath, type Language, languages } from '../../i18n';
+import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Load categories from content collections
+const restaurantCategories = await getCollection('restaurantCategories');
+const accommodationCategories = await getCollection('accommodationCategories');
+const activityCategories = await getCollection('activityCategories');
+const serviceCategories = await getCollection('serviceCategories');
+
+// Organize categories by parent
+const organizeCategories = (categories: any[]) => {
+  const topLevel = categories.filter(c => !c.data.parentId && c.data.published).sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+  const childMap = new Map();
+  
+  categories.filter(c => c.data.parentId && c.data.published).forEach(child => {
+    if (!childMap.has(child.data.parentId)) {
+      childMap.set(child.data.parentId, []);
+    }
+    childMap.get(child.data.parentId).push(child);
+  });
+  
+  return topLevel.map(parent => ({
+    ...parent,
+    children: (childMap.get(parent.data.id) || []).sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0))
+  }));
+};
+
+const restaurantCategoriesOrg = organizeCategories(restaurantCategories);
+const accommodationCategoriesOrg = organizeCategories(accommodationCategories);
+const activityCategoriesOrg = organizeCategories(activityCategories);
+const serviceCategoriesOrg = organizeCategories(serviceCategories);
 ---
 
 <header class="header">
@@ -23,255 +53,117 @@ const t = useTranslations(lang);
       <!-- Navigation -->
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <ul class="nav-list">
-          <!-- Explorer -->
-          <li class="nav-item-with-dropdown mega-menu">
-            <button class="nav-dropdown-trigger" aria-label="Menu Explorer">
-              Explorer
+          <!-- Restaurants -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Restaurants">
+              {t('header.restaurants')}
               <Icon name="chevron-down" size="sm" />
             </button>
-            <div class="nav-dropdown mega-dropdown">
-              <div class="mega-columns">
-                <!-- Restaurants Column -->
-                <div class="mega-column">
-                  <div class="mega-section">
-                    <h3 class="mega-title">Restaurants</h3>
-                    <div class="mega-group">
-                      <h4>Bars & Cafés</h4>
-                      <a href={getLocalizedPath('/restaurants?cat=bars-pubs', lang)}>Bars-Pubs</a>
-                      <a href={getLocalizedPath('/restaurants?cat=cafes-the', lang)}>Cafés-thé</a>
-                      <a href={getLocalizedPath('/restaurants?cat=salons-cafe', lang)}>Salons de café</a>
-                      <a href={getLocalizedPath('/restaurants?cat=brasseries', lang)}>Brasseries</a>
-                      <a href={getLocalizedPath('/restaurants?cat=cocktail-bars', lang)}>Cocktail Bars</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Restaurants</h4>
-                      <a href={getLocalizedPath('/restaurants?cat=locale', lang)}>Cuisine locale</a>
-                      <a href={getLocalizedPath('/restaurants?cat=internationale', lang)}>Cuisine internationale</a>
-                      <a href={getLocalizedPath('/restaurants?cat=bistronomie', lang)}>Bistronomie</a>
-                      <a href={getLocalizedPath('/restaurants?cat=etoilee', lang)}>Gastronomie étoilée</a>
-                      <a href={getLocalizedPath('/restaurants?cat=street-food', lang)}>Street Food</a>
-                      <a href={getLocalizedPath('/restaurants?cat=vegan-bio', lang)}>Vegan / Bio</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Épiceries & Produits locaux</h4>
-                      <a href={getLocalizedPath('/restaurants?cat=fromageries', lang)}>Fromageries</a>
-                      <a href={getLocalizedPath('/restaurants?cat=boulangeries', lang)}>Boulangeries</a>
-                      <a href={getLocalizedPath('/restaurants?cat=charcuteries', lang)}>Charcuteries</a>
-                      <a href={getLocalizedPath('/restaurants?cat=epiceries-fines', lang)}>Épiceries fines</a>
-                      <a href={getLocalizedPath('/restaurants?cat=marches', lang)}>Marchés</a>
-                    </div>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/restaurants', lang)} class="dropdown-main-link">
+                <strong>Tous les restaurants</strong>
+              </a>
+              <div class="dropdown-divider"></div>
+              {restaurantCategoriesOrg.map(category => (
+                <>
+                  <div class="dropdown-section">
+                    <h4>{category.data.name}</h4>
+                    {category.children && category.children.length > 0 ? (
+                      category.children.map((child: any) => (
+                        <a href={getLocalizedPath(`/restaurants?cat=${child.data.slug}`, lang)}>
+                          {child.data.name}
+                        </a>
+                      ))
+                    ) : (
+                      <a href={getLocalizedPath(`/restaurants?cat=${category.data.slug}`, lang)}>
+                        {category.data.description || 'Voir tout'}
+                      </a>
+                    )}
                   </div>
+                </>
+              ))}
+            </div>
+          </li>
+
+          <!-- Hébergements -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Hébergements">
+              {t('header.accommodations')}
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/hebergements', lang)} class="dropdown-main-link">
+                <strong>Tous les hébergements</strong>
+              </a>
+              <div class="dropdown-divider"></div>
+              {accommodationCategoriesOrg.map(category => (
+                <div class="dropdown-section">
+                  <h4>{category.data.name}</h4>
+                  {category.children && category.children.length > 0 ? (
+                    category.children.map((child: any) => (
+                      <a href={getLocalizedPath(`/hebergements?cat=${child.data.slug}`, lang)}>
+                        {child.data.name}
+                      </a>
+                    ))
+                  ) : (
+                    <a href={getLocalizedPath(`/hebergements?cat=${category.data.slug}`, lang)}>
+                      {category.data.description || 'Voir tout'}
+                    </a>
+                  )}
                 </div>
+              ))}
+            </div>
+          </li>
 
-                <!-- Hébergements Column -->
-                <div class="mega-column">
-                  <div class="mega-section">
-                    <h3 class="mega-title">Hébergements</h3>
-                    <div class="mega-group">
-                      <h4>Hôtels</h4>
-                      <a href={getLocalizedPath('/hebergements?cat=luxe', lang)}>Luxe</a>
-                      <a href={getLocalizedPath('/hebergements?cat=4-etoiles', lang)}>4 étoiles</a>
-                      <a href={getLocalizedPath('/hebergements?cat=3-etoiles', lang)}>3 étoiles</a>
-                      <a href={getLocalizedPath('/hebergements?cat=boutique', lang)}>Boutique hôtels</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Auberges</h4>
-                      <a href={getLocalizedPath('/hebergements?cat=traditionnelles', lang)}>Traditionnelles</a>
-                      <a href={getLocalizedPath('/hebergements?cat=familiales', lang)}>Familiales</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Locations</h4>
-                      <a href={getLocalizedPath('/hebergements?cat=appartements', lang)}>Appartements</a>
-                      <a href={getLocalizedPath('/hebergements?cat=maisons', lang)}>Maisons</a>
-                      <a href={getLocalizedPath('/hebergements?cat=chalets', lang)}>Chalets</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Campings</h4>
-                      <a href={getLocalizedPath('/hebergements?cat=etoiles', lang)}>Étoilés</a>
-                      <a href={getLocalizedPath('/hebergements?cat=nature-insolite', lang)}>Nature / Insolite</a>
-                    </div>
-                  </div>
+          <!-- Activités -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Activités">
+              {t('header.activities')}
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/activites', lang)} class="dropdown-main-link">
+                <strong>Toutes les activités</strong>
+              </a>
+              <div class="dropdown-divider"></div>
+              {activityCategoriesOrg.map(category => (
+                <div class="dropdown-section">
+                  <h4>{category.data.name}</h4>
+                  {category.children && category.children.length > 0 ? (
+                    category.children.map((child: any) => (
+                      <a href={getLocalizedPath(`/activites?cat=${child.data.slug}`, lang)}>
+                        {child.data.name}
+                      </a>
+                    ))
+                  ) : (
+                    <a href={getLocalizedPath(`/activites?cat=${category.data.slug}`, lang)}>
+                      {category.data.description || 'Voir tout'}
+                    </a>
+                  )}
                 </div>
-
-                <!-- Activités Column -->
-                <div class="mega-column">
-                  <div class="mega-section">
-                    <h3 class="mega-title">Activités</h3>
-                    <div class="mega-group">
-                      <h4>Sports</h4>
-                      <a href={getLocalizedPath('/activites?cat=randonnee-montagne', lang)}>Randonnée - Montagne</a>
-                      <a href={getLocalizedPath('/activites?cat=randonnee-forets', lang)}>Randonnée - Forêts</a>
-                      <a href={getLocalizedPath('/activites?cat=randonnee-riviere', lang)}>Randonnée - Rivière</a>
-                      <a href={getLocalizedPath('/activites?cat=cyclisme', lang)}>Cyclisme</a>
-                      <a href={getLocalizedPath('/activites?cat=natation', lang)}>Natation</a>
-                      <a href={getLocalizedPath('/activites?cat=sports-extremes', lang)}>Sports extrêmes</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Culture</h4>
-                      <a href={getLocalizedPath('/activites?cat=musees', lang)}>Musées</a>
-                      <a href={getLocalizedPath('/activites?cat=galeries', lang)}>Galeries</a>
-                      <a href={getLocalizedPath('/activites?cat=monuments', lang)}>Monuments</a>
-                      <a href={getLocalizedPath('/activites?cat=patrimoine', lang)}>Patrimoine</a>
-                    </div>
-                    <div class="mega-group">
-                      <h4>Loisirs</h4>
-                      <a href={getLocalizedPath('/activites?cat=parcs-jardins', lang)}>Parcs & Jardins</a>
-                      <a href={getLocalizedPath('/activites?cat=centres-loisirs', lang)}>Centres de loisirs</a>
-                      <a href={getLocalizedPath('/activites?cat=cinemas-theatre', lang)}>Cinémas / Théâtre</a>
-                      <a href={getLocalizedPath('/activites?cat=evenements-speciaux', lang)}>Événements spéciaux</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </li>
 
-          <!-- Services -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Services">
-              Services
-              <Icon name="chevron-down" size="sm" />
-            </button>
-            <div class="nav-dropdown">
-              <div class="dropdown-section">
-                <h4>Santé</h4>
-                <a href={getLocalizedPath('/services?cat=medecins', lang)}>Médecins</a>
-                <a href={getLocalizedPath('/services?cat=pharmacies', lang)}>Pharmacies</a>
-                <a href={getLocalizedPath('/services?cat=hopitaux', lang)}>Hôpitaux</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Transport</h4>
-                <a href={getLocalizedPath('/services?cat=taxi-vtc', lang)}>Taxi / VTC</a>
-                <a href={getLocalizedPath('/services?cat=bus-metro', lang)}>Bus / Métro</a>
-                <a href={getLocalizedPath('/services?cat=locations-vehicules', lang)}>Locations de véhicules</a>
-                <a href={getLocalizedPath('/services?cat=transports-alternatifs', lang)}>Transports alternatifs</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Maintenance</h4>
-                <a href={getLocalizedPath('/services?cat=plomberie', lang)}>Plomberie</a>
-                <a href={getLocalizedPath('/services?cat=electricite', lang)}>Électricité</a>
-                <a href={getLocalizedPath('/services?cat=informatique', lang)}>Informatique / IT</a>
-                <a href={getLocalizedPath('/services?cat=reparations', lang)}>Réparations générales</a>
-              </div>
-            </div>
+          <!-- Sentiers -->
+          <li class="nav-item">
+            <a href={getLocalizedPath('/sentiers', lang)} class="nav-link">
+              {t('header.trails')}
+            </a>
           </li>
 
-          <!-- Produits -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Produits">
-              Produits
-              <Icon name="chevron-down" size="sm" />
-            </button>
-            <div class="nav-dropdown">
-              <div class="dropdown-section">
-                <h4>Artisanat</h4>
-                <a href={getLocalizedPath('/shopping?cat=bijoux', lang)}>Bijoux</a>
-                <a href={getLocalizedPath('/shopping?cat=ceramique', lang)}>Céramique</a>
-                <a href={getLocalizedPath('/shopping?cat=textile', lang)}>Textile</a>
-                <a href={getLocalizedPath('/shopping?cat=decoration', lang)}>Décoration</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Alimentation</h4>
-                <a href={getLocalizedPath('/shopping?cat=produits-locaux', lang)}>Produits locaux</a>
-                <a href={getLocalizedPath('/shopping?cat=boissons', lang)}>Boissons</a>
-                <a href={getLocalizedPath('/shopping?cat=epicerie-fine', lang)}>Épicerie fine</a>
-                <a href={getLocalizedPath('/shopping?cat=vins-spiritueux', lang)}>Vins & Spiritueux</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Souvenirs</h4>
-                <a href={getLocalizedPath('/shopping?cat=cartes-postales', lang)}>Cartes postales</a>
-                <a href={getLocalizedPath('/shopping?cat=objets-typiques', lang)}>Objets typiques</a>
-                <a href={getLocalizedPath('/shopping?cat=personnalises', lang)}>Produits personnalisés</a>
-              </div>
-            </div>
-          </li>
-
-          <!-- Événements -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Événements">
-              Événements
-              <Icon name="chevron-down" size="sm" />
-            </button>
-            <div class="nav-dropdown">
-              <div class="dropdown-section">
-                <h4>Concerts</h4>
-                <a href={getLocalizedPath('/agenda?cat=musique-classique', lang)}>Musique classique</a>
-                <a href={getLocalizedPath('/agenda?cat=rock-pop', lang)}>Rock / Pop</a>
-                <a href={getLocalizedPath('/agenda?cat=jazz', lang)}>Jazz</a>
-                <a href={getLocalizedPath('/agenda?cat=festivals-locaux', lang)}>Festivals locaux</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Festivals</h4>
-                <a href={getLocalizedPath('/agenda?cat=gastronomie', lang)}>Gastronomie</a>
-                <a href={getLocalizedPath('/agenda?cat=culture', lang)}>Culture</a>
-                <a href={getLocalizedPath('/agenda?cat=sports', lang)}>Sports</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Conférences</h4>
-                <a href={getLocalizedPath('/agenda?cat=tech-innovation', lang)}>Tech / Innovation</a>
-                <a href={getLocalizedPath('/agenda?cat=education', lang)}>Éducation</a>
-                <a href={getLocalizedPath('/agenda?cat=ecologie', lang)}>Écologie / Environnement</a>
-              </div>
-            </div>
-          </li>
-
-          <!-- Petites annonces -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Petites annonces">
-              Petites annonces
-              <Icon name="chevron-down" size="sm" />
-            </button>
-            <div class="nav-dropdown">
-              <div class="dropdown-section">
-                <h4>Immobilier</h4>
-                <a href={getLocalizedPath('/annonces?cat=appartements', lang)}>Appartements</a>
-                <a href={getLocalizedPath('/annonces?cat=maisons', lang)}>Maisons</a>
-                <a href={getLocalizedPath('/annonces?cat=terrains', lang)}>Terrains</a>
-                <a href={getLocalizedPath('/annonces?cat=commerces', lang)}>Commerces</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Emploi</h4>
-                <a href={getLocalizedPath('/annonces?cat=cdi', lang)}>CDI</a>
-                <a href={getLocalizedPath('/annonces?cat=cdd', lang)}>CDD</a>
-                <a href={getLocalizedPath('/annonces?cat=freelance', lang)}>Freelance</a>
-                <a href={getLocalizedPath('/annonces?cat=stages', lang)}>Stages</a>
-              </div>
-              <div class="dropdown-section">
-                <h4>Véhicules</h4>
-                <a href={getLocalizedPath('/annonces?cat=voitures', lang)}>Voitures</a>
-                <a href={getLocalizedPath('/annonces?cat=motos', lang)}>Motos</a>
-                <a href={getLocalizedPath('/annonces?cat=utilitaires', lang)}>Utilitaires</a>
-                <a href={getLocalizedPath('/annonces?cat=velo-trottinette', lang)}>Vélo / Trottinette</a>
-              </div>
-            </div>
-          </li>
-
-          <!-- Communauté -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Communauté">
-              Communauté
-              <Icon name="chevron-down" size="sm" />
-            </button>
-            <div class="nav-dropdown">
-              <a href={getLocalizedPath('/live', lang)}>Live</a>
-              <a href={getLocalizedPath('/forums', lang)}>Forums</a>
-              <a href={getLocalizedPath('/groupes', lang)}>Groupes</a>
-              <a href={getLocalizedPath('/membres', lang)}>Membres</a>
-            </div>
+          <!-- Agenda -->
+          <li class="nav-item">
+            <a href={getLocalizedPath('/agenda', lang)} class="nav-link">
+              {t('header.events')}
+            </a>
           </li>
 
           <!-- Magazine -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Magazine">
-              Magazine
-              <Icon name="chevron-down" size="sm" />
-            </button>
-            <div class="nav-dropdown">
-              <a href={getLocalizedPath('/magazine?cat=actualites', lang)}>Actualités</a>
-              <a href={getLocalizedPath('/magazine?cat=interviews', lang)}>Interviews</a>
-              <a href={getLocalizedPath('/magazine?cat=dossiers', lang)}>Dossiers</a>
-              <a href={getLocalizedPath('/magazine?cat=recommandations', lang)}>Recommandations</a>
-            </div>
+          <li class="nav-item">
+            <a href={getLocalizedPath('/magazine', lang)} class="nav-link">
+              {t('header.magazine')}
+            </a>
           </li>
         </ul>
       </nav>
@@ -483,68 +375,22 @@ const t = useTranslations(lang);
     letter-spacing: 0.05em;
   }
 
-  /* Mega Menu */
-  .mega-menu .nav-dropdown {
-    min-width: 800px;
-    max-width: 900px;
-  }
-
-  .mega-dropdown {
-    padding: var(--spacing-4);
-  }
-
-  .mega-columns {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-6);
-  }
-
-  .mega-column {
-    min-width: 0;
-  }
-
-  .mega-section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-4);
-  }
-
-  .mega-title {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-bold);
+  .dropdown-main-link {
+    padding: var(--spacing-3) var(--spacing-4);
     color: var(--color-primary-600);
-    margin-bottom: var(--spacing-2);
-    padding-bottom: var(--spacing-2);
-    border-bottom: 2px solid var(--color-primary-600);
-  }
-
-  .mega-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mega-group h4 {
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    color: var(--color-text-primary);
-    letter-spacing: 0.05em;
-    margin-bottom: var(--spacing-2);
-  }
-
-  .mega-group a {
-    padding: var(--spacing-1) var(--spacing-2);
-    color: var(--color-text-secondary);
     text-decoration: none;
     transition: all var(--transition-fast);
-    font-size: var(--font-size-sm);
-    border-radius: var(--radius-sm);
+    display: block;
   }
 
-  .mega-group a:hover {
+  .dropdown-main-link:hover {
     background-color: var(--color-surface-secondary);
-    color: var(--color-text-primary);
-    padding-left: var(--spacing-3);
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background-color: var(--color-border);
+    margin: var(--spacing-2) 0;
   }
 
   .header-actions {
