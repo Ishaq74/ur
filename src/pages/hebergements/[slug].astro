@@ -6,38 +6,38 @@ import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const allRestaurants = await getCollection('restaurants');
-  const restaurantCategories = await getCollection('restaurantCategories');
+  const allAccommodations = await getCollection('accommodations');
+  const accommodationCategories = await getCollection('accommodationCategories');
   
-  return allRestaurants.map((restaurant: any) => {
-    const category = restaurantCategories.find(c => c.data.id === restaurant.data.categoryId);
+  return allAccommodations.map((accommodation: any) => {
+    const category = accommodationCategories.find(c => c.data.id === accommodation.data.categoryId);
     return {
-      params: { slug: restaurant.data.id },
-      props: { restaurant, category },
+      params: { slug: accommodation.data.id },
+      props: { accommodation, category },
     };
   });
 }
 
 type Props = {
-  restaurant: any;
+  accommodation: any;
   category: any;
 };
 
-const { restaurant, category }: Props = Astro.props;
+const { accommodation, category }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
 <MainLayout 
-  title={`${restaurant.data.name} - Salut Annecy`} 
-  description={restaurant.data.description}
+  title={`${accommodation.data.name} - Salut Annecy`} 
+  description={accommodation.data.description}
   lang={lang}
 >
   <article class="place-detail">
     <!-- Header Image -->
     <section class="place-hero">
       <div class="place-hero-image">
-        <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
+        <img src={accommodation.data.imageUrl} alt={accommodation.data.name} />
       </div>
       <div class="place-hero-overlay">
         <div class="container">
@@ -45,19 +45,19 @@ const t = useTranslations(lang);
             <div class="place-breadcrumb">
               <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
               <span>/</span>
-              <a href={getLocalizedPath('/restaurants', lang)}>Restaurants</a>
+              <a href={getLocalizedPath('/hebergements', lang)}>Accommodations</a>
               <span>/</span>
-              <span>{restaurant.data.name}</span>
+              <span>{accommodation.data.name}</span>
             </div>
-            <h1>{restaurant.data.name}</h1>
+            <h1>{accommodation.data.name}</h1>
             <div class="place-meta">
-              <span class="place-category-badge">{category?.data.name || 'Restaurant'}</span>
-              {restaurant.data.rating && (
+              <span class="place-category-badge">{category?.data.name || t('header.accommodations')}</span>
+              {accommodation.data.rating && (
                 <div class="place-rating">
                   <Icon name="star" size="sm" />
-                  <span>{restaurant.data.rating.toFixed(1)}</span>
-                  {restaurant.data.reviewCount && (
-                    <span class="review-count">({restaurant.data.reviewCount} avis)</span>
+                  <span>{accommodation.data.rating.toFixed(1)}</span>
+                  {accommodation.data.reviewCount && (
+                    <span class="review-count">({accommodation.data.reviewCount} avis)</span>
                   )}
                 </div>
               )}
@@ -76,15 +76,15 @@ const t = useTranslations(lang);
             <!-- Description -->
             <div class="content-block">
               <h2>Description</h2>
-              <p>{restaurant.data.description}</p>
+              <p>{accommodation.data.description}</p>
             </div>
 
             <!-- Attributes -->
-            {restaurant.data.attributes && restaurant.data.attributes.length > 0 && (
+            {accommodation.data.attributes && accommodation.data.attributes.length > 0 && (
               <div class="content-block">
                 <h2>Caractéristiques</h2>
                 <div class="attributes-grid">
-                  {restaurant.data.attributes.map((attr: string) => (
+                  {accommodation.data.attributes.map((attr: string) => (
                     <div class="attribute-item">
                       <Icon name="check-circle" size="sm" />
                       <span>{attr}</span>
@@ -100,57 +100,57 @@ const t = useTranslations(lang);
             <!-- Contact Info -->
             <div class="sidebar-card">
               <h3>Informations</h3>
-              {restaurant.data.address && (
+              {accommodation.data.address && (
                 <div class="info-item">
                   <Icon name="map-pin" size="sm" />
                   <div>
                     <strong>Adresse</strong>
-                    <p>{restaurant.data.address}</p>
+                    <p>{accommodation.data.address}</p>
                   </div>
                 </div>
               )}
-              {restaurant.data.phone && (
+              {accommodation.data.phone && (
                 <div class="info-item">
                   <Icon name="phone" size="sm" />
                   <div>
                     <strong>Téléphone</strong>
-                    <p><a href={`tel:${restaurant.data.phone}`}>{restaurant.data.phone}</a></p>
+                    <p><a href={`tel:${accommodation.data.phone}`}>{accommodation.data.phone}</a></p>
                   </div>
                 </div>
               )}
-              {restaurant.data.email && (
+              {accommodation.data.email && (
                 <div class="info-item">
                   <Icon name="mail" size="sm" />
                   <div>
                     <strong>Email</strong>
-                    <p><a href={`mailto:${restaurant.data.email}`}>{restaurant.data.email}</a></p>
+                    <p><a href={`mailto:${accommodation.data.email}`}>{accommodation.data.email}</a></p>
                   </div>
                 </div>
               )}
-              {restaurant.data.website && (
+              {accommodation.data.website && (
                 <div class="info-item">
                   <Icon name="globe" size="sm" />
                   <div>
                     <strong>Site web</strong>
-                    <p><a href={restaurant.data.website} target="_blank" rel="noopener noreferrer">Visiter le site</a></p>
+                    <p><a href={accommodation.data.website} target="_blank" rel="noopener noreferrer">Visiter le site</a></p>
                   </div>
                 </div>
               )}
-              {restaurant.data.hours && (
+              {accommodation.data.hours && (
                 <div class="info-item">
                   <Icon name="clock" size="sm" />
                   <div>
                     <strong>Horaires</strong>
-                    <p>{restaurant.data.hours}</p>
+                    <p>{accommodation.data.hours}</p>
                   </div>
                 </div>
               )}
-              {restaurant.data.priceRange && (
+              {accommodation.data.priceRange && (
                 <div class="info-item">
                   <Icon name="credit-card" size="sm" />
                   <div>
                     <strong>Prix</strong>
-                    <p>{restaurant.data.priceRange}</p>
+                    <p>{accommodation.data.priceRange}</p>
                   </div>
                 </div>
               )}

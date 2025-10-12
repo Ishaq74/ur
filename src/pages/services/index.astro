@@ -1,8 +1,8 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Card from '../components/molecules/Card.astro';
-import Icon from '../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -14,35 +14,35 @@ const attributeFilter = Astro.url.searchParams.get('attr');
 const priceFilter = Astro.url.searchParams.get('price');
 const ratingFilter = Astro.url.searchParams.get('rating');
 
-// Get accommodations from new collection first, fallback to legacy places
-const newAccommodations = await getCollection('accommodations');
+// Get services from new collection first, fallback to legacy places
+const newServices = await getCollection('services');
 const legacyPlaces = await getCollection('places');
-const accommodationCategories = await getCollection('accommodationCategories');
+const serviceCategories = await getCollection('serviceCategories');
 
 // Combine both sources
-const allAccommodations = [
-  ...newAccommodations.map((a: any) => ({ ...a, isNew: true })),
-  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'hebergement').map((p: any) => ({ ...p, isNew: false }))
+const allServices = [
+  ...newServices.map((s: any) => ({ ...s, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'shopping').map((p: any) => ({ ...p, isNew: false }))
 ];
 
-// Filter accommodations
-let accommodations = allAccommodations.filter((a: any) => a.data.published);
+// Filter services
+let shops = allServices.filter((s: any) => s.data.published);
 
 // Category filter
 if (categoryFilter) {
-  accommodations = accommodations.filter((a: any) => {
-    if (a.isNew) {
-      return a.data.categoryId === categoryFilter;
+  shops = shops.filter((s: any) => {
+    if (s.isNew) {
+      return s.data.categoryId === categoryFilter;
     } else {
-      return a.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+      return s.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
     }
   });
 }
 
 // Attribute filter
 if (attributeFilter) {
-  accommodations = accommodations.filter((a: any) => 
-    a.data.attributes && a.data.attributes.some((attr: string) => 
+  shops = shops.filter((s: any) => 
+    s.data.attributes && s.data.attributes.some((attr: string) => 
       attr.toLowerCase().includes(attributeFilter.toLowerCase())
     )
   );
@@ -50,19 +50,19 @@ if (attributeFilter) {
 
 // Price range filter
 if (priceFilter) {
-  accommodations = accommodations.filter((a: any) => a.data.priceRange === priceFilter);
+  shops = shops.filter((s: any) => s.data.priceRange === priceFilter);
 }
 
 // Rating filter
 if (ratingFilter) {
   const minRating = parseFloat(ratingFilter);
-  accommodations = accommodations.filter((a: any) => a.data.rating && a.data.rating >= minRating);
+  shops = shops.filter((s: any) => s.data.rating && s.data.rating >= minRating);
 }
 
 // Get category name if filtering
-let categoryName = t('common.all_accommodations');
+let categoryName = t('common.all_services');
 if (categoryFilter) {
-  const category = accommodationCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const category = serviceCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
@@ -71,112 +71,35 @@ if (categoryFilter) {
 // Collect all unique attributes and price ranges for filter options
 const allAttributes = new Set<string>();
 const allPriceRanges = new Set<string>();
-allAccommodations.forEach((a: any) => {
-  if (a.data.attributes) {
-    a.data.attributes.forEach((attr: string) => allAttributes.add(attr));
+allServices.forEach((s: any) => {
+  if (s.data.attributes) {
+    s.data.attributes.forEach((attr: string) => allAttributes.add(attr));
   }
-  if (a.data.priceRange) {
-    allPriceRanges.add(a.data.priceRange);
+  if (s.data.priceRange) {
+    allPriceRanges.add(s.data.priceRange);
   }
 });
 ---
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description={t('hero.search_placeholder')}
+  description="Découvrez les meilleurs commerces d'Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <h1>{categoryName}</h1>
-      <p class="subtitle">{t('hero.subtitle')}</p>
+      <p class="subtitle">Explorez les commerces et services d'Annecy</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
-      <!-- Filters Section -->
-      <div class="filters-section">
-        <h2 class="filters-title">{t('filters.filter_by')}</h2>
-        <div class="filters-container">
-          <!-- Attribute Filter -->
-          <div class="filter-group">
-            <label class="filter-label">{t('filters.attributes')}</label>
-            <select 
-              class="filter-select" 
-              onchange="window.location.href = this.value"
-            >
-              <option value={getLocalizedPath(`/hebergements${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
-                {t('filters.all')}
-              </option>
-              {Array.from(allAttributes).sort().map(attr => (
-                <option 
-                  value={getLocalizedPath(`/hebergements?${categoryFilter ? `cat=${categoryFilter}&` : ''}attr=${encodeURIComponent(attr)}`, lang)}
-                  selected={attributeFilter === attr}
-                >
-                  {attr}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <!-- Price Range Filter -->
-          <div class="filter-group">
-            <label class="filter-label">{t('filters.price_range')}</label>
-            <select 
-              class="filter-select" 
-              onchange="window.location.href = this.value"
-            >
-              <option value={getLocalizedPath(`/hebergements${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
-                {t('filters.all')}
-              </option>
-              {Array.from(allPriceRanges).sort().map(price => (
-                <option 
-                  value={getLocalizedPath(`/hebergements?${categoryFilter ? `cat=${categoryFilter}&` : ''}price=${price}`, lang)}
-                  selected={priceFilter === price}
-                >
-                  {price}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <!-- Rating Filter -->
-          <div class="filter-group">
-            <label class="filter-label">{t('filters.rating')}</label>
-            <select 
-              class="filter-select" 
-              onchange="window.location.href = this.value"
-            >
-              <option value={getLocalizedPath(`/hebergements${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
-                {t('filters.all')}
-              </option>
-              {[4.5, 4.0, 3.5, 3.0].map(rating => (
-                <option 
-                  value={getLocalizedPath(`/hebergements?${categoryFilter ? `cat=${categoryFilter}&` : ''}rating=${rating}`, lang)}
-                  selected={ratingFilter === rating.toString()}
-                >
-                  {rating}+
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <!-- Clear Filters Button -->
-          {(categoryFilter || attributeFilter || priceFilter || ratingFilter) && (
-            <a href={getLocalizedPath('/hebergements', lang)} class="clear-filters-btn">
-              {t('filters.clear_filters')}
-            </a>
-          )}
-        </div>
-        <p class="results-count">{t('filters.results_count').replace('{count}', accommodations.length.toString())}</p>
-      </div>
-
-      {accommodations.length > 0 ? (
+      {shops.length > 0 ? (
         <div class="places-grid">
-          {accommodations.map((place: any) => (
+          {shops.map((place: any) => (
             <Card 
-              href={getLocalizedPath(`/place/${place.data.id}`, lang)} 
+              href={getLocalizedPath(`/services/${place.data.id}`, lang)} 
               hoverable={true}
               class="place-card"
             >
@@ -212,8 +135,8 @@ allAccommodations.forEach((a: any) => {
         </div>
       ) : (
         <div class="empty-state">
-          <Icon name="home" size="xl" />
-          <h3>Aucun hébergement trouvé</h3>
+          <Icon name="briefcase" size="xl" />
+          <h3>Aucun commerce trouvé</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
         </div>
       )}

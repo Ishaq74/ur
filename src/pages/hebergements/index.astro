@@ -1,8 +1,8 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Card from '../components/molecules/Card.astro';
-import Icon from '../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -14,23 +14,23 @@ const attributeFilter = Astro.url.searchParams.get('attr');
 const priceFilter = Astro.url.searchParams.get('price');
 const ratingFilter = Astro.url.searchParams.get('rating');
 
-// Get activities from new collection first, fallback to legacy places
-const newActivities = await getCollection('activities');
+// Get accommodations from new collection first, fallback to legacy places
+const newAccommodations = await getCollection('accommodations');
 const legacyPlaces = await getCollection('places');
-const activityCategories = await getCollection('activityCategories');
+const accommodationCategories = await getCollection('accommodationCategories');
 
 // Combine both sources
-const allActivities = [
-  ...newActivities.map((a: any) => ({ ...a, isNew: true })),
-  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'activites').map((p: any) => ({ ...p, isNew: false }))
+const allAccommodations = [
+  ...newAccommodations.map((a: any) => ({ ...a, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'hebergement').map((p: any) => ({ ...p, isNew: false }))
 ];
 
-// Filter activities
-let activities = allActivities.filter((a: any) => a.data.published);
+// Filter accommodations
+let accommodations = allAccommodations.filter((a: any) => a.data.published);
 
 // Category filter
 if (categoryFilter) {
-  activities = activities.filter((a: any) => {
+  accommodations = accommodations.filter((a: any) => {
     if (a.isNew) {
       return a.data.categoryId === categoryFilter;
     } else {
@@ -41,7 +41,7 @@ if (categoryFilter) {
 
 // Attribute filter
 if (attributeFilter) {
-  activities = activities.filter((a: any) => 
+  accommodations = accommodations.filter((a: any) => 
     a.data.attributes && a.data.attributes.some((attr: string) => 
       attr.toLowerCase().includes(attributeFilter.toLowerCase())
     )
@@ -50,19 +50,19 @@ if (attributeFilter) {
 
 // Price range filter
 if (priceFilter) {
-  activities = activities.filter((a: any) => a.data.priceRange === priceFilter);
+  accommodations = accommodations.filter((a: any) => a.data.priceRange === priceFilter);
 }
 
 // Rating filter
 if (ratingFilter) {
   const minRating = parseFloat(ratingFilter);
-  activities = activities.filter((a: any) => a.data.rating && a.data.rating >= minRating);
+  accommodations = accommodations.filter((a: any) => a.data.rating && a.data.rating >= minRating);
 }
 
 // Get category name if filtering
-let categoryName = t('common.all_activities');
+let categoryName = t('common.all_accommodations');
 if (categoryFilter) {
-  const category = activityCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const category = accommodationCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
@@ -71,7 +71,7 @@ if (categoryFilter) {
 // Collect all unique attributes and price ranges for filter options
 const allAttributes = new Set<string>();
 const allPriceRanges = new Set<string>();
-allActivities.forEach((a: any) => {
+allAccommodations.forEach((a: any) => {
   if (a.data.attributes) {
     a.data.attributes.forEach((attr: string) => allAttributes.add(attr));
   }
@@ -83,23 +83,100 @@ allActivities.forEach((a: any) => {
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description="Découvrez les meilleures activités à Annecy et ses environs"
+  description={t('hero.search_placeholder')}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <h1>{categoryName}</h1>
-      <p class="subtitle">Explorez toutes les activités à Annecy et ses environs</p>
+      <p class="subtitle">{t('hero.subtitle')}</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
-      {activities.length > 0 ? (
+      <!-- Filters Section -->
+      <div class="filters-section">
+        <h2 class="filters-title">{t('filters.filter_by')}</h2>
+        <div class="filters-container">
+          <!-- Attribute Filter -->
+          <div class="filter-group">
+            <label class="filter-label">{t('filters.attributes')}</label>
+            <select 
+              class="filter-select" 
+              onchange="window.location.href = this.value"
+            >
+              <option value={getLocalizedPath(`/hebergements${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
+                {t('filters.all')}
+              </option>
+              {Array.from(allAttributes).sort().map(attr => (
+                <option 
+                  value={getLocalizedPath(`/hebergements?${categoryFilter ? `cat=${categoryFilter}&` : ''}attr=${encodeURIComponent(attr)}`, lang)}
+                  selected={attributeFilter === attr}
+                >
+                  {attr}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Price Range Filter -->
+          <div class="filter-group">
+            <label class="filter-label">{t('filters.price_range')}</label>
+            <select 
+              class="filter-select" 
+              onchange="window.location.href = this.value"
+            >
+              <option value={getLocalizedPath(`/hebergements${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
+                {t('filters.all')}
+              </option>
+              {Array.from(allPriceRanges).sort().map(price => (
+                <option 
+                  value={getLocalizedPath(`/hebergements?${categoryFilter ? `cat=${categoryFilter}&` : ''}price=${price}`, lang)}
+                  selected={priceFilter === price}
+                >
+                  {price}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Rating Filter -->
+          <div class="filter-group">
+            <label class="filter-label">{t('filters.rating')}</label>
+            <select 
+              class="filter-select" 
+              onchange="window.location.href = this.value"
+            >
+              <option value={getLocalizedPath(`/hebergements${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
+                {t('filters.all')}
+              </option>
+              {[4.5, 4.0, 3.5, 3.0].map(rating => (
+                <option 
+                  value={getLocalizedPath(`/hebergements?${categoryFilter ? `cat=${categoryFilter}&` : ''}rating=${rating}`, lang)}
+                  selected={ratingFilter === rating.toString()}
+                >
+                  {rating}+
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Clear Filters Button -->
+          {(categoryFilter || attributeFilter || priceFilter || ratingFilter) && (
+            <a href={getLocalizedPath('/hebergements', lang)} class="clear-filters-btn">
+              {t('filters.clear_filters')}
+            </a>
+          )}
+        </div>
+        <p class="results-count">{t('filters.results_count').replace('{count}', accommodations.length.toString())}</p>
+      </div>
+
+      {accommodations.length > 0 ? (
         <div class="places-grid">
-          {activities.map((place: any) => (
+          {accommodations.map((place: any) => (
             <Card 
-              href={getLocalizedPath(`/place/${place.data.id}`, lang)} 
+              href={getLocalizedPath(`/hebergements/${place.data.id}`, lang)} 
               hoverable={true}
               class="place-card"
             >
@@ -135,8 +212,8 @@ allActivities.forEach((a: any) => {
         </div>
       ) : (
         <div class="empty-state">
-          <Icon name="hiking" size="xl" />
-          <h3>Aucune activité trouvée</h3>
+          <Icon name="home" size="xl" />
+          <h3>Aucun hébergement trouvé</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
         </div>
       )}

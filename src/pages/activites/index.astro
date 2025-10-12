@@ -1,8 +1,8 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Card from '../components/molecules/Card.astro';
-import Icon from '../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -14,35 +14,35 @@ const attributeFilter = Astro.url.searchParams.get('attr');
 const priceFilter = Astro.url.searchParams.get('price');
 const ratingFilter = Astro.url.searchParams.get('rating');
 
-// Get services from new collection first, fallback to legacy places
-const newServices = await getCollection('services');
+// Get activities from new collection first, fallback to legacy places
+const newActivities = await getCollection('activities');
 const legacyPlaces = await getCollection('places');
-const serviceCategories = await getCollection('serviceCategories');
+const activityCategories = await getCollection('activityCategories');
 
 // Combine both sources
-const allServices = [
-  ...newServices.map((s: any) => ({ ...s, isNew: true })),
-  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'shopping').map((p: any) => ({ ...p, isNew: false }))
+const allActivities = [
+  ...newActivities.map((a: any) => ({ ...a, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'activites').map((p: any) => ({ ...p, isNew: false }))
 ];
 
-// Filter services
-let shops = allServices.filter((s: any) => s.data.published);
+// Filter activities
+let activities = allActivities.filter((a: any) => a.data.published);
 
 // Category filter
 if (categoryFilter) {
-  shops = shops.filter((s: any) => {
-    if (s.isNew) {
-      return s.data.categoryId === categoryFilter;
+  activities = activities.filter((a: any) => {
+    if (a.isNew) {
+      return a.data.categoryId === categoryFilter;
     } else {
-      return s.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+      return a.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
     }
   });
 }
 
 // Attribute filter
 if (attributeFilter) {
-  shops = shops.filter((s: any) => 
-    s.data.attributes && s.data.attributes.some((attr: string) => 
+  activities = activities.filter((a: any) => 
+    a.data.attributes && a.data.attributes.some((attr: string) => 
       attr.toLowerCase().includes(attributeFilter.toLowerCase())
     )
   );
@@ -50,19 +50,19 @@ if (attributeFilter) {
 
 // Price range filter
 if (priceFilter) {
-  shops = shops.filter((s: any) => s.data.priceRange === priceFilter);
+  activities = activities.filter((a: any) => a.data.priceRange === priceFilter);
 }
 
 // Rating filter
 if (ratingFilter) {
   const minRating = parseFloat(ratingFilter);
-  shops = shops.filter((s: any) => s.data.rating && s.data.rating >= minRating);
+  activities = activities.filter((a: any) => a.data.rating && a.data.rating >= minRating);
 }
 
 // Get category name if filtering
-let categoryName = t('common.all_services');
+let categoryName = t('common.all_activities');
 if (categoryFilter) {
-  const category = serviceCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const category = activityCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
@@ -71,35 +71,35 @@ if (categoryFilter) {
 // Collect all unique attributes and price ranges for filter options
 const allAttributes = new Set<string>();
 const allPriceRanges = new Set<string>();
-allServices.forEach((s: any) => {
-  if (s.data.attributes) {
-    s.data.attributes.forEach((attr: string) => allAttributes.add(attr));
+allActivities.forEach((a: any) => {
+  if (a.data.attributes) {
+    a.data.attributes.forEach((attr: string) => allAttributes.add(attr));
   }
-  if (s.data.priceRange) {
-    allPriceRanges.add(s.data.priceRange);
+  if (a.data.priceRange) {
+    allPriceRanges.add(a.data.priceRange);
   }
 });
 ---
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description="Découvrez les meilleurs commerces d'Annecy et ses environs"
+  description="Découvrez les meilleures activités à Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <h1>{categoryName}</h1>
-      <p class="subtitle">Explorez les commerces et services d'Annecy</p>
+      <p class="subtitle">Explorez toutes les activités à Annecy et ses environs</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
-      {shops.length > 0 ? (
+      {activities.length > 0 ? (
         <div class="places-grid">
-          {shops.map((place: any) => (
+          {activities.map((place: any) => (
             <Card 
-              href={getLocalizedPath(`/place/${place.data.id}`, lang)} 
+              href={getLocalizedPath(`/activites/${place.data.id}`, lang)} 
               hoverable={true}
               class="place-card"
             >
@@ -135,8 +135,8 @@ allServices.forEach((s: any) => {
         </div>
       ) : (
         <div class="empty-state">
-          <Icon name="briefcase" size="xl" />
-          <h3>Aucun commerce trouvé</h3>
+          <Icon name="hiking" size="xl" />
+          <h3>Aucune activité trouvée</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
         </div>
       )}
