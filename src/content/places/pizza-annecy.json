@@ -1,0 +1,20 @@
+{
+  "id": "r3",
+  "name": "Pizza d'Annecy",
+  "description": "Pizzeria familiale proposant des pizzas au feu de bois avec des produits locaux",
+  "mainCategory": "restauration",
+  "category": "Italien",
+  "address": "8 Rue des Alpes, Annecy",
+  "phone": "+33 4 50 12 34 56",
+  "imageUrl": "/images/places/pizza-annecy.jpg",
+  "rating": 4.3,
+  "reviewCount": 89,
+  "coordinates": {
+    "lat": 45.8995,
+    "lng": 6.1285
+  },
+  "attributes": ["Emporter", "Livraison", "Terrasse", "Pizza au feu de bois"],
+  "hours": "11h30-14h30, 18h-22h30",
+  "priceRange": "€€",
+  "published": true
+}

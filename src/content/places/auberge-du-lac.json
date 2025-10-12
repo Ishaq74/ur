@@ -1,0 +1,21 @@
+{
+  "id": "r2",
+  "name": "L'Auberge du Lac",
+  "description": "Restaurant gastronomique en bord de lac avec une cuisine française raffinée",
+  "mainCategory": "restauration",
+  "category": "Gastronomique",
+  "address": "23 Rue du Lac, Annecy",
+  "phone": "+33 4 50 23 45 67",
+  "website": "https://auberge-du-lac.fr",
+  "imageUrl": "/images/places/auberge-lac.jpg",
+  "rating": 4.8,
+  "reviewCount": 256,
+  "coordinates": {
+    "lat": 45.8986,
+    "lng": 6.1301
+  },
+  "attributes": ["Vue sur lac", "Menu dégustation", "Cave à vin", "Étoilé Michelin"],
+  "hours": "12h-14h, 19h-22h (Fermé lundi et mardi)",
+  "priceRange": "€€€€",
+  "published": true
+}
