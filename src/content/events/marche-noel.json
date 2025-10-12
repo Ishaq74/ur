@@ -1,0 +1,15 @@
+{
+  "id": "e2",
+  "name": "Marché de Noël d'Annecy",
+  "title": "Marché de Noël d'Annecy",
+  "description": "Marché de Noël traditionnel avec chalets artisanaux, gastronomie savoyarde, animations pour enfants et patinoire en plein air",
+  "imageUrl": "/images/events/marche-noel.jpg",
+  "date": "2025-11-29T10:00:00",
+  "endDate": "2025-12-29T20:00:00",
+  "location": "Centre-ville d'Annecy",
+  "category": "Fêtes et Traditions",
+  "organizer": "Ville d'Annecy",
+  "website": "https://www.annecy.fr/marche-noel",
+  "price": "Gratuit",
+  "published": true
+}

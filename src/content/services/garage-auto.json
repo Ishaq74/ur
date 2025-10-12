@@ -1,0 +1,20 @@
+{
+  "id": "s3",
+  "name": "Garage Auto Service Annecy",
+  "description": "Garage automobile multimarque offrant réparations, entretien, contrôle technique et dépannage",
+  "categoryId": "maintenance",
+  "address": "15 Avenue de Genève, 74000 Annecy",
+  "phone": "+33 4 50 57 12 34",
+  "website": "https://www.autoservice-annecy.fr",
+  "imageUrl": "/images/services/garage.jpg",
+  "rating": 4.4,
+  "reviewCount": 178,
+  "coordinates": {
+    "lat": 45.9086,
+    "lng": 6.1178
+  },
+  "attributes": ["Toutes marques", "Dépannage", "Contrôle technique", "Pneus", "Diagnostic électronique"],
+  "hours": "Lun-Sam 8h-12h, 14h-18h",
+  "priceRange": "€€",
+  "published": true
+}

@@ -18,7 +18,11 @@
     "all_listings": "所有广告",
     "propose": "推荐内容",
     "login": "登录",
-    "signup": "注册"
+    "signup": "注册",
+    "restaurants": "餐厅",
+    "accommodations": "住宿",
+    "activities": "活动",
+    "events": "活动"
   },
   "hero": {
     "title": "你好安纳西",
@@ -77,5 +81,26 @@
     "ads": "广告",
     "partner": "成为合作伙伴",
     "copyright": "你好安纳西。版权所有。"
+  },
+  "filters": {
+    "all": "全部",
+    "filter_by": "筛选",
+    "category": "类别",
+    "tags": "标签",
+    "difficulty": "难度",
+    "distance": "距离",
+    "attributes": "属性",
+    "price_range": "价格区间",
+    "rating": "最低评分",
+    "clear_filters": "清除筛选",
+    "no_results": "未找到结果",
+    "results_count": "{count} 个结果"
+  },
+  "common": {
+    "restaurant": "餐厅",
+    "all_restaurants": "所有餐厅",
+    "all_accommodations": "所有住宿",
+    "all_activities": "所有活动",
+    "all_services": "所有服务"
   }
 }

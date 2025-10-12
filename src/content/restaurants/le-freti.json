@@ -1,0 +1,20 @@
+{
+  "id": "r4",
+  "name": "Le Freti",
+  "description": "Restaurant savoyard authentique proposant raclette, fondue et tartiflette dans une ambiance chaleureuse et conviviale",
+  "categoryId": "cuisine-locale",
+  "address": "12 Rue Sainte-Claire, 74000 Annecy",
+  "phone": "+33 4 50 51 29 52",
+  "website": "https://www.lefreti.com",
+  "imageUrl": "/images/places/le-freti.jpg",
+  "rating": 4.6,
+  "reviewCount": 523,
+  "coordinates": {
+    "lat": 45.8988,
+    "lng": 6.1268
+  },
+  "attributes": ["Spécialités savoyardes", "Cave à fromages", "Terrasse", "Réservation recommandée"],
+  "hours": "12h-14h, 19h-22h (fermé dimanche)",
+  "priceRange": "€€",
+  "published": true
+}

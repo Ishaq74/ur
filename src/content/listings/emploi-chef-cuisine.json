@@ -1,0 +1,11 @@
+{
+  "id": "l1",
+  "title": "Chef de cuisine - Restaurant gastronomique",
+  "description": "Restaurant étoilé recherche chef de cuisine expérimenté. Maîtrise de la cuisine française et des produits locaux. CDI, salaire selon expérience.",
+  "type": "emploi",
+  "price": "2800-3500€/mois",
+  "imageUrl": "/images/listings/chef-cuisine.jpg",
+  "authorId": "u1",
+  "date": "2025-01-18T10:00:00",
+  "published": true
+}

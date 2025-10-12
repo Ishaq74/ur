@@ -1,0 +1,15 @@
+{
+  "id": "e4",
+  "name": "Marathon du Lac d'Annecy",
+  "title": "Marathon du Lac d'Annecy",
+  "description": "Course marathon autour du lac d'Annecy avec parcours de 42km, semi-marathon et courses pour enfants",
+  "imageUrl": "/images/events/marathon-lac.jpg",
+  "date": "2025-04-26T08:00:00",
+  "endDate": "2025-04-26T14:00:00",
+  "location": "Tour du Lac d'Annecy",
+  "category": "Sport",
+  "organizer": "Association Marathon du Lac",
+  "website": "https://www.marathon-lac-annecy.com",
+  "price": "Inscription 45-65€",
+  "published": true
+}

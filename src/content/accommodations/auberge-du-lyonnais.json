@@ -1,0 +1,20 @@
+{
+  "id": "h2",
+  "name": "Auberge du Lyonnais",
+  "description": "Auberge familiale chaleureuse au cœur de la vieille ville, avec chambres confortables et petit-déjeuner maison",
+  "categoryId": "auberges",
+  "address": "9 Rue de la République, 74000 Annecy",
+  "phone": "+33 4 50 51 26 10",
+  "website": "https://www.auberge-lyonnais.fr",
+  "imageUrl": "/images/accommodations/auberge-lyonnais.jpg",
+  "rating": 4.3,
+  "reviewCount": 156,
+  "coordinates": {
+    "lat": 45.8992,
+    "lng": 6.1262
+  },
+  "attributes": ["Wi-Fi gratuit", "Petit-déjeuner inclus", "Centre-ville", "Charme historique"],
+  "hours": "Check-in: 15h-20h",
+  "priceRange": "€€",
+  "published": true
+}

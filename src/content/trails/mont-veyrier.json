@@ -1,0 +1,19 @@
+{
+  "id": "t3",
+  "name": "Mont Veyrier",
+  "excerpt": "Ascension panoramique avec vue imprenable sur le lac",
+  "description": "Randonnée sportive vers le sommet du Mont Veyrier offrant une vue à 360° exceptionnelle sur le lac d'Annecy et les Alpes. Effort récompensé par un panorama inoubliable.",
+  "categoryId": "moyen",
+  "difficulty": "moyen",
+  "distance": "8 km",
+  "duration": "3h30",
+  "elevation": "650m",
+  "imageUrl": "/images/trails/mont-veyrier.jpg",
+  "startPoint": "Col des Contrebandiers",
+  "coordinates": {
+    "lat": 45.8778,
+    "lng": 6.1847
+  },
+  "attributes": ["Vue panoramique", "Sommet", "Alpage", "Faune sauvage"],
+  "published": true
+}

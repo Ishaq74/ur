@@ -1,0 +1,21 @@
+{
+  "id": "h1",
+  "name": "Impérial Palace",
+  "description": "Hôtel 4 étoiles de luxe avec vue exceptionnelle sur le lac d'Annecy et service de spa haut de gamme",
+  "categoryId": "hotels",
+  "address": "Allée de l'Impérial, 74000 Annecy",
+  "phone": "+33 4 50 09 30 00",
+  "website": "https://www.imperial-palace.com",
+  "email": "contact@imperial-palace.com",
+  "imageUrl": "/images/accommodations/imperial-palace.jpg",
+  "rating": 4.8,
+  "reviewCount": 328,
+  "coordinates": {
+    "lat": 45.9036,
+    "lng": 6.1294
+  },
+  "attributes": ["Wi-Fi gratuit", "Spa", "Piscine", "Restaurant gastronomique", "Parking", "Vue lac"],
+  "hours": "Réception 24h/24",
+  "priceRange": "€€€€",
+  "published": true
+}

@@ -1,0 +1,19 @@
+{
+  "id": "t4",
+  "name": "La Tournette",
+  "excerpt": "Randonnée alpine vers le plus haut sommet autour du lac",
+  "description": "Ascension exigeante vers le sommet emblématique de La Tournette (2351m), plus haut sommet dominant le lac d'Annecy. Vue spectaculaire garantie pour les randonneurs expérimentés. Passage en terrain rocheux.",
+  "categoryId": "difficile",
+  "difficulty": "difficile",
+  "distance": "12 km",
+  "duration": "6h",
+  "elevation": "1200m",
+  "imageUrl": "/images/trails/la-tournette.jpg",
+  "startPoint": "Chalet de l'Aulp",
+  "coordinates": {
+    "lat": 45.8389,
+    "lng": 6.2775
+  },
+  "attributes": ["Haute montagne", "Vue exceptionnelle", "Passages rocheux", "Équipement requis"],
+  "published": true
+}

@@ -1,0 +1,20 @@
+{
+  "id": "s4",
+  "name": "Pharmacie du Lac",
+  "description": "Pharmacie de garde située au centre-ville, conseils personnalisés et large gamme de produits de santé",
+  "categoryId": "sante",
+  "address": "8 Rue Vaugelas, 74000 Annecy",
+  "phone": "+33 4 50 45 23 67",
+  "website": "https://www.pharmacie-du-lac.fr",
+  "imageUrl": "/images/services/pharmacie.jpg",
+  "rating": 4.6,
+  "reviewCount": 124,
+  "coordinates": {
+    "lat": 45.8994,
+    "lng": 6.1271
+  },
+  "attributes": ["Garde de nuit", "Orthopédie", "Homéopathie", "Cosmétiques", "Conseils nutrition"],
+  "hours": "Lun-Sam 8h30-19h30",
+  "priceRange": "",
+  "published": true
+}

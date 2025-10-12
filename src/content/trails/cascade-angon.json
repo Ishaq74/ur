@@ -1,0 +1,19 @@
+{
+  "id": "t2",
+  "name": "Cascade d'Angon",
+  "excerpt": "Randonnée familiale vers une cascade spectaculaire",
+  "description": "Randonnée accessible menant à la magnifique cascade d'Angon, située entre Talloires et Menthon-Saint-Bernard. Sentier bien balisé avec points de vue sur le lac.",
+  "categoryId": "facile",
+  "difficulty": "facile",
+  "distance": "3.5 km",
+  "duration": "1h30",
+  "elevation": "150m",
+  "imageUrl": "/images/trails/cascade-angon.jpg",
+  "startPoint": "Parking d'Angon",
+  "coordinates": {
+    "lat": 45.8556,
+    "lng": 6.2089
+  },
+  "attributes": ["Cascade", "Familial", "Point de vue", "Ombragé"],
+  "published": true
+}
