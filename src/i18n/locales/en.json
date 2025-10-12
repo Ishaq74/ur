@@ -85,6 +85,10 @@
   "filters": {
     "all": "All",
     "filter_by": "Filter by",
+    "category": "Category",
+    "tags": "Tags",
+    "difficulty": "Difficulty",
+    "distance": "Distance",
     "attributes": "Attributes",
     "price_range": "Price range",
     "rating": "Minimum rating",

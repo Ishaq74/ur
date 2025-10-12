@@ -1,27 +1,46 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Card from '../components/molecules/Card.astro';
-import Icon from '../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
+export async function getStaticPaths() {
+  const trailCategories = await getCollection('trailCategories');
+  const allTrails = await getCollection('trails');
+  
+  return trailCategories.map(category => ({
+    params: { category: category.data.slug },
+    props: { 
+      category,
+      trails: allTrails.filter((trail: any) => 
+        trail.data.difficulty === category.data.id && trail.data.published
+      )
+    },
+  }));
+}
+
+const { category, trails } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-// Get all published trails
-const allTrails = await getCollection('trails');
-const trails = allTrails.filter((trail: any) => trail.data.published);
 ---
 
 <MainLayout 
-  title={`${t('header.trails')} - Salut Annecy`} 
-  description="Découvrez les meilleurs sentiers de randonnée autour d'Annecy"
+  title={`Sentiers ${category.data.name} - Salut Annecy`} 
+  description={category.data.description || `Découvrez nos sentiers de difficulté ${category.data.name}`}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{t('header.trails')}</h1>
-      <p class="subtitle">Explorez les plus beaux sentiers autour d'Annecy</p>
+      <nav class="breadcrumb">
+        <a href={getLocalizedPath('/sentiers', lang)}>{t('header.trails')}</a>
+        <span>/</span>
+        <span>{category.data.name}</span>
+      </nav>
+      <h1>Sentiers {category.data.name}</h1>
+      {category.data.description && (
+        <p class="subtitle">{category.data.description}</p>
+      )}
     </div>
   </section>
 
@@ -67,8 +86,11 @@ const trails = allTrails.filter((trail: any) => trail.data.published);
       ) : (
         <div class="empty-state">
           <Icon name="hiking" size="xl" />
-          <h3>Aucun sentier trouvé</h3>
+          <h3>Aucun sentier dans cette catégorie</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
+          <a href={getLocalizedPath('/sentiers', lang)} class="back-link">
+            Retour aux sentiers
+          </a>
         </div>
       )}
     </div>
@@ -80,6 +102,25 @@ const trails = allTrails.filter((trail: any) => trail.data.published);
     background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
     padding: var(--spacing-12) 0 var(--spacing-8);
     text-align: center;
+  }
+
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-secondary);
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
   }
 
   .page-header h1 {
@@ -191,6 +232,21 @@ const trails = allTrails.filter((trail: any) => trail.data.published);
 
   .empty-state h3 {
     margin: var(--spacing-4) 0 var(--spacing-2);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-6);
+    background-color: var(--color-primary-500);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-base);
+    transition: all var(--transition-fast);
+  }
+
+  .back-link:hover {
+    background-color: var(--color-primary-600);
   }
 
   @media (max-width: 768px) {

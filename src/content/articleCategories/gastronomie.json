@@ -1,0 +1,9 @@
+{
+  "id": "gastronomie",
+  "name": "Gastronomie",
+  "description": "Les spécialités culinaires de la région",
+  "slug": "gastronomie",
+  "icon": "food",
+  "order": 2,
+  "published": true
+}

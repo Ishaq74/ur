@@ -1,0 +1,9 @@
+{
+  "id": "difficile",
+  "name": "Difficile",
+  "description": "Sentiers difficiles, expérience requise",
+  "slug": "difficile",
+  "icon": "mountain",
+  "order": 3,
+  "published": true
+}

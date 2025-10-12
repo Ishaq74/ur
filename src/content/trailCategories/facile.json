@@ -1,0 +1,9 @@
+{
+  "id": "facile",
+  "name": "Facile",
+  "description": "Sentiers faciles, accessibles à tous",
+  "slug": "facile",
+  "icon": "walk",
+  "order": 1,
+  "published": true
+}

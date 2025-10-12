@@ -1,0 +1,9 @@
+{
+  "id": "histoire-culture",
+  "name": "Histoire & Culture",
+  "description": "Découvrez l'histoire et la culture d'Annecy",
+  "slug": "histoire-culture",
+  "icon": "book-open",
+  "order": 1,
+  "published": true
+}
