@@ -8,21 +8,51 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get all published places in the "activites" category
-const allPlaces = await getCollection('places');
-const activities = allPlaces.filter(
-  (place: any) => place.data.mainCategory === 'activites' && place.data.published
-);
+// Get category filter from URL
+const categoryFilter = Astro.url.searchParams.get('cat');
+
+// Get activities from new collection first, fallback to legacy places
+const newActivities = await getCollection('activities');
+const legacyPlaces = await getCollection('places');
+const activityCategories = await getCollection('activityCategories');
+
+// Combine both sources
+const allActivities = [
+  ...newActivities.map((a: any) => ({ ...a, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'activites').map((p: any) => ({ ...p, isNew: false }))
+];
+
+// Filter activities
+let activities = allActivities.filter((a: any) => a.data.published);
+if (categoryFilter) {
+  activities = activities.filter((a: any) => {
+    if (a.isNew) {
+      return a.data.categoryId === categoryFilter;
+    } else {
+      // For legacy data, try to match by category string
+      return a.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+    }
+  });
+}
+
+// Get category name if filtering
+let categoryName = 'Activités';
+if (categoryFilter) {
+  const category = activityCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    categoryName = category.data.name;
+  }
+}
 ---
 
 <MainLayout 
-  title={`${t('header.do')} - Salut Annecy`} 
+  title={`${categoryName} - Salut Annecy`} 
   description="Découvrez les meilleures activités à Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{t('header.do')}</h1>
+      <h1>{categoryName}</h1>
       <p class="subtitle">Explorez toutes les activités à Annecy et ses environs</p>
     </div>
   </section>

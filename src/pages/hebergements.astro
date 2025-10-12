@@ -8,21 +8,51 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get all published places in the "hebergement" category
-const allPlaces = await getCollection('places');
-const accommodations = allPlaces.filter(
-  (place: any) => place.data.mainCategory === 'hebergement' && place.data.published
-);
+// Get category filter from URL
+const categoryFilter = Astro.url.searchParams.get('cat');
+
+// Get accommodations from new collection first, fallback to legacy places
+const newAccommodations = await getCollection('accommodations');
+const legacyPlaces = await getCollection('places');
+const accommodationCategories = await getCollection('accommodationCategories');
+
+// Combine both sources
+const allAccommodations = [
+  ...newAccommodations.map((a: any) => ({ ...a, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'hebergement').map((p: any) => ({ ...p, isNew: false }))
+];
+
+// Filter accommodations
+let accommodations = allAccommodations.filter((a: any) => a.data.published);
+if (categoryFilter) {
+  accommodations = accommodations.filter((a: any) => {
+    if (a.isNew) {
+      return a.data.categoryId === categoryFilter;
+    } else {
+      // For legacy data, try to match by category string
+      return a.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+    }
+  });
+}
+
+// Get category name if filtering
+let categoryName = 'Hébergements';
+if (categoryFilter) {
+  const category = accommodationCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    categoryName = category.data.name;
+  }
+}
 ---
 
 <MainLayout 
-  title={`${t('header.sleep')} - Salut Annecy`} 
+  title={`${categoryName} - Salut Annecy`} 
   description="Découvrez les meilleurs hébergements d'Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{t('header.sleep')}</h1>
+      <h1>{categoryName}</h1>
       <p class="subtitle">Trouvez l'hébergement parfait pour votre séjour à Annecy</p>
     </div>
   </section>

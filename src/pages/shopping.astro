@@ -8,21 +8,50 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get all published places in the "shopping" category
-const allPlaces = await getCollection('places');
-const shops = allPlaces.filter(
-  (place: any) => place.data.mainCategory === 'shopping' && place.data.published
-);
+// Get category filter from URL
+const categoryFilter = Astro.url.searchParams.get('cat');
+
+// Get services from new collection first, fallback to legacy places
+const newServices = await getCollection('services');
+const legacyPlaces = await getCollection('places');
+const serviceCategories = await getCollection('serviceCategories');
+
+// Combine both sources
+const allServices = [
+  ...newServices.map((s: any) => ({ ...s, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'shopping').map((p: any) => ({ ...p, isNew: false }))
+];
+
+// Filter services
+let shops = allServices.filter((s: any) => s.data.published);
+if (categoryFilter) {
+  shops = shops.filter((s: any) => {
+    if (s.isNew) {
+      return s.data.categoryId === categoryFilter;
+    } else {
+      return s.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+    }
+  });
+}
+
+// Get category name if filtering
+let categoryName = 'Shopping & Services';
+if (categoryFilter) {
+  const category = serviceCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    categoryName = category.data.name;
+  }
+}
 ---
 
 <MainLayout 
-  title={`Shopping - Salut Annecy`} 
+  title={`${categoryName} - Salut Annecy`} 
   description="Découvrez les meilleurs commerces d'Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>Shopping & Services</h1>
+      <h1>{categoryName}</h1>
       <p class="subtitle">Explorez les commerces et services d'Annecy</p>
     </div>
   </section>
