@@ -1,0 +1,9 @@
+{
+  "id": "epiceries",
+  "name": "Épiceries & Produits locaux",
+  "description": "Épiceries fines et produits locaux",
+  "slug": "epiceries",
+  "icon": "shopping",
+  "order": 3,
+  "published": true
+}

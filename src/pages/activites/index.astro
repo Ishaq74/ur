@@ -1,39 +1,105 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Card from '../components/molecules/Card.astro';
-import Icon from '../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get all published places in the "hebergement" category
-const allPlaces = await getCollection('places');
-const accommodations = allPlaces.filter(
-  (place: any) => place.data.mainCategory === 'hebergement' && place.data.published
-);
+// Get filters from URL
+const categoryFilter = Astro.url.searchParams.get('cat');
+const attributeFilter = Astro.url.searchParams.get('attr');
+const priceFilter = Astro.url.searchParams.get('price');
+const ratingFilter = Astro.url.searchParams.get('rating');
+
+// Get activities from new collection first, fallback to legacy places
+const newActivities = await getCollection('activities');
+const legacyPlaces = await getCollection('places');
+const activityCategories = await getCollection('activityCategories');
+
+// Combine both sources
+const allActivities = [
+  ...newActivities.map((a: any) => ({ ...a, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'activites').map((p: any) => ({ ...p, isNew: false }))
+];
+
+// Filter activities
+let activities = allActivities.filter((a: any) => a.data.published);
+
+// Category filter
+if (categoryFilter) {
+  activities = activities.filter((a: any) => {
+    if (a.isNew) {
+      return a.data.categoryId === categoryFilter;
+    } else {
+      return a.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+    }
+  });
+}
+
+// Attribute filter
+if (attributeFilter) {
+  activities = activities.filter((a: any) => 
+    a.data.attributes && a.data.attributes.some((attr: string) => 
+      attr.toLowerCase().includes(attributeFilter.toLowerCase())
+    )
+  );
+}
+
+// Price range filter
+if (priceFilter) {
+  activities = activities.filter((a: any) => a.data.priceRange === priceFilter);
+}
+
+// Rating filter
+if (ratingFilter) {
+  const minRating = parseFloat(ratingFilter);
+  activities = activities.filter((a: any) => a.data.rating && a.data.rating >= minRating);
+}
+
+// Get category name if filtering
+let categoryName = t('common.all_activities');
+if (categoryFilter) {
+  const category = activityCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    categoryName = category.data.name;
+  }
+}
+
+// Collect all unique attributes and price ranges for filter options
+const allAttributes = new Set<string>();
+const allPriceRanges = new Set<string>();
+allActivities.forEach((a: any) => {
+  if (a.data.attributes) {
+    a.data.attributes.forEach((attr: string) => allAttributes.add(attr));
+  }
+  if (a.data.priceRange) {
+    allPriceRanges.add(a.data.priceRange);
+  }
+});
 ---
 
 <MainLayout 
-  title={`${t('header.sleep')} - Salut Annecy`} 
-  description="Découvrez les meilleurs hébergements d'Annecy et ses environs"
+  title={`${categoryName} - Salut Annecy`} 
+  description="Découvrez les meilleures activités à Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{t('header.sleep')}</h1>
-      <p class="subtitle">Trouvez l'hébergement parfait pour votre séjour à Annecy</p>
+      <h1>{categoryName}</h1>
+      <p class="subtitle">Explorez toutes les activités à Annecy et ses environs</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
-      {accommodations.length > 0 ? (
+      {activities.length > 0 ? (
         <div class="places-grid">
-          {accommodations.map((place: any) => (
+          {activities.map((place: any) => (
             <Card 
-              href={getLocalizedPath(`/place/${place.data.id}`, lang)} 
+              href={getLocalizedPath(`/activites/${place.data.id}`, lang)} 
               hoverable={true}
               class="place-card"
             >
@@ -69,8 +135,8 @@ const accommodations = allPlaces.filter(
         </div>
       ) : (
         <div class="empty-state">
-          <Icon name="home" size="xl" />
-          <h3>Aucun hébergement trouvé</h3>
+          <Icon name="hiking" size="xl" />
+          <h3>Aucune activité trouvée</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
         </div>
       )}

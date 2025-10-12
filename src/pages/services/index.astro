@@ -1,39 +1,105 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Card from '../components/molecules/Card.astro';
-import Icon from '../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get all published places in the "activites" category
-const allPlaces = await getCollection('places');
-const activities = allPlaces.filter(
-  (place: any) => place.data.mainCategory === 'activites' && place.data.published
-);
+// Get filters from URL
+const categoryFilter = Astro.url.searchParams.get('cat');
+const attributeFilter = Astro.url.searchParams.get('attr');
+const priceFilter = Astro.url.searchParams.get('price');
+const ratingFilter = Astro.url.searchParams.get('rating');
+
+// Get services from new collection first, fallback to legacy places
+const newServices = await getCollection('services');
+const legacyPlaces = await getCollection('places');
+const serviceCategories = await getCollection('serviceCategories');
+
+// Combine both sources
+const allServices = [
+  ...newServices.map((s: any) => ({ ...s, isNew: true })),
+  ...legacyPlaces.filter((p: any) => p.data.mainCategory === 'shopping').map((p: any) => ({ ...p, isNew: false }))
+];
+
+// Filter services
+let shops = allServices.filter((s: any) => s.data.published);
+
+// Category filter
+if (categoryFilter) {
+  shops = shops.filter((s: any) => {
+    if (s.isNew) {
+      return s.data.categoryId === categoryFilter;
+    } else {
+      return s.data.category.toLowerCase().includes(categoryFilter.toLowerCase());
+    }
+  });
+}
+
+// Attribute filter
+if (attributeFilter) {
+  shops = shops.filter((s: any) => 
+    s.data.attributes && s.data.attributes.some((attr: string) => 
+      attr.toLowerCase().includes(attributeFilter.toLowerCase())
+    )
+  );
+}
+
+// Price range filter
+if (priceFilter) {
+  shops = shops.filter((s: any) => s.data.priceRange === priceFilter);
+}
+
+// Rating filter
+if (ratingFilter) {
+  const minRating = parseFloat(ratingFilter);
+  shops = shops.filter((s: any) => s.data.rating && s.data.rating >= minRating);
+}
+
+// Get category name if filtering
+let categoryName = t('common.all_services');
+if (categoryFilter) {
+  const category = serviceCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    categoryName = category.data.name;
+  }
+}
+
+// Collect all unique attributes and price ranges for filter options
+const allAttributes = new Set<string>();
+const allPriceRanges = new Set<string>();
+allServices.forEach((s: any) => {
+  if (s.data.attributes) {
+    s.data.attributes.forEach((attr: string) => allAttributes.add(attr));
+  }
+  if (s.data.priceRange) {
+    allPriceRanges.add(s.data.priceRange);
+  }
+});
 ---
 
 <MainLayout 
-  title={`${t('header.do')} - Salut Annecy`} 
-  description="Découvrez les meilleures activités à Annecy et ses environs"
+  title={`${categoryName} - Salut Annecy`} 
+  description="Découvrez les meilleurs commerces d'Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{t('header.do')}</h1>
-      <p class="subtitle">Explorez toutes les activités à Annecy et ses environs</p>
+      <h1>{categoryName}</h1>
+      <p class="subtitle">Explorez les commerces et services d'Annecy</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
-      {activities.length > 0 ? (
+      {shops.length > 0 ? (
         <div class="places-grid">
-          {activities.map((place: any) => (
+          {shops.map((place: any) => (
             <Card 
-              href={getLocalizedPath(`/place/${place.data.id}`, lang)} 
+              href={getLocalizedPath(`/services/${place.data.id}`, lang)} 
               hoverable={true}
               class="place-card"
             >
@@ -69,8 +135,8 @@ const activities = allPlaces.filter(
         </div>
       ) : (
         <div class="empty-state">
-          <Icon name="hiking" size="xl" />
-          <h3>Aucune activité trouvée</h3>
+          <Icon name="briefcase" size="xl" />
+          <h3>Aucun commerce trouvé</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
         </div>
       )}

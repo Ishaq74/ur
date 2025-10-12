@@ -1,0 +1,9 @@
+{
+  "id": "cuisine-locale",
+  "name": "Cuisine locale",
+  "description": "Restaurants de cuisine locale et savoyarde",
+  "slug": "locale",
+  "parentId": "restaurants",
+  "order": 1,
+  "published": true
+}

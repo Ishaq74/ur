@@ -1,0 +1,9 @@
+{
+  "id": "hotels",
+  "name": "Hôtels",
+  "description": "Hôtels de toutes catégories",
+  "slug": "hotels",
+  "icon": "hotel",
+  "order": 1,
+  "published": true
+}

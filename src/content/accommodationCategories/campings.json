@@ -1,0 +1,9 @@
+{
+  "id": "campings",
+  "name": "Campings",
+  "description": "Campings étoilés et nature",
+  "slug": "campings",
+  "icon": "campfire",
+  "order": 4,
+  "published": true
+}

@@ -1,0 +1,9 @@
+{
+  "id": "culture",
+  "name": "Culture",
+  "description": "Musées, galeries et patrimoine",
+  "slug": "culture",
+  "icon": "museum",
+  "order": 2,
+  "published": true
+}
