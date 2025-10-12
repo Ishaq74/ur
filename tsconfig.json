@@ -31,15 +31,5 @@
   "include": [
     "src/**/*",
     "astro.config.mjs"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "components",
-    "App.tsx",
-    "index.tsx",
-    "types.ts",
-    "constants.tsx",
-    "vite.config.ts"
   ]
 }
