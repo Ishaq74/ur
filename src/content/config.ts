@@ -21,6 +21,17 @@ const locationSchema = z.object({
   hours: z.string().optional(),
   priceRange: z.string().optional(),
   published: z.boolean().default(true),
+  // Additional fields for better content management
+  featured: z.boolean().default(false),
+  accessibility: z.string().optional(), // Accessibility information
+  social: z.object({
+    facebook: z.string().optional(),
+    instagram: z.string().optional(),
+    twitter: z.string().optional(),
+  }).optional(),
+  tags: z.array(z.string()).default([]),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
 });
 
 // Restaurant collection
@@ -57,6 +68,12 @@ const categorySchema = z.object({
   icon: z.string().optional(),
   order: z.number().optional(),
   published: z.boolean().default(true),
+  // Additional fields for better categorization
+  color: z.string().optional(), // Theme color for the category
+  imageUrl: z.string().optional(), // Category illustration
+  featured: z.boolean().default(false),
+  seoTitle: z.string().optional(),
+  seoDescription: z.string().optional(),
 });
 
 // Category collections
@@ -133,6 +150,15 @@ const eventsCollection = defineCollection({
     website: z.string().optional(),
     price: z.string().optional(),
     published: z.boolean().default(true),
+    // Additional event fields
+    featured: z.boolean().default(false),
+    ticketUrl: z.string().optional(), // Link to buy tickets
+    contactEmail: z.string().optional(),
+    contactPhone: z.string().optional(),
+    capacity: z.number().optional(), // Maximum attendees
+    tags: z.array(z.string()).default([]),
+    ageRestriction: z.string().optional(), // e.g., "18+", "All ages"
+    accessibility: z.string().optional(),
   }),
 });
 
@@ -157,6 +183,15 @@ const trailsCollection = defineCollection({
     }).optional(),
     attributes: z.array(z.string()).default([]),
     published: z.boolean().default(true),
+    // Additional trail fields
+    featured: z.boolean().default(false),
+    gpxFile: z.string().optional(), // Path to GPX track file
+    season: z.string().optional(), // Best season (e.g., "Printemps-Automne")
+    loopTrail: z.boolean().default(false), // Is it a loop?
+    dogsAllowed: z.boolean().default(true),
+    parkingInfo: z.string().optional(),
+    waterSources: z.boolean().default(false), // Water available on trail?
+    tags: z.array(z.string()).default([]),
   }),
 });
 
@@ -191,6 +226,21 @@ const listingsCollection = defineCollection({
     authorId: z.string(),
     date: z.string(),
     published: z.boolean().default(true),
+    // Additional listing fields
+    featured: z.boolean().default(false),
+    expiresAt: z.string().optional(), // When listing expires
+    contactEmail: z.string().optional(),
+    contactPhone: z.string().optional(),
+    location: z.string().optional(), // City/area
+    tags: z.array(z.string()).default([]),
+    // Specific to employment listings
+    company: z.string().optional(),
+    contractType: z.string().optional(), // CDI, CDD, Stage, etc.
+    // Specific to real estate
+    surface: z.string().optional(), // m²
+    rooms: z.number().optional(),
+    // Specific to sales
+    condition: z.string().optional(), // Neuf, Bon état, etc.
   }),
 });
 
