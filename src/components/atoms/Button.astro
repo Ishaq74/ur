@@ -7,6 +7,8 @@ interface Props {
   class?: string;
   ariaLabel?: string;
   disabled?: boolean;
+  fullWidth?: boolean;
+  target?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   class: className = '',
   ariaLabel,
   disabled = false,
+  fullWidth = false,
+  target,
 } = Astro.props;
 
 const Tag = href ? 'a' : 'button';
@@ -25,9 +29,11 @@ const Tag = href ? 'a' : 'button';
 <Tag
   href={href}
   type={!href ? type : undefined}
-  class={`btn btn-${variant} btn-${size} ${className}`}
+  class={`btn btn-${variant} btn-${size} ${fullWidth ? 'btn-full' : ''} ${className}`}
   aria-label={ariaLabel}
   disabled={disabled}
+  target={target}
+  rel={target === '_blank' ? 'noopener noreferrer' : undefined}
 >
   <slot />
 </Tag>
@@ -72,6 +78,10 @@ const Tag = href ? 'a' : 'button';
   .btn-lg {
     padding: var(--spacing-4) var(--spacing-8);
     font-size: var(--font-size-lg);
+  }
+
+  .btn-full {
+    width: 100%;
   }
 
   /* Variants */

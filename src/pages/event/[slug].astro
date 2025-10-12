@@ -1,0 +1,336 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import Button from '../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allEvents = await getCollection('events');
+  return allEvents.map((event: any) => ({
+    params: { slug: event.data.id },
+    props: { event },
+  }));
+}
+
+type Props = {
+  event: any;
+};
+
+const { event }: Props = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const eventDate = new Date(event.data.date);
+const eventEndDate = event.data.endDate ? new Date(event.data.endDate) : null;
+---
+
+<MainLayout 
+  title={`${event.data.title} - Salut Annecy`} 
+  description={event.data.description}
+  lang={lang}
+>
+  <article class="event-detail">
+    <!-- Header Image -->
+    <section class="event-hero">
+      <div class="event-hero-image">
+        <img src={event.data.imageUrl} alt={event.data.title} />
+      </div>
+      <div class="event-hero-overlay">
+        <div class="container">
+          <div class="event-hero-content">
+            <div class="event-breadcrumb">
+              <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
+              <span>/</span>
+              <a href={getLocalizedPath('/agenda', lang)}>{t('header.agenda')}</a>
+              <span>/</span>
+              <span>{event.data.title}</span>
+            </div>
+            <h1>{event.data.title}</h1>
+            <div class="event-meta">
+              <span class="event-category-badge">{event.data.category}</span>
+              <div class="event-date-info">
+                <Icon name="calendar" size="sm" />
+                <span>
+                  {eventDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  {eventEndDate && ` - ${eventEndDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="event-content-section">
+      <div class="container">
+        <div class="event-layout">
+          <!-- Main Content -->
+          <div class="event-main">
+            <!-- Description -->
+            <div class="content-block">
+              <h2>À propos de l'événement</h2>
+              <p>{event.data.description}</p>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="event-sidebar">
+            <!-- Event Info -->
+            <div class="sidebar-card">
+              <h3>Informations pratiques</h3>
+              
+              <div class="info-item">
+                <Icon name="calendar" size="sm" />
+                <div>
+                  <strong>Date</strong>
+                  <p>
+                    {eventDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                    {eventEndDate && (
+                      <><br />au {eventEndDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</>
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              {event.data.location && (
+                <div class="info-item">
+                  <Icon name="map-pin" size="sm" />
+                  <div>
+                    <strong>Lieu</strong>
+                    <p>{event.data.location}</p>
+                  </div>
+                </div>
+              )}
+
+              {event.data.organizer && (
+                <div class="info-item">
+                  <Icon name="users" size="sm" />
+                  <div>
+                    <strong>Organisateur</strong>
+                    <p>{event.data.organizer}</p>
+                  </div>
+                </div>
+              )}
+
+              {event.data.price && (
+                <div class="info-item">
+                  <Icon name="credit-card" size="sm" />
+                  <div>
+                    <strong>Tarif</strong>
+                    <p>{event.data.price}</p>
+                  </div>
+                </div>
+              )}
+
+              {event.data.website && (
+                <div class="info-item">
+                  <Icon name="globe" size="sm" />
+                  <div>
+                    <strong>Site web</strong>
+                    <p><a href={event.data.website} target="_blank" rel="noopener noreferrer">Plus d'informations</a></p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="sidebar-actions">
+              {event.data.website && (
+                <Button href={event.data.website} variant="primary" size="md" fullWidth={true} target="_blank">
+                  Réserver / Plus d'infos
+                </Button>
+              )}
+              <Button href={getLocalizedPath('/agenda', lang)} variant="secondary" size="md" fullWidth={true}>
+                Retour à l'agenda
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </article>
+</MainLayout>
+
+<style>
+  .event-hero {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .event-hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .event-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .event-hero-overlay {
+    position: relative;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: var(--spacing-8);
+  }
+
+  .event-hero-content {
+    color: white;
+  }
+
+  .event-breadcrumb {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-3);
+    display: flex;
+    gap: var(--spacing-2);
+    align-items: center;
+  }
+
+  .event-breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .event-breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .event-hero-content h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .event-meta {
+    display: flex;
+    gap: var(--spacing-4);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .event-category-badge {
+    padding: var(--spacing-2) var(--spacing-3);
+    background-color: var(--color-primary-600);
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .event-date-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .event-content-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .event-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--spacing-8);
+  }
+
+  .event-main {
+    min-width: 0;
+  }
+
+  .content-block {
+    margin-bottom: var(--spacing-8);
+  }
+
+  .content-block h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content-block p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .event-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .sidebar-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+  }
+
+  .sidebar-card h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-item {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-item strong {
+    display: block;
+    margin-bottom: var(--spacing-1);
+    font-size: var(--font-size-sm);
+  }
+
+  .info-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .info-item a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .info-item a:hover {
+    text-decoration: underline;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  @media (max-width: 1024px) {
+    .event-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .event-hero {
+      height: 300px;
+    }
+
+    .event-hero-content h1 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>

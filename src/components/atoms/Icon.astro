@@ -1,7 +1,7 @@
 ---
 interface Props {
   name: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   class?: string;
 }
 
@@ -56,5 +56,10 @@ const icons: Record<string, string> = {
   .icon-lg {
     width: 2rem;
     height: 2rem;
+  }
+
+  .icon-xl {
+    width: 3rem;
+    height: 3rem;
   }
 </style>
