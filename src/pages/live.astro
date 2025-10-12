@@ -1,0 +1,78 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Icon from '../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('header.live')} - Salut Annecy`} 
+  description="Suivez en direct ce qui se passe à Annecy"
+  lang={lang}
+>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('header.live')}</h1>
+      <p class="subtitle">Suivez en direct l'actualité d'Annecy</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="coming-soon">
+        <div class="coming-soon-icon">
+          <Icon name="video" size="xl" />
+        </div>
+        <h2>Bientôt disponible</h2>
+        <p>La fonctionnalité Live sera bientôt disponible. Vous pourrez suivre en direct les événements, webcams et actualités d'Annecy.</p>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    padding: var(--spacing-12) 0 var(--spacing-8);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .content-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .coming-soon {
+    text-align: center;
+    padding: var(--spacing-16) var(--spacing-6);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .coming-soon-icon {
+    color: var(--color-primary-500);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .coming-soon h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .coming-soon p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+</style>
