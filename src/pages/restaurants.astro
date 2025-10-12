@@ -8,21 +8,37 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get all published places in the "restauration" category
-const allPlaces = await getCollection('places');
-const restaurants = allPlaces.filter(
-  (place: any) => place.data.mainCategory === 'restauration' && place.data.published
-);
+// Get category filter from URL
+const categoryFilter = Astro.url.searchParams.get('cat');
+
+// Get all published restaurants from new collection
+const allRestaurants = await getCollection('restaurants');
+const restaurantCategories = await getCollection('restaurantCategories');
+
+// Filter restaurants
+let restaurants = allRestaurants.filter((r: any) => r.data.published);
+if (categoryFilter) {
+  restaurants = restaurants.filter((r: any) => r.data.categoryId === categoryFilter);
+}
+
+// Get category name if filtering
+let categoryName = 'Restaurants';
+if (categoryFilter) {
+  const category = restaurantCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    categoryName = category.data.name;
+  }
+}
 ---
 
 <MainLayout 
-  title={`${t('header.eat')} - Salut Annecy`} 
+  title={`${categoryName} - Salut Annecy`} 
   description="Découvrez les meilleurs restaurants d'Annecy et ses environs"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{t('header.eat')}</h1>
+      <h1>{categoryName}</h1>
       <p class="subtitle">Découvrez les meilleures tables d'Annecy et ses environs</p>
     </div>
   </section>
@@ -31,41 +47,44 @@ const restaurants = allPlaces.filter(
     <div class="container">
       {restaurants.length > 0 ? (
         <div class="places-grid">
-          {restaurants.map((restaurant: any) => (
-            <Card 
-              href={getLocalizedPath(`/place/${restaurant.data.id}`, lang)} 
-              hoverable={true}
-              class="place-card"
-            >
-              <div class="place-image">
-                <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
-              </div>
-              <div class="place-content">
-                <div class="place-header">
-                  <span class="place-category">{restaurant.data.category}</span>
-                  {restaurant.data.rating && (
-                    <div class="place-rating">
-                      <Icon name="star" size="sm" />
-                      <span>{restaurant.data.rating.toFixed(1)}</span>
+          {restaurants.map((restaurant: any) => {
+            const category = restaurantCategories.find(c => c.data.id === restaurant.data.categoryId);
+            return (
+              <Card 
+                href={getLocalizedPath(`/restaurant/${restaurant.data.id}`, lang)} 
+                hoverable={true}
+                class="place-card"
+              >
+                <div class="place-image">
+                  <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
+                </div>
+                <div class="place-content">
+                  <div class="place-header">
+                    <span class="place-category">{category?.data.name || 'Restaurant'}</span>
+                    {restaurant.data.rating && (
+                      <div class="place-rating">
+                        <Icon name="star" size="sm" />
+                        <span>{restaurant.data.rating.toFixed(1)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <h3 class="place-name">{restaurant.data.name}</h3>
+                  <p class="place-description">{restaurant.data.description}</p>
+                  {restaurant.data.priceRange && (
+                    <div class="place-meta">
+                      <span class="price-range">{restaurant.data.priceRange}</span>
+                      {restaurant.data.attributes.length > 0 && (
+                        <span class="separator">•</span>
+                      )}
+                      {restaurant.data.attributes.slice(0, 2).map((attr: string) => (
+                        <span class="attribute">{attr}</span>
+                      ))}
                     </div>
                   )}
                 </div>
-                <h3 class="place-name">{restaurant.data.name}</h3>
-                <p class="place-description">{restaurant.data.description}</p>
-                {restaurant.data.priceRange && (
-                  <div class="place-meta">
-                    <span class="price-range">{restaurant.data.priceRange}</span>
-                    {restaurant.data.attributes.length > 0 && (
-                      <span class="separator">•</span>
-                    )}
-                    {restaurant.data.attributes.slice(0, 2).map((attr: string) => (
-                      <span class="attribute">{attr}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
       ) : (
         <div class="empty-state">
