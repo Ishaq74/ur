@@ -8,8 +8,11 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get category filter from URL
+// Get filters from URL
 const categoryFilter = Astro.url.searchParams.get('cat');
+const attributeFilter = Astro.url.searchParams.get('attr');
+const priceFilter = Astro.url.searchParams.get('price');
+const ratingFilter = Astro.url.searchParams.get('rating');
 
 // Get all published restaurants from new collection
 const allRestaurants = await getCollection('restaurants');
@@ -17,34 +20,148 @@ const restaurantCategories = await getCollection('restaurantCategories');
 
 // Filter restaurants
 let restaurants = allRestaurants.filter((r: any) => r.data.published);
+
+// Category filter
 if (categoryFilter) {
   restaurants = restaurants.filter((r: any) => r.data.categoryId === categoryFilter);
 }
 
+// Attribute filter
+if (attributeFilter) {
+  restaurants = restaurants.filter((r: any) => 
+    r.data.attributes && r.data.attributes.some((attr: string) => 
+      attr.toLowerCase().includes(attributeFilter.toLowerCase())
+    )
+  );
+}
+
+// Price range filter
+if (priceFilter) {
+  restaurants = restaurants.filter((r: any) => r.data.priceRange === priceFilter);
+}
+
+// Rating filter
+if (ratingFilter) {
+  const minRating = parseFloat(ratingFilter);
+  restaurants = restaurants.filter((r: any) => r.data.rating && r.data.rating >= minRating);
+}
+
 // Get category name if filtering
-let categoryName = 'Restaurants';
+let categoryName = t('common.all_restaurants');
 if (categoryFilter) {
   const category = restaurantCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
 }
+
+// Collect all unique attributes and price ranges for filter options
+const allAttributes = new Set<string>();
+const allPriceRanges = new Set<string>();
+allRestaurants.forEach((r: any) => {
+  if (r.data.attributes) {
+    r.data.attributes.forEach((attr: string) => allAttributes.add(attr));
+  }
+  if (r.data.priceRange) {
+    allPriceRanges.add(r.data.priceRange);
+  }
+});
 ---
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description="Découvrez les meilleurs restaurants d'Annecy et ses environs"
+  description={t('hero.search_placeholder')}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <h1>{categoryName}</h1>
-      <p class="subtitle">Découvrez les meilleures tables d'Annecy et ses environs</p>
+      <p class="subtitle">{t('hero.subtitle')}</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
+      <!-- Filters Section -->
+      <div class="filters-section">
+        <h2 class="filters-title">{t('filters.filter_by')}</h2>
+        <div class="filters-container">
+          <!-- Attribute Filter -->
+          <div class="filter-group">
+            <label class="filter-label">{t('filters.attributes')}</label>
+            <select 
+              class="filter-select" 
+              onchange="window.location.href = this.value"
+              id="attr-filter"
+            >
+              <option value={getLocalizedPath(`/restaurants${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
+                {t('filters.all')}
+              </option>
+              {Array.from(allAttributes).sort().map(attr => (
+                <option 
+                  value={getLocalizedPath(`/restaurants?${categoryFilter ? `cat=${categoryFilter}&` : ''}attr=${encodeURIComponent(attr)}`, lang)}
+                  selected={attributeFilter === attr}
+                >
+                  {attr}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Price Range Filter -->
+          <div class="filter-group">
+            <label class="filter-label">{t('filters.price_range')}</label>
+            <select 
+              class="filter-select" 
+              onchange="window.location.href = this.value"
+              id="price-filter"
+            >
+              <option value={getLocalizedPath(`/restaurants${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
+                {t('filters.all')}
+              </option>
+              {Array.from(allPriceRanges).sort().map(price => (
+                <option 
+                  value={getLocalizedPath(`/restaurants?${categoryFilter ? `cat=${categoryFilter}&` : ''}price=${price}`, lang)}
+                  selected={priceFilter === price}
+                >
+                  {price}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Rating Filter -->
+          <div class="filter-group">
+            <label class="filter-label">{t('filters.rating')}</label>
+            <select 
+              class="filter-select" 
+              onchange="window.location.href = this.value"
+              id="rating-filter"
+            >
+              <option value={getLocalizedPath(`/restaurants${categoryFilter ? `?cat=${categoryFilter}` : ''}`, lang)}>
+                {t('filters.all')}
+              </option>
+              {[4.5, 4.0, 3.5, 3.0].map(rating => (
+                <option 
+                  value={getLocalizedPath(`/restaurants?${categoryFilter ? `cat=${categoryFilter}&` : ''}rating=${rating}`, lang)}
+                  selected={ratingFilter === rating.toString()}
+                >
+                  {rating}+
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Clear Filters Button -->
+          {(categoryFilter || attributeFilter || priceFilter || ratingFilter) && (
+            <a href={getLocalizedPath('/restaurants', lang)} class="clear-filters-btn">
+              {t('filters.clear_filters')}
+            </a>
+          )}
+        </div>
+        <p class="results-count">{t('filters.results_count').replace('{count}', restaurants.length.toString())}</p>
+      </div>
+
       {restaurants.length > 0 ? (
         <div class="places-grid">
           {restaurants.map((restaurant: any) => {
@@ -60,7 +177,7 @@ if (categoryFilter) {
                 </div>
                 <div class="place-content">
                   <div class="place-header">
-                    <span class="place-category">{category?.data.name || 'Restaurant'}</span>
+                    <span class="place-category">{category?.data.name || t('common.restaurant')}</span>
                     {restaurant.data.rating && (
                       <div class="place-rating">
                         <Icon name="star" size="sm" />
@@ -89,7 +206,7 @@ if (categoryFilter) {
       ) : (
         <div class="empty-state">
           <Icon name="map-pin" size="lg" />
-          <p>Aucun restaurant disponible pour le moment.</p>
+          <p>{t('filters.no_results')}</p>
         </div>
       )}
     </div>
@@ -119,6 +236,89 @@ if (categoryFilter) {
 
   .content-section {
     padding: var(--spacing-12) 0;
+  }
+
+  .filters-section {
+    background-color: var(--color-surface-secondary);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .filters-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .filters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+    align-items: end;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .filter-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+
+  .filter-select {
+    padding: var(--spacing-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
+    background-color: var(--color-surface);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .filter-select:hover {
+    border-color: var(--color-primary-500);
+  }
+
+  .filter-select:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-500-rgb), 0.1);
+  }
+
+  .clear-filters-btn {
+    padding: var(--spacing-3) var(--spacing-4);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .clear-filters-btn:hover {
+    background-color: var(--color-error-50);
+    border-color: var(--color-error-500);
+    color: var(--color-error-700);
+  }
+
+  .results-count {
+    margin-top: var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-align: center;
   }
 
   .places-grid {

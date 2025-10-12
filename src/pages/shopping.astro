@@ -8,8 +8,11 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get category filter from URL
+// Get filters from URL
 const categoryFilter = Astro.url.searchParams.get('cat');
+const attributeFilter = Astro.url.searchParams.get('attr');
+const priceFilter = Astro.url.searchParams.get('price');
+const ratingFilter = Astro.url.searchParams.get('rating');
 
 // Get services from new collection first, fallback to legacy places
 const newServices = await getCollection('services');
@@ -24,6 +27,8 @@ const allServices = [
 
 // Filter services
 let shops = allServices.filter((s: any) => s.data.published);
+
+// Category filter
 if (categoryFilter) {
   shops = shops.filter((s: any) => {
     if (s.isNew) {
@@ -34,14 +39,46 @@ if (categoryFilter) {
   });
 }
 
+// Attribute filter
+if (attributeFilter) {
+  shops = shops.filter((s: any) => 
+    s.data.attributes && s.data.attributes.some((attr: string) => 
+      attr.toLowerCase().includes(attributeFilter.toLowerCase())
+    )
+  );
+}
+
+// Price range filter
+if (priceFilter) {
+  shops = shops.filter((s: any) => s.data.priceRange === priceFilter);
+}
+
+// Rating filter
+if (ratingFilter) {
+  const minRating = parseFloat(ratingFilter);
+  shops = shops.filter((s: any) => s.data.rating && s.data.rating >= minRating);
+}
+
 // Get category name if filtering
-let categoryName = 'Shopping & Services';
+let categoryName = t('common.all_services');
 if (categoryFilter) {
   const category = serviceCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
 }
+
+// Collect all unique attributes and price ranges for filter options
+const allAttributes = new Set<string>();
+const allPriceRanges = new Set<string>();
+allServices.forEach((s: any) => {
+  if (s.data.attributes) {
+    s.data.attributes.forEach((attr: string) => allAttributes.add(attr));
+  }
+  if (s.data.priceRange) {
+    allPriceRanges.add(s.data.priceRange);
+  }
+});
 ---
 
 <MainLayout 

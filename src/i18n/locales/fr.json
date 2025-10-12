@@ -18,7 +18,11 @@
     "all_listings": "Toutes les annonces",
     "propose": "Proposer un contenu",
     "login": "Connexion",
-    "signup": "Inscription"
+    "signup": "Inscription",
+    "restaurants": "Restaurants",
+    "accommodations": "Hébergements",
+    "activities": "Activités",
+    "events": "Événements"
   },
   "hero": {
     "title": "Salut Annecy",
@@ -77,5 +81,22 @@
     "ads": "Publicité",
     "partner": "Devenir partenaire",
     "copyright": "Salut Annecy. Tous droits réservés."
+  },
+  "filters": {
+    "all": "Tous",
+    "filter_by": "Filtrer par",
+    "attributes": "Attributs",
+    "price_range": "Gamme de prix",
+    "rating": "Note minimum",
+    "clear_filters": "Effacer les filtres",
+    "no_results": "Aucun résultat trouvé",
+    "results_count": "{count} résultat(s)"
+  },
+  "common": {
+    "restaurant": "Restaurant",
+    "all_restaurants": "Tous les restaurants",
+    "all_accommodations": "Tous les hébergements",
+    "all_activities": "Toutes les activités",
+    "all_services": "Tous les services"
   }
 }

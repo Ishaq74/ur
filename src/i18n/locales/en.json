@@ -18,7 +18,11 @@
     "all_listings": "All listings",
     "propose": "Suggest content",
     "login": "Login",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "restaurants": "Restaurants",
+    "accommodations": "Accommodations",
+    "activities": "Activities",
+    "events": "Events"
   },
   "hero": {
     "title": "Hello Annecy",
@@ -77,5 +81,22 @@
     "ads": "Advertising",
     "partner": "Become a partner",
     "copyright": "Salut Annecy. All rights reserved."
+  },
+  "filters": {
+    "all": "All",
+    "filter_by": "Filter by",
+    "attributes": "Attributes",
+    "price_range": "Price range",
+    "rating": "Minimum rating",
+    "clear_filters": "Clear filters",
+    "no_results": "No results found",
+    "results_count": "{count} result(s)"
+  },
+  "common": {
+    "restaurant": "Restaurant",
+    "all_restaurants": "All restaurants",
+    "all_accommodations": "All accommodations",
+    "all_activities": "All activities",
+    "all_services": "All services"
   }
 }
