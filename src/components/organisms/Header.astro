@@ -25,11 +25,55 @@ const t = useTranslations(lang);
         <ul class="nav-list">
           <li><a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a></li>
           <li><a href={getLocalizedPath('/live', lang)}>{t('header.live')}</a></li>
-          <li><a href={getLocalizedPath('/restaurants', lang)}>{t('header.eat')}</a></li>
-          <li><a href={getLocalizedPath('/hebergements', lang)}>{t('header.sleep')}</a></li>
-          <li><a href={getLocalizedPath('/activites', lang)}>{t('header.do')}</a></li>
+          
+          <!-- Restaurants Dropdown -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Restaurants">
+              {t('header.eat')}
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/restaurants', lang)}>Tous les restaurants</a>
+              <div class="dropdown-divider"></div>
+              <a href={getLocalizedPath('/restaurants', lang)}>Bars & Cafés</a>
+              <a href={getLocalizedPath('/restaurants', lang)}>Restaurants</a>
+              <a href={getLocalizedPath('/restaurants', lang)}>Épiceries & Produits locaux</a>
+            </div>
+          </li>
+
+          <!-- Hébergements Dropdown -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Hébergements">
+              {t('header.sleep')}
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/hebergements', lang)}>Tous les hébergements</a>
+              <div class="dropdown-divider"></div>
+              <a href={getLocalizedPath('/hebergements', lang)}>Hôtels</a>
+              <a href={getLocalizedPath('/hebergements', lang)}>Auberges</a>
+              <a href={getLocalizedPath('/hebergements', lang)}>Locations</a>
+              <a href={getLocalizedPath('/hebergements', lang)}>Campings</a>
+            </div>
+          </li>
+
+          <!-- Activités Dropdown -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Activités">
+              {t('header.do')}
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/activites', lang)}>Toutes les activités</a>
+              <div class="dropdown-divider"></div>
+              <a href={getLocalizedPath('/activites', lang)}>Sports</a>
+              <a href={getLocalizedPath('/activites', lang)}>Culture</a>
+              <a href={getLocalizedPath('/activites', lang)}>Loisirs</a>
+              <a href={getLocalizedPath('/sentiers', lang)}>{t('header.trails')}</a>
+            </div>
+          </li>
+
           <li><a href={getLocalizedPath('/agenda', lang)}>{t('header.agenda')}</a></li>
-          <li><a href={getLocalizedPath('/sentiers', lang)}>{t('header.trails')}</a></li>
           <li><a href={getLocalizedPath('/magazine', lang)}>{t('header.magazine')}</a></li>
         </ul>
       </nav>
@@ -127,6 +171,7 @@ const t = useTranslations(lang);
     list-style: none;
     margin: 0;
     padding: 0;
+    align-items: center;
   }
 
   .nav-list a {
@@ -137,11 +182,75 @@ const t = useTranslations(lang);
     padding: var(--spacing-2) var(--spacing-3);
     border-radius: var(--radius-base);
     transition: all var(--transition-fast);
+    display: block;
   }
 
   .nav-list a:hover {
     color: var(--color-text-primary);
     background-color: var(--color-surface-secondary);
+  }
+
+  /* Dropdown Navigation */
+  .nav-item-with-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+
+  .nav-dropdown-trigger:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-surface-secondary);
+  }
+
+  .nav-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-2));
+    left: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    min-width: 220px;
+    display: none;
+    flex-direction: column;
+    z-index: var(--z-dropdown);
+    padding: var(--spacing-2) 0;
+  }
+
+  .nav-item-with-dropdown:hover .nav-dropdown {
+    display: flex;
+  }
+
+  .nav-dropdown a {
+    padding: var(--spacing-3) var(--spacing-4);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+  }
+
+  .nav-dropdown a:hover {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background-color: var(--color-border);
+    margin: var(--spacing-2) 0;
   }
 
   .header-actions {
@@ -235,10 +344,30 @@ const t = useTranslations(lang);
       flex-direction: column;
       gap: 0;
       padding: var(--spacing-4);
+      align-items: stretch;
     }
 
     .nav-list a {
       display: block;
+      padding: var(--spacing-4);
+    }
+
+    .nav-item-with-dropdown .nav-dropdown {
+      position: static;
+      box-shadow: none;
+      border: none;
+      border-left: 2px solid var(--color-primary-600);
+      margin-left: var(--spacing-4);
+      padding-left: var(--spacing-2);
+    }
+
+    .nav-item-with-dropdown.active .nav-dropdown {
+      display: flex;
+    }
+
+    .nav-dropdown-trigger {
+      width: 100%;
+      justify-content: space-between;
       padding: var(--spacing-4);
     }
 
@@ -265,6 +394,22 @@ const t = useTranslations(lang);
 
   mobileMenuToggle?.addEventListener('click', () => {
     mainNav?.classList.toggle('active');
+  });
+
+  // Mobile dropdown toggles
+  document.addEventListener('DOMContentLoaded', () => {
+    const dropdownTriggers = document.querySelectorAll('.nav-dropdown-trigger');
+    
+    dropdownTriggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        // Only handle clicks in mobile view
+        if (window.innerWidth <= 1024) {
+          e.preventDefault();
+          const parent = trigger.closest('.nav-item-with-dropdown');
+          parent?.classList.toggle('active');
+        }
+      });
+    });
   });
 
   // Language dropdown toggle
