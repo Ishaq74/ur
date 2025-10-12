@@ -1,0 +1,20 @@
+{
+  "id": "a3",
+  "name": "Compagnie des Bateaux du Lac d'Annecy",
+  "description": "Croisières et promenades en bateau sur le lac d'Annecy, découverte des villages lacustres et déjeuners à bord",
+  "categoryId": "loisirs",
+  "address": "2 Place aux Bois, 74000 Annecy",
+  "phone": "+33 4 50 51 08 40",
+  "website": "https://www.annecy-croisieres.com",
+  "imageUrl": "/images/activities/bateaux-lac.jpg",
+  "rating": 4.6,
+  "reviewCount": 892,
+  "coordinates": {
+    "lat": 45.9014,
+    "lng": 6.1289
+  },
+  "attributes": ["Croisières", "Déjeuner à bord", "Commentaires audio", "Bar", "Accessible PMR"],
+  "hours": "Départs toutes les heures 10h-18h",
+  "priceRange": "€€",
+  "published": true
+}

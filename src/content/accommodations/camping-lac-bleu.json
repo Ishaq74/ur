@@ -1,0 +1,20 @@
+{
+  "id": "h3",
+  "name": "Camping Le Lac Bleu",
+  "description": "Camping 3 étoiles au bord du lac avec emplacements spacieux, mobil-homes modernes et accès direct à la plage",
+  "categoryId": "campings",
+  "address": "Route du Camping, 74290 Doussard",
+  "phone": "+33 4 50 44 30 18",
+  "website": "https://www.camping-lac-bleu.com",
+  "imageUrl": "/images/accommodations/camping-lac-bleu.jpg",
+  "rating": 4.5,
+  "reviewCount": 234,
+  "coordinates": {
+    "lat": 45.7756,
+    "lng": 6.2247
+  },
+  "attributes": ["Plage privée", "Piscine", "Aire de jeux", "Restaurant", "Location vélos", "Animations"],
+  "hours": "Ouvert avril-septembre",
+  "priceRange": "€",
+  "published": true
+}

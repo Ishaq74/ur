@@ -1,0 +1,20 @@
+{
+  "id": "a2",
+  "name": "Musée-Château d'Annecy",
+  "description": "Ancien château des comtes de Genève et des ducs de Genevois-Nemours, abritant collections d'art et d'histoire régionale",
+  "categoryId": "culture",
+  "address": "1 Place du Château, 74000 Annecy",
+  "phone": "+33 4 50 33 87 34",
+  "website": "https://www.musees.annecy.fr",
+  "imageUrl": "/images/activities/chateau-musee.jpg",
+  "rating": 4.4,
+  "reviewCount": 567,
+  "coordinates": {
+    "lat": 45.8989,
+    "lng": 6.1253
+  },
+  "attributes": ["Expositions", "Architecture historique", "Vue panoramique", "Boutique", "Visites guidées"],
+  "hours": "10h-18h (fermé mardi)",
+  "priceRange": "€",
+  "published": true
+}

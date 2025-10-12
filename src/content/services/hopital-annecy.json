@@ -1,0 +1,20 @@
+{
+  "id": "s1",
+  "name": "Centre Hospitalier Annecy Genevois",
+  "description": "Hôpital principal d'Annecy offrant services d'urgence 24h/24 et consultations médicales spécialisées",
+  "categoryId": "sante",
+  "address": "1 Avenue de l'Hôpital, 74374 Epagny Metz-Tessy",
+  "phone": "+33 4 50 88 33 33",
+  "website": "https://www.ch-annecygenevois.fr",
+  "imageUrl": "/images/services/hopital.jpg",
+  "rating": 4.1,
+  "reviewCount": 145,
+  "coordinates": {
+    "lat": 45.9347,
+    "lng": 6.0892
+  },
+  "attributes": ["Urgences 24h/24", "Maternité", "Chirurgie", "Consultations spécialisées", "Parking"],
+  "hours": "Urgences ouvertes 24h/24",
+  "priceRange": "",
+  "published": true
+}

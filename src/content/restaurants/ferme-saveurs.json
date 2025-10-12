@@ -1,0 +1,20 @@
+{
+  "id": "r7",
+  "name": "La Ferme des Saveurs",
+  "description": "Épicerie fine et traiteur proposant produits du terroir, fromages artisanaux et spécialités savoyardes",
+  "categoryId": "epiceries",
+  "address": "23 Rue Carnot, 74000 Annecy",
+  "phone": "+33 4 50 45 78 90",
+  "website": "https://www.ferme-saveurs.fr",
+  "imageUrl": "/images/places/ferme-saveurs.jpg",
+  "rating": 4.7,
+  "reviewCount": 198,
+  "coordinates": {
+    "lat": 45.8996,
+    "lng": 6.1258
+  },
+  "attributes": ["Produits locaux", "Fromages artisanaux", "Charcuterie", "Vins régionaux", "Paniers cadeaux"],
+  "hours": "9h-13h, 15h-19h (Mar-Sam)",
+  "priceRange": "€€€",
+  "published": true
+}

@@ -18,7 +18,11 @@
     "all_listings": "Todos los anuncios",
     "propose": "Sugerir contenido",
     "login": "Iniciar sesión",
-    "signup": "Registrarse"
+    "signup": "Registrarse",
+    "restaurants": "Restaurantes",
+    "accommodations": "Alojamientos",
+    "activities": "Actividades",
+    "events": "Eventos"
   },
   "hero": {
     "title": "Hola Annecy",
@@ -77,5 +81,26 @@
     "ads": "Publicidad",
     "partner": "Hazte socio",
     "copyright": "Salut Annecy. Todos los derechos reservados."
+  },
+  "filters": {
+    "all": "Todos",
+    "filter_by": "Filtrar por",
+    "category": "Categoría",
+    "tags": "Etiquetas",
+    "difficulty": "Dificultad",
+    "distance": "Distancia",
+    "attributes": "Atributos",
+    "price_range": "Rango de precios",
+    "rating": "Calificación mínima",
+    "clear_filters": "Borrar filtros",
+    "no_results": "No se encontraron resultados",
+    "results_count": "{count} resultado(s)"
+  },
+  "common": {
+    "restaurant": "Restaurante",
+    "all_restaurants": "Todos los restaurantes",
+    "all_accommodations": "Todos los alojamientos",
+    "all_activities": "Todas las actividades",
+    "all_services": "Todos los servicios"
   }
 }

@@ -18,7 +18,11 @@
     "all_listings": "كل الإعلانات",
     "propose": "اقترح محتوى",
     "login": "تسجيل الدخول",
-    "signup": "التسجيل"
+    "signup": "التسجيل",
+    "restaurants": "مطاعم",
+    "accommodations": "أماكن الإقامة",
+    "activities": "أنشطة",
+    "events": "أحداث"
   },
   "hero": {
     "title": "أهلاً آنسي",
@@ -77,5 +81,26 @@
     "ads": "الإعلانات",
     "partner": "كن شريكًا",
     "copyright": "سالو آنسي. جميع الحقوق محفوظة."
+  },
+  "filters": {
+    "all": "الكل",
+    "filter_by": "تصفية حسب",
+    "category": "الفئة",
+    "tags": "العلامات",
+    "difficulty": "الصعوبة",
+    "distance": "المسافة",
+    "attributes": "السمات",
+    "price_range": "نطاق السعر",
+    "rating": "الحد الأدنى للتقييم",
+    "clear_filters": "مسح الفلاتر",
+    "no_results": "لا توجد نتائج",
+    "results_count": "{count} نتيجة"
+  },
+  "common": {
+    "restaurant": "مطعم",
+    "all_restaurants": "جميع المطاعم",
+    "all_accommodations": "جميع أماكن الإقامة",
+    "all_activities": "جميع الأنشطة",
+    "all_services": "جميع الخدمات"
   }
 }

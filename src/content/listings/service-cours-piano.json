@@ -1,0 +1,11 @@
+{
+  "id": "l4",
+  "title": "Cours de piano à domicile",
+  "description": "Professeur diplômé du Conservatoire propose cours de piano tous niveaux. Solfège inclus. Tarif dégressif si plusieurs cours/semaine. Déplacement à domicile.",
+  "type": "service",
+  "price": "35€/heure",
+  "imageUrl": "/images/listings/cours-piano.jpg",
+  "authorId": "u4",
+  "date": "2025-01-25T09:00:00",
+  "published": true
+}

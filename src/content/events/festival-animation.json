@@ -1,0 +1,15 @@
+{
+  "id": "e3",
+  "name": "Festival International du Film d'Animation",
+  "title": "Festival International du Film d'Animation",
+  "description": "Festival majeur du cinéma d'animation avec projections, masterclass, expositions et rencontres avec des professionnels",
+  "imageUrl": "/images/events/festival-animation.jpg",
+  "date": "2025-06-09T09:00:00",
+  "endDate": "2025-06-14T23:00:00",
+  "location": "Bonlieu Scène Nationale, Annecy",
+  "category": "Culture et Cinéma",
+  "organizer": "CITIA",
+  "website": "https://www.annecy.org",
+  "price": "Variable (pass festival disponible)",
+  "published": true
+}

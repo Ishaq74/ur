@@ -1,0 +1,20 @@
+{
+  "id": "r5",
+  "name": "Café des Arts",
+  "description": "Café-brasserie avec terrasse sur canal, parfait pour un café, brunch ou apéritif dans le vieux Annecy",
+  "categoryId": "cafes-the",
+  "address": "4 Passage de l'Île, 74000 Annecy",
+  "phone": "+33 4 50 51 56 40",
+  "website": "https://www.cafedesarts-annecy.fr",
+  "imageUrl": "/images/places/cafe-arts.jpg",
+  "rating": 4.3,
+  "reviewCount": 289,
+  "coordinates": {
+    "lat": 45.8984,
+    "lng": 6.1265
+  },
+  "attributes": ["Terrasse canal", "Brunch dimanche", "Wi-Fi", "Vue pittoresque"],
+  "hours": "8h-23h tous les jours",
+  "priceRange": "€€",
+  "published": true
+}

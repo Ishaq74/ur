@@ -1,0 +1,20 @@
+{
+  "id": "a1",
+  "name": "École de Parapente Aerobatix",
+  "description": "École de parapente réputée offrant des vols baptême et des stages complets avec des pilotes expérimentés, vues spectaculaires sur le lac",
+  "categoryId": "sports",
+  "address": "Col de la Forclaz, 74210 Montmin",
+  "phone": "+33 4 50 60 12 50",
+  "website": "https://www.aerobatix-annecy.com",
+  "imageUrl": "/images/activities/parapente.jpg",
+  "rating": 4.9,
+  "reviewCount": 412,
+  "coordinates": {
+    "lat": 45.8144,
+    "lng": 6.2156
+  },
+  "attributes": ["Baptême de l'air", "Stages", "Photos/Vidéos", "Équipement fourni", "Vues panoramiques"],
+  "hours": "9h-18h (selon météo)",
+  "priceRange": "€€€",
+  "published": true
+}

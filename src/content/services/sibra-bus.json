@@ -1,0 +1,20 @@
+{
+  "id": "s2",
+  "name": "SIBRA - Réseau de Bus",
+  "description": "Réseau de transport en commun d'Annecy et sa région, bus urbains et lignes interurbaines",
+  "categoryId": "transport",
+  "address": "Gare Routière, 74000 Annecy",
+  "phone": "+33 4 50 10 04 04",
+  "website": "https://www.sibra.fr",
+  "imageUrl": "/images/services/sibra.jpg",
+  "rating": 3.9,
+  "reviewCount": 267,
+  "coordinates": {
+    "lat": 45.9012,
+    "lng": 6.1198
+  },
+  "attributes": ["Pass journée", "Abonnements", "Application mobile", "Lignes de nuit", "Accessible PMR"],
+  "hours": "Service 6h-21h (variable selon lignes)",
+  "priceRange": "€",
+  "published": true
+}

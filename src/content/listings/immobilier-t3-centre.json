@@ -1,0 +1,11 @@
+{
+  "id": "l2",
+  "title": "T3 avec vue lac - Centre-ville",
+  "description": "Appartement T3 de 75m² avec balcon et vue imprenable sur le lac. 3ème étage avec ascenseur, proche commerces et transports. Disponible 1er mars.",
+  "type": "immobilier",
+  "price": "1250€/mois CC",
+  "imageUrl": "/images/listings/appart-t3.jpg",
+  "authorId": "u2",
+  "date": "2025-02-01T14:00:00",
+  "published": true
+}
