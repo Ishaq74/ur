@@ -11,7 +11,7 @@ const t = useTranslations(lang);
 // Get all published places in the "restauration" category
 const allPlaces = await getCollection('places');
 const restaurants = allPlaces.filter(
-  (place) => place.data.mainCategory === 'restauration' && place.data.published
+  (place: any) => place.data.mainCategory === 'restauration' && place.data.published
 );
 ---
 
@@ -31,7 +31,7 @@ const restaurants = allPlaces.filter(
     <div class="container">
       {restaurants.length > 0 ? (
         <div class="places-grid">
-          {restaurants.map((restaurant) => (
+          {restaurants.map((restaurant: any) => (
             <Card 
               href={getLocalizedPath(`/place/${restaurant.data.id}`, lang)} 
               hoverable={true}
@@ -58,7 +58,7 @@ const restaurants = allPlaces.filter(
                     {restaurant.data.attributes.length > 0 && (
                       <span class="separator">•</span>
                     )}
-                    {restaurant.data.attributes.slice(0, 2).map((attr) => (
+                    {restaurant.data.attributes.slice(0, 2).map((attr: string) => (
                       <span class="attribute">{attr}</span>
                     ))}
                   </div>
