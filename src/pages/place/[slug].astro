@@ -7,13 +7,17 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const allPlaces = await getCollection('places');
-  return allPlaces.map((place) => ({
+  return allPlaces.map((place: any) => ({
     params: { slug: place.data.id },
     props: { place },
   }));
 }
 
-const { place } = Astro.props;
+type Props = {
+  place: any;
+};
+
+const { place }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---

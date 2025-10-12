@@ -7,13 +7,17 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const allTrails = await getCollection('trails');
-  return allTrails.map((trail) => ({
+  return allTrails.map((trail: any) => ({
     params: { slug: trail.data.id },
     props: { trail },
   }));
 }
 
-const { trail } = Astro.props;
+type Props = {
+  trail: any;
+};
+
+const { trail }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---

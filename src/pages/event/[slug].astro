@@ -7,13 +7,17 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const allEvents = await getCollection('events');
-  return allEvents.map((event) => ({
+  return allEvents.map((event: any) => ({
     params: { slug: event.data.id },
     props: { event },
   }));
 }
 
-const { event } = Astro.props;
+type Props = {
+  event: any;
+};
+
+const { event }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
