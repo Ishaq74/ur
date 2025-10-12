@@ -1,0 +1,9 @@
+{
+  "id": "nature-environnement",
+  "name": "Nature & Environnement",
+  "description": "Explorez la nature autour d'Annecy",
+  "slug": "nature-environnement",
+  "icon": "tree",
+  "order": 3,
+  "published": true
+}

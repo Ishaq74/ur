@@ -1,0 +1,9 @@
+{
+  "id": "moyen",
+  "name": "Moyen",
+  "description": "Sentiers de difficulté moyenne, bon niveau requis",
+  "slug": "moyen",
+  "icon": "hiking",
+  "order": 2,
+  "published": true
+}

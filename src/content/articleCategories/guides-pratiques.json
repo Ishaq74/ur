@@ -1,0 +1,9 @@
+{
+  "id": "guides-pratiques",
+  "name": "Guides Pratiques",
+  "description": "Conseils et informations pratiques pour votre séjour",
+  "slug": "guides-pratiques",
+  "icon": "map",
+  "order": 4,
+  "published": true
+}

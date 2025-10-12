@@ -80,6 +80,16 @@ const serviceCategoriesCollection = defineCollection({
   schema: categorySchema,
 });
 
+const articleCategoriesCollection = defineCollection({
+  type: 'data',
+  schema: categorySchema,
+});
+
+const trailCategoriesCollection = defineCollection({
+  type: 'data',
+  schema: categorySchema,
+});
+
 // Legacy places collection (deprecated, kept for backward compatibility)
 const placesCollection = defineCollection({
   type: 'data',
@@ -134,6 +144,7 @@ const trailsCollection = defineCollection({
     name: z.string(),
     excerpt: z.string(),
     description: z.string(),
+    categoryId: z.string().optional(),
     difficulty: z.enum(['facile', 'moyen', 'difficile']),
     distance: z.string(),
     duration: z.string(),
@@ -144,6 +155,7 @@ const trailsCollection = defineCollection({
       lat: z.number(),
       lng: z.number(),
     }).optional(),
+    attributes: z.array(z.string()).default([]),
     published: z.boolean().default(true),
   }),
 });
@@ -157,6 +169,7 @@ const articlesCollection = defineCollection({
     excerpt: z.string(),
     imageUrl: z.string(),
     category: z.string(),
+    categoryId: z.string().optional(),
     authorId: z.string(),
     date: z.string(),
     readTime: z.string().optional(),
@@ -191,6 +204,8 @@ export const collections = {
   'accommodationCategories': accommodationCategoriesCollection,
   'activityCategories': activityCategoriesCollection,
   'serviceCategories': serviceCategoriesCollection,
+  'articleCategories': articleCategoriesCollection,
+  'trailCategories': trailCategoriesCollection,
   
   // Legacy collections (kept for backward compatibility)
   'places': placesCollection,
