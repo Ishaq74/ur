@@ -1,0 +1,51 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  elevated?: boolean;
+  hoverable?: boolean;
+}
+
+const {
+  href,
+  class: className = '',
+  elevated = false,
+  hoverable = true,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  class={`card ${elevated ? 'card-elevated' : ''} ${hoverable && href ? 'card-hoverable' : ''} ${className}`}
+>
+  <slot />
+</Tag>
+
+<style>
+  .card {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card-elevated {
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-hoverable:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .card-hoverable:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+</style>

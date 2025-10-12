@@ -1,0 +1,285 @@
+---
+import Icon from '../atoms/Icon.astro';
+import Button from '../atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath, type Language, languages } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo -->
+      <a href={getLocalizedPath('/', lang)} class="logo" aria-label={t('header.discover')}>
+        <span class="logo-text">Salut Annecy</span>
+      </a>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" id="mobile-menu-toggle">
+        <Icon name="menu" size="md" />
+      </button>
+
+      <!-- Navigation -->
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a></li>
+          <li><a href={getLocalizedPath('/live', lang)}>{t('header.live')}</a></li>
+          <li><a href={getLocalizedPath('/restaurants', lang)}>{t('header.eat')}</a></li>
+          <li><a href={getLocalizedPath('/hebergements', lang)}>{t('header.sleep')}</a></li>
+          <li><a href={getLocalizedPath('/activites', lang)}>{t('header.do')}</a></li>
+          <li><a href={getLocalizedPath('/agenda', lang)}>{t('header.agenda')}</a></li>
+          <li><a href={getLocalizedPath('/sentiers', lang)}>{t('header.trails')}</a></li>
+          <li><a href={getLocalizedPath('/magazine', lang)}>{t('header.magazine')}</a></li>
+        </ul>
+      </nav>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button class="icon-button" aria-label="Toggle theme" onclick="window.toggleTheme()">
+          <Icon name="sun" size="md" />
+        </button>
+
+        <!-- Language Selector -->
+        <div class="language-selector">
+          <button class="icon-button" aria-label="Change language" id="lang-toggle">
+            <Icon name="globe" size="md" />
+          </button>
+          <div class="language-dropdown" id="lang-dropdown">
+            {Object.entries(languages).map(([code, { name }]) => (
+              <a
+                href={getLocalizedPath(Astro.url.pathname, code as Language)}
+                class={`language-option ${code === lang ? 'active' : ''}`}
+                hreflang={code}
+              >
+                {name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Auth Buttons -->
+        <Button href={getLocalizedPath('/connexion', lang)} variant="ghost" size="sm">
+          {t('header.login')}
+        </Button>
+        <Button href={getLocalizedPath('/inscription', lang)} variant="primary" size="sm">
+          {t('header.signup')}
+        </Button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-4) 0;
+    gap: var(--spacing-4);
+  }
+
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  .logo-text {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary-600);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    padding: var(--spacing-2);
+  }
+
+  .nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-list {
+    display: flex;
+    gap: var(--spacing-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-list a {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    transition: all var(--transition-fast);
+  }
+
+  .nav-list a:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-surface-secondary);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+  }
+
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-2);
+    border-radius: var(--radius-base);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-button:hover {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text-primary);
+  }
+
+  /* Language Selector */
+  .language-selector {
+    position: relative;
+  }
+
+  .language-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-2));
+    right: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    min-width: 180px;
+    display: none;
+    flex-direction: column;
+    z-index: var(--z-dropdown);
+  }
+
+  .language-dropdown.active {
+    display: flex;
+  }
+
+  .language-option {
+    padding: var(--spacing-3) var(--spacing-4);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+  }
+
+  .language-option:hover {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .language-option.active {
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-semibold);
+    background-color: var(--color-primary-50);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 1024px) {
+    .mobile-menu-toggle {
+      display: block;
+    }
+
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav.active {
+      display: block;
+    }
+
+    .nav-list {
+      flex-direction: column;
+      gap: 0;
+      padding: var(--spacing-4);
+    }
+
+    .nav-list a {
+      display: block;
+      padding: var(--spacing-4);
+    }
+
+    .header-actions {
+      display: none;
+    }
+
+    .header-actions.mobile-active {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .header-content {
+      padding: var(--spacing-3) 0;
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mainNav = document.getElementById('main-nav');
+
+  mobileMenuToggle?.addEventListener('click', () => {
+    mainNav?.classList.toggle('active');
+  });
+
+  // Language dropdown toggle
+  const langToggle = document.getElementById('lang-toggle');
+  const langDropdown = document.getElementById('lang-dropdown');
+
+  langToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDropdown?.classList.toggle('active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!langToggle?.contains(e.target as Node)) {
+      langDropdown?.classList.remove('active');
+    }
+  });
+</script>

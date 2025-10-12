@@ -1,0 +1,29 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/organisms/Header.astro';
+import Footer from '../components/organisms/Footer.astro';
+import { type Language } from '../i18n';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: Language;
+}
+
+const { title, description, lang } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <Header />
+  <main id="main-content" class="main-content">
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .main-content {
+    flex: 1;
+    width: 100%;
+  }
+</style>
