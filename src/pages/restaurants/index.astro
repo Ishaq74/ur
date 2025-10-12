@@ -23,7 +23,10 @@ let restaurants = allRestaurants.filter((r: any) => r.data.published);
 
 // Category filter
 if (categoryFilter) {
-  restaurants = restaurants.filter((r: any) => r.data.categoryId === categoryFilter);
+  restaurants = restaurants.filter((r: any) => {
+    const category = restaurantCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+    return category && r.data.categoryId === category.data.id;
+  });
 }
 
 // Attribute filter

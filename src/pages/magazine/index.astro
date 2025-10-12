@@ -21,7 +21,10 @@ let articles = allArticles.filter((article: any) => article.data.published);
 
 // Category filter
 if (categoryFilter) {
-  articles = articles.filter((a: any) => a.data.categoryId === categoryFilter || a.data.category === categoryFilter);
+  const category = articleCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  if (category) {
+    articles = articles.filter((a: any) => a.data.categoryId === category.data.id || a.data.category === category.data.name);
+  }
 }
 
 // Tag filter

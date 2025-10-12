@@ -21,13 +21,17 @@ let trails = allTrails.filter((trail: any) => trail.data.published);
 
 // Difficulty filter
 if (difficultyFilter) {
-  trails = trails.filter((t: any) => t.data.difficulty === difficultyFilter);
+  const category = trailCategories.find(c => c.data.slug === difficultyFilter || c.data.id === difficultyFilter);
+  if (category) {
+    trails = trails.filter((t: any) => t.data.difficulty === category.data.id || t.data.difficulty === category.data.slug);
+  }
 }
 
 // Distance filter (basic filtering by length)
 if (distanceFilter) {
   trails = trails.filter((t: any) => {
-    const distance = parseInt(t.data.distance);
+    // Extract numeric value from distance string (e.g., "3.5 km" -> 3.5)
+    const distance = parseFloat(t.data.distance);
     if (distanceFilter === 'short' && distance <= 10) return true;
     if (distanceFilter === 'medium' && distance > 10 && distance <= 25) return true;
     if (distanceFilter === 'long' && distance > 25) return true;
