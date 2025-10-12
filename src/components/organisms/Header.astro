@@ -23,58 +23,256 @@ const t = useTranslations(lang);
       <!-- Navigation -->
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <ul class="nav-list">
-          <li><a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a></li>
-          <li><a href={getLocalizedPath('/live', lang)}>{t('header.live')}</a></li>
-          
-          <!-- Restaurants Dropdown -->
-          <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Restaurants">
-              {t('header.eat')}
+          <!-- Explorer -->
+          <li class="nav-item-with-dropdown mega-menu">
+            <button class="nav-dropdown-trigger" aria-label="Menu Explorer">
+              Explorer
               <Icon name="chevron-down" size="sm" />
             </button>
-            <div class="nav-dropdown">
-              <a href={getLocalizedPath('/restaurants', lang)}>Tous les restaurants</a>
-              <div class="dropdown-divider"></div>
-              <a href={getLocalizedPath('/restaurants', lang)}>Bars & Cafés</a>
-              <a href={getLocalizedPath('/restaurants', lang)}>Restaurants</a>
-              <a href={getLocalizedPath('/restaurants', lang)}>Épiceries & Produits locaux</a>
+            <div class="nav-dropdown mega-dropdown">
+              <div class="mega-columns">
+                <!-- Restaurants Column -->
+                <div class="mega-column">
+                  <div class="mega-section">
+                    <h3 class="mega-title">Restaurants</h3>
+                    <div class="mega-group">
+                      <h4>Bars & Cafés</h4>
+                      <a href={getLocalizedPath('/restaurants?cat=bars-pubs', lang)}>Bars-Pubs</a>
+                      <a href={getLocalizedPath('/restaurants?cat=cafes-the', lang)}>Cafés-thé</a>
+                      <a href={getLocalizedPath('/restaurants?cat=salons-cafe', lang)}>Salons de café</a>
+                      <a href={getLocalizedPath('/restaurants?cat=brasseries', lang)}>Brasseries</a>
+                      <a href={getLocalizedPath('/restaurants?cat=cocktail-bars', lang)}>Cocktail Bars</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Restaurants</h4>
+                      <a href={getLocalizedPath('/restaurants?cat=locale', lang)}>Cuisine locale</a>
+                      <a href={getLocalizedPath('/restaurants?cat=internationale', lang)}>Cuisine internationale</a>
+                      <a href={getLocalizedPath('/restaurants?cat=bistronomie', lang)}>Bistronomie</a>
+                      <a href={getLocalizedPath('/restaurants?cat=etoilee', lang)}>Gastronomie étoilée</a>
+                      <a href={getLocalizedPath('/restaurants?cat=street-food', lang)}>Street Food</a>
+                      <a href={getLocalizedPath('/restaurants?cat=vegan-bio', lang)}>Vegan / Bio</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Épiceries & Produits locaux</h4>
+                      <a href={getLocalizedPath('/restaurants?cat=fromageries', lang)}>Fromageries</a>
+                      <a href={getLocalizedPath('/restaurants?cat=boulangeries', lang)}>Boulangeries</a>
+                      <a href={getLocalizedPath('/restaurants?cat=charcuteries', lang)}>Charcuteries</a>
+                      <a href={getLocalizedPath('/restaurants?cat=epiceries-fines', lang)}>Épiceries fines</a>
+                      <a href={getLocalizedPath('/restaurants?cat=marches', lang)}>Marchés</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Hébergements Column -->
+                <div class="mega-column">
+                  <div class="mega-section">
+                    <h3 class="mega-title">Hébergements</h3>
+                    <div class="mega-group">
+                      <h4>Hôtels</h4>
+                      <a href={getLocalizedPath('/hebergements?cat=luxe', lang)}>Luxe</a>
+                      <a href={getLocalizedPath('/hebergements?cat=4-etoiles', lang)}>4 étoiles</a>
+                      <a href={getLocalizedPath('/hebergements?cat=3-etoiles', lang)}>3 étoiles</a>
+                      <a href={getLocalizedPath('/hebergements?cat=boutique', lang)}>Boutique hôtels</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Auberges</h4>
+                      <a href={getLocalizedPath('/hebergements?cat=traditionnelles', lang)}>Traditionnelles</a>
+                      <a href={getLocalizedPath('/hebergements?cat=familiales', lang)}>Familiales</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Locations</h4>
+                      <a href={getLocalizedPath('/hebergements?cat=appartements', lang)}>Appartements</a>
+                      <a href={getLocalizedPath('/hebergements?cat=maisons', lang)}>Maisons</a>
+                      <a href={getLocalizedPath('/hebergements?cat=chalets', lang)}>Chalets</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Campings</h4>
+                      <a href={getLocalizedPath('/hebergements?cat=etoiles', lang)}>Étoilés</a>
+                      <a href={getLocalizedPath('/hebergements?cat=nature-insolite', lang)}>Nature / Insolite</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activités Column -->
+                <div class="mega-column">
+                  <div class="mega-section">
+                    <h3 class="mega-title">Activités</h3>
+                    <div class="mega-group">
+                      <h4>Sports</h4>
+                      <a href={getLocalizedPath('/activites?cat=randonnee-montagne', lang)}>Randonnée - Montagne</a>
+                      <a href={getLocalizedPath('/activites?cat=randonnee-forets', lang)}>Randonnée - Forêts</a>
+                      <a href={getLocalizedPath('/activites?cat=randonnee-riviere', lang)}>Randonnée - Rivière</a>
+                      <a href={getLocalizedPath('/activites?cat=cyclisme', lang)}>Cyclisme</a>
+                      <a href={getLocalizedPath('/activites?cat=natation', lang)}>Natation</a>
+                      <a href={getLocalizedPath('/activites?cat=sports-extremes', lang)}>Sports extrêmes</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Culture</h4>
+                      <a href={getLocalizedPath('/activites?cat=musees', lang)}>Musées</a>
+                      <a href={getLocalizedPath('/activites?cat=galeries', lang)}>Galeries</a>
+                      <a href={getLocalizedPath('/activites?cat=monuments', lang)}>Monuments</a>
+                      <a href={getLocalizedPath('/activites?cat=patrimoine', lang)}>Patrimoine</a>
+                    </div>
+                    <div class="mega-group">
+                      <h4>Loisirs</h4>
+                      <a href={getLocalizedPath('/activites?cat=parcs-jardins', lang)}>Parcs & Jardins</a>
+                      <a href={getLocalizedPath('/activites?cat=centres-loisirs', lang)}>Centres de loisirs</a>
+                      <a href={getLocalizedPath('/activites?cat=cinemas-theatre', lang)}>Cinémas / Théâtre</a>
+                      <a href={getLocalizedPath('/activites?cat=evenements-speciaux', lang)}>Événements spéciaux</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </li>
 
-          <!-- Hébergements Dropdown -->
+          <!-- Services -->
           <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Hébergements">
-              {t('header.sleep')}
+            <button class="nav-dropdown-trigger" aria-label="Menu Services">
+              Services
               <Icon name="chevron-down" size="sm" />
             </button>
             <div class="nav-dropdown">
-              <a href={getLocalizedPath('/hebergements', lang)}>Tous les hébergements</a>
-              <div class="dropdown-divider"></div>
-              <a href={getLocalizedPath('/hebergements', lang)}>Hôtels</a>
-              <a href={getLocalizedPath('/hebergements', lang)}>Auberges</a>
-              <a href={getLocalizedPath('/hebergements', lang)}>Locations</a>
-              <a href={getLocalizedPath('/hebergements', lang)}>Campings</a>
+              <div class="dropdown-section">
+                <h4>Santé</h4>
+                <a href={getLocalizedPath('/services?cat=medecins', lang)}>Médecins</a>
+                <a href={getLocalizedPath('/services?cat=pharmacies', lang)}>Pharmacies</a>
+                <a href={getLocalizedPath('/services?cat=hopitaux', lang)}>Hôpitaux</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Transport</h4>
+                <a href={getLocalizedPath('/services?cat=taxi-vtc', lang)}>Taxi / VTC</a>
+                <a href={getLocalizedPath('/services?cat=bus-metro', lang)}>Bus / Métro</a>
+                <a href={getLocalizedPath('/services?cat=locations-vehicules', lang)}>Locations de véhicules</a>
+                <a href={getLocalizedPath('/services?cat=transports-alternatifs', lang)}>Transports alternatifs</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Maintenance</h4>
+                <a href={getLocalizedPath('/services?cat=plomberie', lang)}>Plomberie</a>
+                <a href={getLocalizedPath('/services?cat=electricite', lang)}>Électricité</a>
+                <a href={getLocalizedPath('/services?cat=informatique', lang)}>Informatique / IT</a>
+                <a href={getLocalizedPath('/services?cat=reparations', lang)}>Réparations générales</a>
+              </div>
             </div>
           </li>
 
-          <!-- Activités Dropdown -->
+          <!-- Produits -->
           <li class="nav-item-with-dropdown">
-            <button class="nav-dropdown-trigger" aria-label="Menu Activités">
-              {t('header.do')}
+            <button class="nav-dropdown-trigger" aria-label="Menu Produits">
+              Produits
               <Icon name="chevron-down" size="sm" />
             </button>
             <div class="nav-dropdown">
-              <a href={getLocalizedPath('/activites', lang)}>Toutes les activités</a>
-              <div class="dropdown-divider"></div>
-              <a href={getLocalizedPath('/activites', lang)}>Sports</a>
-              <a href={getLocalizedPath('/activites', lang)}>Culture</a>
-              <a href={getLocalizedPath('/activites', lang)}>Loisirs</a>
-              <a href={getLocalizedPath('/sentiers', lang)}>{t('header.trails')}</a>
+              <div class="dropdown-section">
+                <h4>Artisanat</h4>
+                <a href={getLocalizedPath('/shopping?cat=bijoux', lang)}>Bijoux</a>
+                <a href={getLocalizedPath('/shopping?cat=ceramique', lang)}>Céramique</a>
+                <a href={getLocalizedPath('/shopping?cat=textile', lang)}>Textile</a>
+                <a href={getLocalizedPath('/shopping?cat=decoration', lang)}>Décoration</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Alimentation</h4>
+                <a href={getLocalizedPath('/shopping?cat=produits-locaux', lang)}>Produits locaux</a>
+                <a href={getLocalizedPath('/shopping?cat=boissons', lang)}>Boissons</a>
+                <a href={getLocalizedPath('/shopping?cat=epicerie-fine', lang)}>Épicerie fine</a>
+                <a href={getLocalizedPath('/shopping?cat=vins-spiritueux', lang)}>Vins & Spiritueux</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Souvenirs</h4>
+                <a href={getLocalizedPath('/shopping?cat=cartes-postales', lang)}>Cartes postales</a>
+                <a href={getLocalizedPath('/shopping?cat=objets-typiques', lang)}>Objets typiques</a>
+                <a href={getLocalizedPath('/shopping?cat=personnalises', lang)}>Produits personnalisés</a>
+              </div>
             </div>
           </li>
 
-          <li><a href={getLocalizedPath('/agenda', lang)}>{t('header.agenda')}</a></li>
-          <li><a href={getLocalizedPath('/magazine', lang)}>{t('header.magazine')}</a></li>
+          <!-- Événements -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Événements">
+              Événements
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <div class="dropdown-section">
+                <h4>Concerts</h4>
+                <a href={getLocalizedPath('/agenda?cat=musique-classique', lang)}>Musique classique</a>
+                <a href={getLocalizedPath('/agenda?cat=rock-pop', lang)}>Rock / Pop</a>
+                <a href={getLocalizedPath('/agenda?cat=jazz', lang)}>Jazz</a>
+                <a href={getLocalizedPath('/agenda?cat=festivals-locaux', lang)}>Festivals locaux</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Festivals</h4>
+                <a href={getLocalizedPath('/agenda?cat=gastronomie', lang)}>Gastronomie</a>
+                <a href={getLocalizedPath('/agenda?cat=culture', lang)}>Culture</a>
+                <a href={getLocalizedPath('/agenda?cat=sports', lang)}>Sports</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Conférences</h4>
+                <a href={getLocalizedPath('/agenda?cat=tech-innovation', lang)}>Tech / Innovation</a>
+                <a href={getLocalizedPath('/agenda?cat=education', lang)}>Éducation</a>
+                <a href={getLocalizedPath('/agenda?cat=ecologie', lang)}>Écologie / Environnement</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Petites annonces -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Petites annonces">
+              Petites annonces
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <div class="dropdown-section">
+                <h4>Immobilier</h4>
+                <a href={getLocalizedPath('/annonces?cat=appartements', lang)}>Appartements</a>
+                <a href={getLocalizedPath('/annonces?cat=maisons', lang)}>Maisons</a>
+                <a href={getLocalizedPath('/annonces?cat=terrains', lang)}>Terrains</a>
+                <a href={getLocalizedPath('/annonces?cat=commerces', lang)}>Commerces</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Emploi</h4>
+                <a href={getLocalizedPath('/annonces?cat=cdi', lang)}>CDI</a>
+                <a href={getLocalizedPath('/annonces?cat=cdd', lang)}>CDD</a>
+                <a href={getLocalizedPath('/annonces?cat=freelance', lang)}>Freelance</a>
+                <a href={getLocalizedPath('/annonces?cat=stages', lang)}>Stages</a>
+              </div>
+              <div class="dropdown-section">
+                <h4>Véhicules</h4>
+                <a href={getLocalizedPath('/annonces?cat=voitures', lang)}>Voitures</a>
+                <a href={getLocalizedPath('/annonces?cat=motos', lang)}>Motos</a>
+                <a href={getLocalizedPath('/annonces?cat=utilitaires', lang)}>Utilitaires</a>
+                <a href={getLocalizedPath('/annonces?cat=velo-trottinette', lang)}>Vélo / Trottinette</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Communauté -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Communauté">
+              Communauté
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/live', lang)}>Live</a>
+              <a href={getLocalizedPath('/forums', lang)}>Forums</a>
+              <a href={getLocalizedPath('/groupes', lang)}>Groupes</a>
+              <a href={getLocalizedPath('/membres', lang)}>Membres</a>
+            </div>
+          </li>
+
+          <!-- Magazine -->
+          <li class="nav-item-with-dropdown">
+            <button class="nav-dropdown-trigger" aria-label="Menu Magazine">
+              Magazine
+              <Icon name="chevron-down" size="sm" />
+            </button>
+            <div class="nav-dropdown">
+              <a href={getLocalizedPath('/magazine?cat=actualites', lang)}>Actualités</a>
+              <a href={getLocalizedPath('/magazine?cat=interviews', lang)}>Interviews</a>
+              <a href={getLocalizedPath('/magazine?cat=dossiers', lang)}>Dossiers</a>
+              <a href={getLocalizedPath('/magazine?cat=recommandations', lang)}>Recommandations</a>
+            </div>
+          </li>
         </ul>
       </nav>
 
@@ -103,13 +301,33 @@ const t = useTranslations(lang);
           </div>
         </div>
 
-        <!-- Auth Buttons -->
-        <Button href={getLocalizedPath('/connexion', lang)} variant="ghost" size="sm">
-          {t('header.login')}
-        </Button>
-        <Button href={getLocalizedPath('/inscription', lang)} variant="primary" size="sm">
-          {t('header.signup')}
-        </Button>
+        <!-- User Menu (when logged in) -->
+        <div class="user-menu" id="user-menu" style="display: none;">
+          <button class="user-menu-trigger" id="user-menu-toggle" aria-label="Menu utilisateur">
+            <Icon name="user" size="md" />
+            <span class="user-name">Mon compte</span>
+            <Icon name="chevron-down" size="sm" />
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <a href={getLocalizedPath('/profil', lang)}>Mon profil</a>
+            <a href={getLocalizedPath('/mes-annonces', lang)}>Mes annonces</a>
+            <a href={getLocalizedPath('/mes-favoris', lang)}>Mes favoris</a>
+            <a href={getLocalizedPath('/mes-messages', lang)}>Messages</a>
+            <div class="dropdown-divider"></div>
+            <a href={getLocalizedPath('/parametres', lang)}>Paramètres</a>
+            <a href={getLocalizedPath('/deconnexion', lang)} class="logout-link">Déconnexion</a>
+          </div>
+        </div>
+
+        <!-- Auth Buttons (when not logged in) -->
+        <div class="auth-buttons" id="auth-buttons">
+          <Button href={getLocalizedPath('/connexion', lang)} variant="ghost" size="sm">
+            {t('header.login')}
+          </Button>
+          <Button href={getLocalizedPath('/inscription', lang)} variant="primary" size="sm">
+            {t('header.signup')}
+          </Button>
+        </div>
       </div>
     </div>
   </div>
@@ -223,11 +441,11 @@ const t = useTranslations(lang);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
-    min-width: 220px;
+    min-width: 240px;
     display: none;
     flex-direction: column;
     z-index: var(--z-dropdown);
-    padding: var(--spacing-2) 0;
+    padding: var(--spacing-3) 0;
   }
 
   .nav-item-with-dropdown:hover .nav-dropdown {
@@ -235,7 +453,7 @@ const t = useTranslations(lang);
   }
 
   .nav-dropdown a {
-    padding: var(--spacing-3) var(--spacing-4);
+    padding: var(--spacing-2) var(--spacing-4);
     color: var(--color-text-secondary);
     text-decoration: none;
     transition: all var(--transition-fast);
@@ -247,10 +465,86 @@ const t = useTranslations(lang);
     color: var(--color-text-primary);
   }
 
-  .dropdown-divider {
-    height: 1px;
-    background-color: var(--color-border);
-    margin: var(--spacing-2) 0;
+  .dropdown-section {
+    padding: var(--spacing-2) 0;
+  }
+
+  .dropdown-section:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .dropdown-section h4 {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em;
+  }
+
+  /* Mega Menu */
+  .mega-menu .nav-dropdown {
+    min-width: 800px;
+    max-width: 900px;
+  }
+
+  .mega-dropdown {
+    padding: var(--spacing-4);
+  }
+
+  .mega-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-6);
+  }
+
+  .mega-column {
+    min-width: 0;
+  }
+
+  .mega-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .mega-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-2);
+    padding-bottom: var(--spacing-2);
+    border-bottom: 2px solid var(--color-primary-600);
+  }
+
+  .mega-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mega-group h4 {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .mega-group a {
+    padding: var(--spacing-1) var(--spacing-2);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .mega-group a:hover {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text-primary);
+    padding-left: var(--spacing-3);
   }
 
   .header-actions {
@@ -319,6 +613,85 @@ const t = useTranslations(lang);
     background-color: var(--color-primary-50);
   }
 
+  /* User Menu */
+  .user-menu {
+    position: relative;
+  }
+
+  .user-menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .user-menu-trigger:hover {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .user-name {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .user-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-2));
+    right: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    display: none;
+    flex-direction: column;
+    z-index: var(--z-dropdown);
+    padding: var(--spacing-2) 0;
+  }
+
+  .user-dropdown.active {
+    display: flex;
+  }
+
+  .user-dropdown a {
+    padding: var(--spacing-3) var(--spacing-4);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+  }
+
+  .user-dropdown a:hover {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .user-dropdown .logout-link {
+    color: var(--color-error-600);
+  }
+
+  .user-dropdown .logout-link:hover {
+    background-color: var(--color-error-50);
+    color: var(--color-error-700);
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background-color: var(--color-border);
+    margin: var(--spacing-2) 0;
+  }
+
   /* Mobile Responsive */
   @media (max-width: 1024px) {
     .mobile-menu-toggle {
@@ -334,6 +707,8 @@ const t = useTranslations(lang);
       background-color: var(--color-surface);
       border-bottom: 1px solid var(--color-border);
       box-shadow: var(--shadow-md);
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .nav.active {
@@ -349,7 +724,7 @@ const t = useTranslations(lang);
 
     .nav-list a {
       display: block;
-      padding: var(--spacing-4);
+      padding: var(--spacing-3) var(--spacing-4);
     }
 
     .nav-item-with-dropdown .nav-dropdown {
@@ -359,6 +734,8 @@ const t = useTranslations(lang);
       border-left: 2px solid var(--color-primary-600);
       margin-left: var(--spacing-4);
       padding-left: var(--spacing-2);
+      min-width: auto;
+      max-width: none;
     }
 
     .nav-item-with-dropdown.active .nav-dropdown {
@@ -368,7 +745,26 @@ const t = useTranslations(lang);
     .nav-dropdown-trigger {
       width: 100%;
       justify-content: space-between;
-      padding: var(--spacing-4);
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+
+    /* Mega menu mobile adjustments */
+    .mega-dropdown {
+      padding: var(--spacing-2);
+    }
+
+    .mega-columns {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-3);
+    }
+
+    .mega-title {
+      font-size: var(--font-size-sm);
+    }
+
+    .dropdown-section h4,
+    .mega-group h4 {
+      font-size: var(--font-size-xs);
     }
 
     .header-actions {
@@ -383,6 +779,10 @@ const t = useTranslations(lang);
   @media (max-width: 640px) {
     .header-content {
       padding: var(--spacing-3) 0;
+    }
+
+    .user-name {
+      display: none;
     }
   }
 </style>
@@ -421,10 +821,34 @@ const t = useTranslations(lang);
     langDropdown?.classList.toggle('active');
   });
 
-  // Close dropdown when clicking outside
+  // User menu dropdown toggle
+  const userMenuToggle = document.getElementById('user-menu-toggle');
+  const userDropdown = document.getElementById('user-dropdown');
+
+  userMenuToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown?.classList.toggle('active');
+  });
+
+  // Close dropdowns when clicking outside
   document.addEventListener('click', (e) => {
-    if (!langToggle?.contains(e.target as Node)) {
+    const target = e.target as Node;
+    
+    if (!langToggle?.contains(target)) {
       langDropdown?.classList.remove('active');
     }
+    
+    if (!userMenuToggle?.contains(target)) {
+      userDropdown?.classList.remove('active');
+    }
   });
+
+  // Simulate user authentication state (for demo purposes)
+  // In production, this would be determined by actual auth state
+  const isLoggedIn = false; // Change to true to see user menu
+  
+  if (isLoggedIn) {
+    document.getElementById('user-menu')?.style.setProperty('display', 'block');
+    document.getElementById('auth-buttons')?.style.setProperty('display', 'none');
+  }
 </script>
