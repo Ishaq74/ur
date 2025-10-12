@@ -1,0 +1,21 @@
+{
+  "id": "r1",
+  "name": "Le Bivouac",
+  "description": "Restaurant de montagne authentique avec une vue imprenable sur le lac d'Annecy",
+  "mainCategory": "restauration",
+  "category": "Cuisine Savoyarde",
+  "address": "15 Avenue du Mont-Blanc, Annecy",
+  "phone": "+33 4 50 45 00 33",
+  "website": "https://lebivouac-annecy.fr",
+  "imageUrl": "/images/places/bivouac.jpg",
+  "rating": 4.5,
+  "reviewCount": 142,
+  "coordinates": {
+    "lat": 45.8992,
+    "lng": 6.1294
+  },
+  "attributes": ["Terrasse", "Vue panoramique", "Spécialités locales", "Parking"],
+  "hours": "12h-14h30, 19h-22h30",
+  "priceRange": "€€€",
+  "published": true
+}

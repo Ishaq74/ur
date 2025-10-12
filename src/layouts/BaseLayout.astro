@@ -1,0 +1,98 @@
+---
+import { languages, getLangFromUrl, type Language } from '../i18n';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: Language;
+}
+
+const { title, description = 'Votre guide pour vivre le meilleur de la région.', lang } = Astro.props;
+
+const currentLang = lang || getLangFromUrl(Astro.url);
+const langDir = languages[currentLang]?.dir || 'ltr';
+---
+
+<!DOCTYPE html>
+<html lang={currentLang} dir={langDir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <link rel="canonical" href={Astro.url.href} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Fonts & Styles -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    
+    <!-- Theme Script (must be inline to prevent flash) -->
+    <script is:inline>
+      // Initialize theme from localStorage or system preference
+      const getTheme = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      };
+      
+      const theme = getTheme();
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-to-main">
+      {currentLang === 'fr' ? 'Aller au contenu principal' : 'Skip to main content'}
+    </a>
+    
+    <slot />
+    
+    <!-- Theme Toggle Script -->
+    <script>
+      // Theme toggle functionality
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const themes = ['light', 'dark', 'contrast'];
+        const currentIndex = themes.indexOf(currentTheme || 'light');
+        const nextTheme = themes[(currentIndex + 1) % themes.length];
+        
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
+        
+        // Dispatch event for components that need to react
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: nextTheme } }));
+      }
+      
+      // Make function globally available
+      (window as any).toggleTheme = toggleTheme;
+    </script>
+  </body>
+</html>
+
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>

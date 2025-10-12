@@ -1,0 +1,17 @@
+{
+  "id": "t1",
+  "name": "Tour du Lac d'Annecy",
+  "excerpt": "Une magnifique balade autour du lac d'Annecy, accessible à tous",
+  "description": "Le tour du lac d'Annecy est une randonnée emblématique de la région. Ce parcours plat et bien aménagé offre des vues spectaculaires sur le lac et les montagnes environnantes. Idéal pour une sortie en famille ou pour les cyclistes.",
+  "difficulty": "facile",
+  "distance": "38 km",
+  "duration": "8-10h à pied, 3-4h à vélo",
+  "elevation": "+200m",
+  "imageUrl": "/images/trails/tour-du-lac.jpg",
+  "startPoint": "Annecy - Esplanade du Paquier",
+  "coordinates": {
+    "lat": 45.8992,
+    "lng": 6.1294
+  },
+  "published": true
+}

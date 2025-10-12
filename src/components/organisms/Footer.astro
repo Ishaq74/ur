@@ -1,0 +1,155 @@
+---
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <!-- Brand Section -->
+      <div class="footer-section">
+        <h3 class="footer-brand">Salut Annecy</h3>
+        <p class="footer-subtitle">{t('footer.subtitle')}</p>
+      </div>
+
+      <!-- About Section -->
+      <div class="footer-section">
+        <h4 class="footer-title">{t('footer.about')}</h4>
+        <ul class="footer-links">
+          <li><a href={getLocalizedPath('/a-propos', lang)}>{t('footer.about_us')}</a></li>
+          <li><a href={getLocalizedPath('/presse', lang)}>{t('footer.press')}</a></li>
+          <li><a href={getLocalizedPath('/contact', lang)}>{t('footer.contact')}</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal Section -->
+      <div class="footer-section">
+        <h4 class="footer-title">{t('footer.legal')}</h4>
+        <ul class="footer-links">
+          <li><a href={getLocalizedPath('/cgu', lang)}>{t('footer.cgu')}</a></li>
+          <li><a href={getLocalizedPath('/cgv', lang)}>{t('footer.cgv')}</a></li>
+          <li><a href={getLocalizedPath('/confidentialite', lang)}>{t('footer.privacy')}</a></li>
+          <li><a href={getLocalizedPath('/mentions-legales', lang)}>{t('footer.legal_mentions')}</a></li>
+        </ul>
+      </div>
+
+      <!-- Support Section -->
+      <div class="footer-section">
+        <h4 class="footer-title">{t('footer.support')}</h4>
+        <ul class="footer-links">
+          <li><a href={getLocalizedPath('/faq', lang)}>{t('footer.faq')}</a></li>
+          <li><a href={getLocalizedPath('/signaler', lang)}>{t('footer.report')}</a></li>
+          <li><a href={getLocalizedPath('/cookies', lang)}>{t('footer.cookies')}</a></li>
+        </ul>
+      </div>
+
+      <!-- Pro Section -->
+      <div class="footer-section">
+        <h4 class="footer-title">{t('footer.pro')}</h4>
+        <ul class="footer-links">
+          <li><a href={getLocalizedPath('/espace-pro', lang)}>{t('footer.pro_space')}</a></li>
+          <li><a href={getLocalizedPath('/offres', lang)}>{t('footer.offers')}</a></li>
+          <li><a href={getLocalizedPath('/publicite', lang)}>{t('footer.ads')}</a></li>
+          <li><a href={getLocalizedPath('/partenaire', lang)}>{t('footer.partner')}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+      <p class="copyright">© {currentYear} {t('footer.copyright')}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-12) 0 var(--spacing-6);
+    margin-top: auto;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .footer-section:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer-brand {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary-600);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .footer-subtitle {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: 0;
+  }
+
+  .footer-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links li {
+    margin-bottom: var(--spacing-2);
+  }
+
+  .footer-links a {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-text-primary);
+  }
+
+  .footer-bottom {
+    padding-top: var(--spacing-6);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+  }
+
+  .copyright {
+    color: var(--color-text-tertiary);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .footer-content {
+      grid-template-columns: 2fr repeat(4, 1fr);
+    }
+
+    .footer-section:first-child {
+      grid-column: 1 / 2;
+    }
+  }
+</style>

@@ -1,0 +1,14 @@
+{
+  "id": "e1",
+  "title": "Fête du Lac d'Annecy",
+  "description": "Le plus grand spectacle pyrotechnique d'Europe au bord du lac d'Annecy",
+  "imageUrl": "/images/events/fete-du-lac.jpg",
+  "date": "2025-08-02T21:30:00",
+  "endDate": "2025-08-02T23:00:00",
+  "location": "Lac d'Annecy",
+  "category": "Festival",
+  "organizer": "Ville d'Annecy",
+  "website": "https://www.lac-annecy.com",
+  "price": "Gratuit",
+  "published": true
+}

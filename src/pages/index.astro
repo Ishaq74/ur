@@ -1,0 +1,367 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Button from '../components/atoms/Button.astro';
+import Icon from '../components/atoms/Icon.astro';
+import Card from '../components/molecules/Card.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout title={`${t('hero.title')} - ${t('hero.subtitle')}`} description={t('hero.subtitle')} lang={lang}>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">{t('hero.title')}</h1>
+        <p class="hero-subtitle">{t('hero.subtitle')}</p>
+        
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <Icon name="search" size="md" class="search-icon" />
+          <input
+            type="search"
+            class="search-input"
+            placeholder={t('hero.search_placeholder')}
+            aria-label={t('hero.search_placeholder')}
+          />
+          <Button type="submit" variant="primary" size="md">
+            {t('hero.search_placeholder').split(',')[0]}
+          </Button>
+        </div>
+
+        <!-- Search Suggestions -->
+        <div class="search-suggestions">
+          <span class="suggestions-label">{t('hero.suggestions')}</span>
+          <a href={getLocalizedPath('/restaurants', lang)} class="suggestion-tag">
+            {t('hero.suggestion1')}
+          </a>
+          <a href={getLocalizedPath('/sentiers?difficulty=facile', lang)} class="suggestion-tag">
+            {t('hero.suggestion2')}
+          </a>
+          <a href={getLocalizedPath('/agenda', lang)} class="suggestion-tag">
+            {t('hero.suggestion3')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Content -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">{t('featured.title')}</h2>
+        <p class="section-subtitle">{t('featured.subtitle')}</p>
+      </div>
+      
+      <div class="featured-grid">
+        <!-- Placeholder cards - will be populated from content collections -->
+        <Card href={getLocalizedPath('/place/1', lang)} hoverable={true}>
+          <div class="card-image-placeholder">
+            <Icon name="map-pin" size="lg" />
+          </div>
+          <h3 class="card-title">Featured Place 1</h3>
+          <p class="card-description">Description of the featured place...</p>
+        </Card>
+
+        <Card href={getLocalizedPath('/place/2', lang)} hoverable={true}>
+          <div class="card-image-placeholder">
+            <Icon name="map-pin" size="lg" />
+          </div>
+          <h3 class="card-title">Featured Place 2</h3>
+          <p class="card-description">Description of the featured place...</p>
+        </Card>
+
+        <Card href={getLocalizedPath('/event/1', lang)} hoverable={true}>
+          <div class="card-image-placeholder">
+            <Icon name="calendar" size="lg" />
+          </div>
+          <h3 class="card-title">Featured Event</h3>
+          <p class="card-description">Description of the featured event...</p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">{t('categories.title')}</h2>
+        <p class="section-subtitle">{t('categories.subtitle')}</p>
+      </div>
+
+      <div class="categories-grid">
+        <Card href={getLocalizedPath('/restaurants', lang)} hoverable={true} class="category-card">
+          <Icon name="map-pin" size="lg" class="category-icon" />
+          <h3 class="category-title">{t('categories.cat1')}</h3>
+        </Card>
+
+        <Card href={getLocalizedPath('/hebergements', lang)} hoverable={true} class="category-card">
+          <Icon name="home" size="lg" class="category-icon" />
+          <h3 class="category-title">{t('categories.cat2')}</h3>
+        </Card>
+
+        <Card href={getLocalizedPath('/activites', lang)} hoverable={true} class="category-card">
+          <Icon name="hiking" size="lg" class="category-icon" />
+          <h3 class="category-title">{t('categories.cat3')}</h3>
+        </Card>
+
+        <Card href={getLocalizedPath('/shopping', lang)} hoverable={true} class="category-card">
+          <Icon name="briefcase" size="lg" class="category-icon" />
+          <h3 class="category-title">{t('categories.cat4')}</h3>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Magazine Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">{t('magazine.title')}</h2>
+        <p class="section-subtitle">{t('magazine.subtitle')}</p>
+      </div>
+      
+      <div class="magazine-grid">
+        <!-- Placeholder for magazine articles -->
+        <Card href={getLocalizedPath('/magazine/article-1', lang)} hoverable={true}>
+          <div class="card-image-placeholder">
+            <Icon name="star" size="lg" />
+          </div>
+          <h3 class="card-title">Article Title</h3>
+          <p class="card-description">Article excerpt goes here...</p>
+        </Card>
+
+        <Card href={getLocalizedPath('/magazine/article-2', lang)} hoverable={true}>
+          <div class="card-image-placeholder">
+            <Icon name="star" size="lg" />
+          </div>
+          <h3 class="card-title">Article Title</h3>
+          <p class="card-description">Article excerpt goes here...</p>
+        </Card>
+      </div>
+
+      <div class="section-footer">
+        <Button href={getLocalizedPath('/magazine', lang)} variant="ghost" size="lg">
+          {t('magazine.read_all')}
+        </Button>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+    padding: var(--spacing-16) 0 var(--spacing-12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--spacing-4);
+    color: white;
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-8);
+    opacity: 0.95;
+    color: white;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    background-color: white;
+    padding: var(--spacing-3);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .search-icon {
+    color: var(--color-text-secondary);
+    margin-left: var(--spacing-2);
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: var(--spacing-2);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+  }
+
+  .search-input:focus {
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  .search-suggestions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+  }
+
+  .suggestions-label {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+  }
+
+  .suggestion-tag {
+    padding: var(--spacing-2) var(--spacing-4);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    color: white;
+    transition: all var(--transition-fast);
+  }
+
+  .suggestion-tag:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Sections */
+  .section {
+    padding: var(--spacing-16) 0;
+  }
+
+  .section-alt {
+    background-color: var(--color-surface-secondary);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-12);
+  }
+
+  .section-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .section-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-8);
+  }
+
+  /* Grids */
+  .featured-grid,
+  .magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  /* Cards */
+  .card-image-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-4);
+    color: var(--color-primary-500);
+  }
+
+  .card-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .card-description {
+    font-size: var(--font-size-base);
+    margin-bottom: 0;
+  }
+
+  .category-card {
+    text-align: center;
+    padding: var(--spacing-8);
+  }
+
+  .category-icon {
+    color: var(--color-primary-500);
+    margin: 0 auto var(--spacing-4);
+  }
+
+  .category-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-lg);
+    }
+
+    .search-bar {
+      flex-direction: column;
+      border-radius: var(--radius-lg);
+    }
+
+    .section {
+      padding: var(--spacing-12) 0;
+    }
+
+    .section-title {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>
