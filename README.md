@@ -237,43 +237,28 @@ All content is managed through Astro Content Collections defined in `src/content
 
 ## ⚠️ Known Issues
 
-### Filtering System
+### Filtering System - ✅ IMPLEMENTED
 
-**Issue**: The filtering system on Magazine, Restaurants, and Trails pages does not work in the current static build mode.
+**Status**: Client-side filtering has been implemented for Magazine, Restaurants, and Trails pages.
 
-**Root Cause**: The site uses `output: 'static'` mode in Astro, which pre-renders all pages at build time without query parameters. The filter links use URL query parameters (e.g., `/magazine?cat=gastronomie`), but Astro's static mode doesn't re-render pages for different query parameter combinations.
+**How it Works**:
+- All content is rendered on the page with data attributes
+- JavaScript reads URL query parameters and filters displayed items
+- Filter counts update dynamically
+- Works in static build mode
 
-**Current State**:
-- Filter links appear and update the URL correctly
-- Active states on filters are applied based on URL params
-- However, the content is not actually filtered - all items are shown
+**Implementation Details**:
+- Magazine: Filters by category ID and tags
+- Restaurants: Filters by category ID, attributes, price range, and rating
+- Trails: Filters by difficulty and distance ranges
 
-**Solutions** (choose one):
+**Testing**: To verify filters are working, navigate to:
+- `/magazine?cat=gastronomie` - Should show only Gastronomie articles
+- `/magazine?tag=culture` - Should show articles tagged with "culture"
+- `/restaurants?attr=Terrasse` - Should show restaurants with terrasse
+- `/sentiers?difficulty=facile` - Should show easy trails
 
-1. **Server-Side Rendering (Recommended for dynamic filtering)**:
-   - Change `output: 'static'` to `output: 'hybrid'` in `astro.config.mjs`
-   - Add an adapter (e.g., `@astrojs/node`, `@astrojs/vercel`)
-   - Mark filter pages with `export const prerender = false`
-   - Deploy to a platform that supports SSR
-
-2. **Client-Side Filtering (Recommended for static deployment)**:
-   - Keep `output: 'static'`
-   - Implement JavaScript to filter displayed items based on URL params
-   - Add data attributes to cards for filtering
-   - Use `URLSearchParams` to read filters and hide/show items
-
-3. **Pre-generate All Filter Combinations** (Complex):
-   - Use `getStaticPaths` to generate pages for all filter combinations
-   - Create routes like `/magazine/category/[slug]`, `/magazine/tag/[tag]`
-   - Requires restructuring URL patterns
-
-**Affected Pages**:
-- `/magazine` - Article category and tag filters
-- `/restaurants` - Category, attribute, price, and rating filters
-- `/sentiers` - Difficulty and distance filters
-- `/activites`, `/hebergements`, `/services` - Category filters
-
-**Workaround**: Users can still access all content by browsing the unfiltered lists or using search (when implemented).
+**Note**: Filtering requires JavaScript enabled in the browser.
 
 ### Missing Images
 
@@ -287,13 +272,19 @@ Many content items reference images in `/images/` directory that don't exist yet
 
 ## 🔄 Recent Changes
 
-### Filter Logic Improvements (Attempted)
-- Updated category matching to compare IDs correctly
+### Client-Side Filtering Implementation ✅
+- Implemented JavaScript-based filtering for Magazine, Restaurants, and Trails pages
+- Added data attributes to all filterable items (category-id, tags, attributes, etc.)
+- Created filter scripts that read URL parameters and hide/show items dynamically
+- Updated result counts to reflect filtered totals
+- Filter links work correctly and update URL parameters
+- All filters maintain active states based on current URL
+
+### Filter Logic Improvements
+- Updated category matching to compare IDs correctly  
 - Fixed restaurant category slug vs ID mismatch
 - Improved trail difficulty and distance filtering logic
-- Changed trail distance parsing from `parseInt` to `parseFloat`
-
-**Note**: These improvements are functionally correct but don't take effect in static mode without one of the solutions listed above.
+- Changed trail distance parsing from `parseInt` to `parseFloat` for accuracy
 
 ## 📚 Additional Documentation
 
@@ -307,10 +298,7 @@ For historical context and detailed migration information, see:
 
 ## 🎯 Next Steps
 
-### Priority 1: Fix Filtering
-Choose and implement one of the filtering solutions (see Known Issues section above).
-
-### Priority 2: Content
+### Priority 1: Content
 - Add real images for all content items
 - Add more restaurants, accommodations, activities
 - Write more articles

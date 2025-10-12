@@ -18,38 +18,10 @@ const ratingFilter = Astro.url.searchParams.get('rating');
 const allRestaurants = await getCollection('restaurants');
 const restaurantCategories = await getCollection('restaurantCategories');
 
-// Filter restaurants
+// For static builds, show all restaurants and filter client-side
 let restaurants = allRestaurants.filter((r: any) => r.data.published);
 
-// Category filter
-if (categoryFilter) {
-  restaurants = restaurants.filter((r: any) => {
-    const category = restaurantCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
-    return category && r.data.categoryId === category.data.id;
-  });
-}
-
-// Attribute filter
-if (attributeFilter) {
-  restaurants = restaurants.filter((r: any) => 
-    r.data.attributes && r.data.attributes.some((attr: string) => 
-      attr.toLowerCase().includes(attributeFilter.toLowerCase())
-    )
-  );
-}
-
-// Price range filter
-if (priceFilter) {
-  restaurants = restaurants.filter((r: any) => r.data.priceRange === priceFilter);
-}
-
-// Rating filter
-if (ratingFilter) {
-  const minRating = parseFloat(ratingFilter);
-  restaurants = restaurants.filter((r: any) => r.data.rating && r.data.rating >= minRating);
-}
-
-// Get category name if filtering
+// Get category name if filtering  
 let categoryName = t('common.all_restaurants');
 if (categoryFilter) {
   const category = restaurantCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
@@ -162,18 +134,24 @@ allRestaurants.forEach((r: any) => {
             </a>
           )}
         </div>
-        <p class="results-count">{t('filters.results_count').replace('{count}', restaurants.length.toString())}</p>
+        <p class="results-count" id="results-count">{t('filters.results_count').replace('{count}', restaurants.length.toString())}</p>
       </div>
 
       {restaurants.length > 0 ? (
-        <div class="places-grid">
+        <div class="places-grid" id="restaurants-grid">
           {restaurants.map((restaurant: any) => {
             const category = restaurantCategories.find(c => c.data.id === restaurant.data.categoryId);
+            const attrsStr = restaurant.data.attributes ? restaurant.data.attributes.join(',') : '';
             return (
               <Card 
                 href={getLocalizedPath(`/restaurants/${restaurant.data.id}`, lang)} 
                 hoverable={true}
                 class="place-card"
+                data-category-id={restaurant.data.categoryId}
+                data-category-name={category?.data.name}
+                data-attributes={attrsStr}
+                data-price-range={restaurant.data.priceRange}
+                data-rating={restaurant.data.rating}
               >
                 <div class="place-image">
                   <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
@@ -207,7 +185,7 @@ allRestaurants.forEach((r: any) => {
           })}
         </div>
       ) : (
-        <div class="empty-state">
+        <div class="empty-state" id="empty-state">
           <Icon name="map-pin" size="lg" />
           <p>{t('filters.no_results')}</p>
         </div>
@@ -445,3 +423,92 @@ allRestaurants.forEach((r: any) => {
     }
   }
 </style>
+
+<script>
+  // Client-side filtering for static builds
+  document.addEventListener('DOMContentLoaded', () => {
+    const restaurantsGrid = document.getElementById('restaurants-grid');
+    const resultsCount = document.getElementById('results-count');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (!restaurantsGrid) return;
+    
+    // Get filter parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const categoryFilter = params.get('cat');
+    const attributeFilter = params.get('attr');
+    const priceFilter = params.get('price');
+    const ratingFilter = params.get('rating');
+    
+    // If no filters, show all restaurants
+    if (!categoryFilter && !attributeFilter && !priceFilter && !ratingFilter) {
+      return;
+    }
+    
+    // Get all restaurant cards
+    const restaurants = Array.from(restaurantsGrid.querySelectorAll('.place-card'));
+    let visibleCount = 0;
+    
+    // Filter restaurants based on URL params
+    restaurants.forEach((restaurant) => {
+      let show = true;
+      
+      // Category filter
+      if (categoryFilter) {
+        const categoryId = restaurant.getAttribute('data-category-id');
+        if (categoryId !== categoryFilter) {
+          show = false;
+        }
+      }
+      
+      // Attribute filter
+      if (attributeFilter && show) {
+        const attributes = restaurant.getAttribute('data-attributes') || '';
+        const attrList = attributes.toLowerCase().split(',');
+        
+        // Check if any attribute matches the filter
+        if (!attrList.some(attr => attr.includes(attributeFilter.toLowerCase()))) {
+          show = false;
+        }
+      }
+      
+      // Price range filter
+      if (priceFilter && show) {
+        const priceRange = restaurant.getAttribute('data-price-range');
+        if (priceRange !== priceFilter) {
+          show = false;
+        }
+      }
+      
+      // Rating filter
+      if (ratingFilter && show) {
+        const rating = parseFloat(restaurant.getAttribute('data-rating') || '0');
+        const minRating = parseFloat(ratingFilter);
+        if (rating < minRating) {
+          show = false;
+        }
+      }
+      
+      // Show or hide the restaurant
+      if (show) {
+        restaurant.style.display = '';
+        visibleCount++;
+      } else {
+        restaurant.style.display = 'none';
+      }
+    });
+    
+    // Update results count
+    if (resultsCount) {
+      resultsCount.textContent = `${visibleCount} résultat(s)`;
+    }
+    
+    // Show/hide empty state
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    if (restaurantsGrid) {
+      restaurantsGrid.style.display = visibleCount === 0 ? 'none' : '';
+    }
+  });
+</script>
