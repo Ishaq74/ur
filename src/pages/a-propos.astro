@@ -1,0 +1,132 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.about_us')} - Salut Annecy`} 
+  description="Découvrez Salut Annecy, votre guide pour vivre le meilleur de la région"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.about_us')}</h1>
+        
+        <div class="content">
+          <h2>Notre Mission</h2>
+          <p>
+            Salut Annecy est votre guide de référence pour découvrir et vivre le meilleur 
+            de la région annécienne. Notre mission est de vous aider à explorer les 
+            restaurants, activités, hébergements et événements qui font la richesse de notre territoire.
+          </p>
+
+          <h2>Qui Sommes-Nous ?</h2>
+          <p>
+            Nous sommes une équipe passionnée par notre région et dédiée à partager 
+            les meilleures adresses et expériences avec vous. Que vous soyez résident 
+            ou visiteur, nous vous aidons à découvrir Annecy sous tous ses aspects.
+          </p>
+
+          <h2>Nos Valeurs</h2>
+          <ul>
+            <li>Authenticité : Nous privilégions les établissements locaux et authentiques</li>
+            <li>Qualité : Nous sélectionnons avec soin nos recommandations</li>
+            <li>Partage : Nous créons une communauté autour de l'amour de notre région</li>
+            <li>Innovation : Nous utilisons les meilleures technologies pour vous servir</li>
+          </ul>
+
+          <h2>Contact</h2>
+          <p>
+            Pour toute question, suggestion ou partenariat, n'hésitez pas à 
+            <a href={getLocalizedPath('/contact', lang)}>nous contacter</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-8);
+    color: var(--color-text-primary);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul li {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-3);
+    padding-left: var(--spacing-6);
+    position: relative;
+  }
+
+  .content ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+
+    .content p,
+    .content ul li {
+      font-size: var(--font-size-base);
+    }
+  }
+</style>
