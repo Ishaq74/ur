@@ -16,24 +16,8 @@ const distanceFilter = Astro.url.searchParams.get('distance');
 const allTrails = await getCollection('trails');
 const trailCategories = await getCollection('trailCategories');
 
-// Filter trails
+// For static builds, show all trails and filter client-side
 let trails = allTrails.filter((trail: any) => trail.data.published);
-
-// Difficulty filter
-if (difficultyFilter) {
-  trails = trails.filter((t: any) => t.data.difficulty === difficultyFilter);
-}
-
-// Distance filter (basic filtering by length)
-if (distanceFilter) {
-  trails = trails.filter((t: any) => {
-    const distance = parseInt(t.data.distance);
-    if (distanceFilter === 'short' && distance <= 10) return true;
-    if (distanceFilter === 'medium' && distance > 10 && distance <= 25) return true;
-    if (distanceFilter === 'long' && distance > 25) return true;
-    return false;
-  });
-}
 
 // Get difficulty name if filtering
 let pageTitle = t('header.trails');
@@ -127,10 +111,10 @@ if (difficultyFilter) {
 
         <!-- Trails Grid -->
         <div class="main-content">
-          <p class="results-count">{trails.length} sentier{trails.length > 1 ? 's' : ''}</p>
+          <p class="results-count" id="results-count">{trails.length} sentier{trails.length > 1 ? 's' : ''}</p>
           
           {trails.length > 0 ? (
-            <div class="trails-grid">
+            <div class="trails-grid" id="trails-grid">
               {trails.map((trail: any) => {
                 const category = trailCategories.find(c => c.data.id === trail.data.difficulty);
                 return (
@@ -138,6 +122,8 @@ if (difficultyFilter) {
                     href={getLocalizedPath(`/trail/${trail.data.id}`, lang)} 
                     hoverable={true}
                     class="trail-card"
+                    data-difficulty={trail.data.difficulty}
+                    data-distance={trail.data.distance}
                   >
                     <div class="trail-image">
                       <img src={trail.data.imageUrl} alt={trail.data.name} />
@@ -170,7 +156,7 @@ if (difficultyFilter) {
               })}
             </div>
           ) : (
-            <div class="empty-state">
+            <div class="empty-state" id="empty-state">
               <Icon name="hiking" size="xl" />
               <h3>Aucun sentier trouvé</h3>
               <p>Revenez bientôt pour découvrir nos recommandations !</p>
@@ -436,3 +422,78 @@ if (difficultyFilter) {
     }
   }
 </style>
+
+<script>
+  // Client-side filtering for static builds
+  document.addEventListener('DOMContentLoaded', () => {
+    const trailsGrid = document.getElementById('trails-grid');
+    const resultsCount = document.getElementById('results-count');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (!trailsGrid) return;
+    
+    // Get filter parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const difficultyFilter = params.get('difficulty');
+    const distanceFilter = params.get('distance');
+    
+    // If no filters, show all trails
+    if (!difficultyFilter && !distanceFilter) {
+      return;
+    }
+    
+    // Get all trail cards
+    const trails = Array.from(trailsGrid.querySelectorAll('.trail-card'));
+    let visibleCount = 0;
+    
+    // Filter trails based on URL params
+    trails.forEach((trail) => {
+      let show = true;
+      
+      // Difficulty filter
+      if (difficultyFilter) {
+        const difficulty = trail.getAttribute('data-difficulty');
+        if (difficulty !== difficultyFilter) {
+          show = false;
+        }
+      }
+      
+      // Distance filter
+      if (distanceFilter && show) {
+        const distanceStr = trail.getAttribute('data-distance') || '0';
+        // Extract numeric value from distance string (e.g., "3.5 km" -> 3.5)
+        const distance = parseFloat(distanceStr);
+        
+        if (distanceFilter === 'short' && distance > 10) {
+          show = false;
+        } else if (distanceFilter === 'medium' && (distance <= 10 || distance > 25)) {
+          show = false;
+        } else if (distanceFilter === 'long' && distance <= 25) {
+          show = false;
+        }
+      }
+      
+      // Show or hide the trail
+      if (show) {
+        trail.style.display = '';
+        visibleCount++;
+      } else {
+        trail.style.display = 'none';
+      }
+    });
+    
+    // Update results count
+    if (resultsCount) {
+      const plural = visibleCount > 1 ? 's' : '';
+      resultsCount.textContent = `${visibleCount} sentier${plural}`;
+    }
+    
+    // Show/hide empty state
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    if (trailsGrid) {
+      trailsGrid.style.display = visibleCount === 0 ? 'none' : '';
+    }
+  });
+</script>

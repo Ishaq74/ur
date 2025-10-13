@@ -12,26 +12,12 @@ const t = useTranslations(lang);
 const categoryFilter = Astro.url.searchParams.get('cat');
 const tagFilter = Astro.url.searchParams.get('tag');
 
-// Get all published articles
+// Get all published articles (don't filter server-side for static builds)
 const allArticles = await getCollection('articles');
 const articleCategories = await getCollection('articleCategories');
 
-// Filter articles
+// For static builds, show all articles and filter client-side
 let articles = allArticles.filter((article: any) => article.data.published);
-
-// Category filter
-if (categoryFilter) {
-  articles = articles.filter((a: any) => a.data.categoryId === categoryFilter || a.data.category === categoryFilter);
-}
-
-// Tag filter
-if (tagFilter) {
-  articles = articles.filter((a: any) => 
-    a.data.tags && a.data.tags.some((tag: string) => 
-      tag.toLowerCase().includes(tagFilter.toLowerCase())
-    )
-  );
-}
 
 // Get category name if filtering
 let categoryName = t('header.magazine');
@@ -118,17 +104,21 @@ allArticles.forEach((a: any) => {
 
         <!-- Articles Grid -->
         <div class="main-content">
-          <p class="results-count">{articles.length} article{articles.length > 1 ? 's' : ''}</p>
+          <p class="results-count" id="results-count">{articles.length} article{articles.length > 1 ? 's' : ''}</p>
           
           {articles.length > 0 ? (
-            <div class="articles-grid">
+            <div class="articles-grid" id="articles-grid">
               {articles.map((article: any) => {
                 const category = articleCategories.find(c => c.data.id === article.data.categoryId);
+                const tagsStr = article.data.tags ? article.data.tags.join(',') : '';
                 return (
                   <Card 
                     href={getLocalizedPath(`/magazine/${article.data.id}`, lang)} 
                     hoverable={true}
                     class="article-card"
+                    data-category-id={article.data.categoryId}
+                    data-category-name={category?.data.name || article.data.category}
+                    data-tags={tagsStr}
                   >
                     <div class="article-image">
                       <img src={article.data.imageUrl} alt={article.data.title} />
@@ -158,7 +148,7 @@ allArticles.forEach((a: any) => {
               })}
             </div>
           ) : (
-            <div class="empty-state">
+            <div class="empty-state" id="empty-state">
               <Icon name="book" size="xl" />
               <h3>Aucun article trouvé</h3>
               <p>Revenez bientôt pour découvrir nos derniers articles !</p>
@@ -438,3 +428,78 @@ allArticles.forEach((a: any) => {
     }
   }
 </style>
+
+<script>
+  // Client-side filtering for static builds
+  document.addEventListener('DOMContentLoaded', () => {
+    const articlesGrid = document.getElementById('articles-grid');
+    const resultsCount = document.getElementById('results-count');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (!articlesGrid) return;
+    
+    // Get filter parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const categoryFilter = params.get('cat');
+    const tagFilter = params.get('tag');
+    
+    // If no filters, show all articles
+    if (!categoryFilter && !tagFilter) {
+      return;
+    }
+    
+    // Get all article cards
+    const articles = Array.from(articlesGrid.querySelectorAll('.article-card'));
+    let visibleCount = 0;
+    
+    // Filter articles based on URL params
+    articles.forEach((article) => {
+      let show = true;
+      
+      // Category filter
+      if (categoryFilter) {
+        const categoryId = article.getAttribute('data-category-id');
+        const categoryName = article.getAttribute('data-category-name');
+        
+        // Match against both ID and name (case-insensitive)
+        if (categoryId !== categoryFilter && 
+            categoryName?.toLowerCase() !== categoryFilter.toLowerCase()) {
+          show = false;
+        }
+      }
+      
+      // Tag filter
+      if (tagFilter && show) {
+        const tags = article.getAttribute('data-tags') || '';
+        const tagList = tags.toLowerCase().split(',');
+        
+        // Check if any tag matches the filter
+        if (!tagList.some(tag => tag.includes(tagFilter.toLowerCase()))) {
+          show = false;
+        }
+      }
+      
+      // Show or hide the article
+      if (show) {
+        article.style.display = '';
+        visibleCount++;
+      } else {
+        article.style.display = 'none';
+      }
+    });
+    
+    // Update results count
+    if (resultsCount) {
+      const plural = visibleCount > 1 ? 's' : '';
+      resultsCount.textContent = `${visibleCount} article${plural}`;
+    }
+    
+    // Show/hide empty state
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    if (articlesGrid) {
+      articlesGrid.style.display = visibleCount === 0 ? 'none' : '';
+    }
+  });
+</script>
