@@ -6,7 +6,7 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   // Update with actual domain
-  site: 'https://salut-annecy.fr',
+  site: 'https://ur-ruddy.vercel.app',
 
   build: {
     inlineStylesheets: 'auto',
