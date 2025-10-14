@@ -1,0 +1,471 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Button from '../../components/atoms/Button.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.pro_space')} - Salut Annecy`} 
+  description="Espace professionnel pour les établissements et commerces d'Annecy"
+  lang={lang}
+>
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1>{t('footer.pro_space')}</h1>
+        <p class="hero-subtitle">
+          Donnez de la visibilité à votre établissement et touchez des milliers de visiteurs 
+          potentiels chaque mois sur Salut Annecy.
+        </p>
+        <div class="hero-actions">
+          <Button href={getLocalizedPath('/offres', lang)} variant="primary" size="lg">
+            Découvrir nos offres
+          </Button>
+          <Button href={getLocalizedPath('/contact', lang)} variant="secondary" size="lg">
+            Nous contacter
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits-section">
+    <div class="container">
+      <h2 class="section-title">Pourquoi Rejoindre Salut Annecy ?</h2>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="users" size="lg" />
+          </div>
+          <h3>Visibilité Maximale</h3>
+          <p>
+            Touchez une audience locale et touristique qualifiée activement à la recherche 
+            d'établissements comme le vôtre.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="star" size="lg" />
+          </div>
+          <h3>Mise en Avant Premium</h3>
+          <p>
+            Bénéficiez d'un positionnement prioritaire dans les résultats de recherche et 
+            les recommandations.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="edit" size="lg" />
+          </div>
+          <h3>Gestion Autonome</h3>
+          <p>
+            Modifiez vos informations, horaires, photos et offres en temps réel depuis votre 
+            espace personnel.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="bar-chart" size="lg" />
+          </div>
+          <h3>Statistiques Détaillées</h3>
+          <p>
+            Suivez les performances de votre fiche : vues, clics, interactions et réservations.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="message-circle" size="lg" />
+          </div>
+          <h3>Gestion des Avis</h3>
+          <p>
+            Répondez aux avis clients et construisez votre réputation en ligne directement 
+            depuis votre espace.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="target" size="lg" />
+          </div>
+          <h3>Marketing Ciblé</h3>
+          <p>
+            Profitez d'outils marketing pour promouvoir vos offres spéciales et événements 
+            auprès de notre audience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="container">
+      <h2 class="section-title">Fonctionnalités de l'Espace Pro</h2>
+      
+      <div class="features-list">
+        <div class="feature-item">
+          <h3>📝 Page Établissement Complète</h3>
+          <p>
+            Une page dédiée avec photos, description détaillée, horaires, coordonnées et 
+            tous les éléments pour convaincre vos futurs clients.
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>🖼️ Galerie Photos</h3>
+          <p>
+            Ajoutez jusqu'à 20 photos haute résolution pour mettre en valeur votre établissement, 
+            vos produits ou services.
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>📅 Gestion des Événements</h3>
+          <p>
+            Créez et gérez vos événements spéciaux : concerts, expositions, promotions, 
+            soirées thématiques...
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>💳 Offres et Promotions</h3>
+          <p>
+            Proposez des offres exclusives aux utilisateurs de Salut Annecy et boostez 
+            votre fréquentation.
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>🎯 Badge "Vérifié"</h3>
+          <p>
+            Obtenez le badge vérifié qui renforce la confiance et la crédibilité auprès 
+            de vos clients potentiels.
+          </p>
+        </div>
+
+        <div class="feature-item">
+          <h3>📊 Tableau de Bord Analytics</h3>
+          <p>
+            Accédez à des statistiques complètes : impressions, clics, appels, demandes 
+            d'itinéraire et plus encore.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps-section">
+    <div class="container">
+      <h2 class="section-title">Comment ça Marche ?</h2>
+      
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Choisissez Votre Formule</h3>
+          <p>
+            Consultez <a href={getLocalizedPath('/offres', lang)}>nos offres</a> et 
+            sélectionnez celle qui correspond le mieux à vos besoins et votre budget.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Créez Votre Compte</h3>
+          <p>
+            Inscrivez-vous en quelques clics et accédez immédiatement à votre espace 
+            professionnel personnalisé.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Complétez Votre Fiche</h3>
+          <p>
+            Ajoutez vos informations, photos, horaires et tous les détails qui feront 
+            la différence.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Profitez de la Visibilité</h3>
+          <p>
+            Votre établissement est maintenant visible par des milliers de visiteurs 
+            potentiels chaque mois !
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à Développer Votre Activité ?</h2>
+        <p>
+          Rejoignez les centaines d'établissements qui font confiance à Salut Annecy 
+          pour développer leur visibilité et leur clientèle.
+        </p>
+        <div class="cta-actions">
+          <Button href={getLocalizedPath('/offres', lang)} variant="primary" size="lg">
+            Voir les Tarifs
+          </Button>
+          <Button href={getLocalizedPath('/contact', lang)} variant="secondary" size="lg">
+            Demander une Démo
+          </Button>
+        </div>
+        <p class="cta-note">
+          Des questions ? Contactez-nous au +33 (0)4 XX XX XX XX ou par 
+          <a href="mailto:pro@salutannecy.fr">email</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero-section {
+    padding: var(--spacing-16) 0 var(--spacing-12);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    max-width: 700px;
+    margin: 0 auto var(--spacing-8);
+    opacity: 0.95;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .benefits-section,
+  .features-section,
+  .steps-section {
+    padding: var(--spacing-16) 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+    color: var(--color-text-primary);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .benefit-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .benefit-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: 50%;
+    color: white;
+  }
+
+  .benefit-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .benefit-card p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .features-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .feature-item {
+    padding: var(--spacing-5);
+    background-color: var(--color-surface);
+    border-left: 4px solid var(--color-primary-500);
+    border-radius: var(--radius-lg);
+  }
+
+  .feature-item h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .feature-item p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .step-card {
+    padding: var(--spacing-6);
+    text-align: center;
+  }
+
+  .step-number {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: 50%;
+    color: white;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .step-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .step-card p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .step-card a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .step-card a:hover {
+    text-decoration: underline;
+  }
+
+  .cta-section {
+    padding: var(--spacing-16) 0;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .cta-content > p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-8);
+    opacity: 0.95;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-6);
+  }
+
+  .cta-note {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+  }
+
+  .cta-note a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .cta-note a:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .section-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .benefits-grid,
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-actions,
+    .cta-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .cta-content h2 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>

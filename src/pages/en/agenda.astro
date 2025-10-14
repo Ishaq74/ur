@@ -1,8 +1,8 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
-import Card from '../../components/molecules/Card.astro';
-import Icon from '../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Card from '../../../components/molecules/Card.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);

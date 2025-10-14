@@ -1,0 +1,135 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.press')} - Salut Annecy`} 
+  description="Espace presse et informations médias de Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.press')}</h1>
+        
+        <div class="content">
+          <h2>Espace Presse</h2>
+          <p>
+            Bienvenue dans notre espace presse. Vous trouverez ici toutes les informations 
+            nécessaires pour communiquer sur Salut Annecy.
+          </p>
+
+          <h2>Kit Presse</h2>
+          <p>
+            Notre kit presse contient :
+          </p>
+          <ul>
+            <li>Logo et charte graphique</li>
+            <li>Communiqués de presse</li>
+            <li>Chiffres clés</li>
+            <li>Photos haute résolution</li>
+          </ul>
+
+          <h2>Contact Presse</h2>
+          <p>
+            Pour toute demande d'interview, information ou partenariat média :
+          </p>
+          <p>
+            Email : <a href="mailto:presse@salutannecy.fr">presse@salutannecy.fr</a><br>
+            Téléphone : +33 (0)4 XX XX XX XX
+          </p>
+
+          <h2>Derniers Communiqués</h2>
+          <p>
+            Consultez nos dernières actualités et communiqués de presse.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-8);
+    color: var(--color-text-primary);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul li {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-3);
+    padding-left: var(--spacing-6);
+    position: relative;
+  }
+
+  .content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+
+    .content p,
+    .content ul li {
+      font-size: var(--font-size-base);
+    }
+  }
+</style>
