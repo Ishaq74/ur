@@ -1,0 +1,10 @@
+{
+  "id": "activites",
+  "name": "活动",
+  "description": "探索安纳西及其周边地区的所有活动",
+  "slug": "activites",
+  "icon": "run-fast",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

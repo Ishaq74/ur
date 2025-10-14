@@ -1,0 +1,10 @@
+{
+  "id": "hebergement",
+  "name": "住宿",
+  "description": "为您在安纳西的住宿找到完美的住处",
+  "slug": "hebergement",
+  "icon": "hotel",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

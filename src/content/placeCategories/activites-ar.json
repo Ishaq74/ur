@@ -1,0 +1,10 @@
+{
+  "id": "activites",
+  "name": "الأنشطة",
+  "description": "استكشف جميع الأنشطة في أنسي ومحيطها",
+  "slug": "activites",
+  "icon": "run-fast",
+  "order": 3,
+  "published": true,
+  "lang": "ar"
+}

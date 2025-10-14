@@ -14,8 +14,9 @@ const allPlaces = await getCollection('places');
 // For static builds, show all published places
 let places = allPlaces.filter((place: any) => place.data.published);
 
-// Get main categories from collection
-const categories = await getCollection('placeCategories');
+// Get main categories from collection filtered by language
+const allCategories = await getCollection('placeCategories');
+const categories = allCategories.filter((cat: any) => cat.data.lang === lang);
 ---
 
 <MainLayout 

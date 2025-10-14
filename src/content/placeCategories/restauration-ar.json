@@ -1,0 +1,10 @@
+{
+  "id": "restauration",
+  "name": "المطاعم",
+  "description": "اكتشف أفضل المطاعم في أنسي ومحيطها",
+  "slug": "restauration",
+  "icon": "silverware-fork-knife",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

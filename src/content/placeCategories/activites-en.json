@@ -1,0 +1,10 @@
+{
+  "id": "activites",
+  "name": "Activities",
+  "description": "Explore all activities in Annecy and its surroundings",
+  "slug": "activites",
+  "icon": "run-fast",
+  "order": 3,
+  "published": true,
+  "lang": "en"
+}

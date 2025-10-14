@@ -6,10 +6,10 @@ import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const placeCategories = await getCollection('placeCategories');
+  const allPlaceCategories = await getCollection('placeCategories');
   const allPlaces = await getCollection('places');
   
-  return placeCategories.map(category => ({
+  return allPlaceCategories.map(category => ({
     params: { category: category.data.slug },
     props: { 
       category,

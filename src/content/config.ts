@@ -68,6 +68,7 @@ const categorySchema = z.object({
   icon: z.string().optional(),
   order: z.number().optional(),
   published: z.boolean().default(true),
+  lang: z.enum(['fr', 'en', 'de', 'es', 'ar', 'zh']).default('fr'),
   // Additional fields for better categorization
   color: z.string().optional(), // Theme color for the category
   imageUrl: z.string().optional(), // Category illustration

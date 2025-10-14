@@ -1,0 +1,10 @@
+{
+  "id": "hebergement",
+  "name": "أماكن الإقامة",
+  "description": "ابحث عن مكان الإقامة المثالي لإقامتك في أنسي",
+  "slug": "hebergement",
+  "icon": "hotel",
+  "order": 2,
+  "published": true,
+  "lang": "ar"
+}
