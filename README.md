@@ -306,6 +306,12 @@ Many content items reference images in `/images/` directory that don't exist yet
 
 **👉 Choose RESUME.md for complete details in French, or RESUME_EN.md for a quick English overview.**
 
+- **[TASKS.md](./TASKS.md)** - ✅ **Detailed task list** (1,364 lines, 37KB)
+  - 1,100+ detailed frontend tasks organized in 10 sections
+  - Focus on translations, components, pages, content, and optimizations
+  - Timeline: 9-13 weeks of frontend work
+  - Database/Auth intentionally excluded (will come after frontend completion)
+
 ### 📜 Migration History (Legacy)
 
 For historical context about the migration from React to Astro:
