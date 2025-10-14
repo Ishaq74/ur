@@ -3,34 +3,39 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import Card from '../../components/molecules/Card.astro';
 import Icon from '../../components/atoms/Icon.astro';
 import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const allPlaceCategories = await getCollection('placeCategories');
   const allPlaces = await getCollection('places');
   
   // Only use French categories for routing (default language)
-  const frenchCategories = allPlaceCategories.filter((cat: any) => cat.data.lang === 'fr');
+  const frenchCategories = allPlaceCategories.filter((cat) => cat.data.lang === 'fr');
   
   return frenchCategories.map(category => ({
     params: { category: category.data.slug },
     props: { 
       category,
-      places: allPlaces.filter((place: any) => 
+      places: allPlaces.filter((place) => 
         place.data.mainCategory.id === category.data.id && place.data.published
       )
     },
   }));
 }
 
-const { category, places } = Astro.props;
+type Props = {
+  category: CollectionEntry<'placeCategories'>;
+  places: CollectionEntry<'places'>[];
+};
+
+const { category, places }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // Collect all unique attributes for filter options
 const allAttributes = new Set<string>();
 const allPriceRanges = new Set<string>();
-places.forEach((place: any) => {
+places.forEach((place) => {
   if (place.data.attributes) {
     place.data.attributes.forEach((attr: string) => allAttributes.add(attr));
   }
