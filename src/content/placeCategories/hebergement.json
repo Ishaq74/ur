@@ -1,0 +1,9 @@
+{
+  "id": "hebergement",
+  "name": "Hébergements",
+  "description": "Trouvez l'hébergement parfait pour votre séjour à Annecy",
+  "slug": "hebergement",
+  "icon": "hotel",
+  "order": 2,
+  "published": true
+}

@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 
 // Common schema for locations
 const locationSchema = z.object({
@@ -112,6 +112,11 @@ const eventCategoriesCollection = defineCollection({
   schema: categorySchema,
 });
 
+const placeCategoriesCollection = defineCollection({
+  type: 'data',
+  schema: categorySchema,
+});
+
 // Legacy places collection (deprecated, kept for backward compatibility)
 const placesCollection = defineCollection({
   type: 'data',
@@ -119,7 +124,7 @@ const placesCollection = defineCollection({
     id: z.string(),
     name: z.string(),
     description: z.string(),
-    mainCategory: z.enum(['restauration', 'hebergement', 'activites', 'shopping']),
+    mainCategory: reference('placeCategories'),
     category: z.string(),
     address: z.string().optional(),
     phone: z.string().optional(),
@@ -262,6 +267,7 @@ export const collections = {
   'articleCategories': articleCategoriesCollection,
   'trailCategories': trailCategoriesCollection,
   'eventCategories': eventCategoriesCollection,
+  'placeCategories': placeCategoriesCollection,
   
   // Legacy collections (kept for backward compatibility)
   'places': placesCollection,
