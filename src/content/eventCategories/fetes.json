@@ -1,0 +1,9 @@
+{
+  "id": "fetes",
+  "name": "Fêtes et Traditions",
+  "description": "Fêtes traditionnelles et célébrations",
+  "slug": "fetes-traditions",
+  "icon": "party-popper",
+  "order": 4,
+  "published": true
+}

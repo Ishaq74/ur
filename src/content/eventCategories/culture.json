@@ -1,0 +1,9 @@
+{
+  "id": "culture",
+  "name": "Culture et Cinéma",
+  "description": "Événements culturels et cinématographiques",
+  "slug": "culture-cinema",
+  "icon": "movie",
+  "order": 2,
+  "published": true
+}
