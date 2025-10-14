@@ -288,6 +288,17 @@ Many content items reference images in `/images/` directory that don't exist yet
 
 ## 📚 Additional Documentation
 
+### Project Status & Audit
+- **[RESUME.md](./RESUME.md)** - 📋 **Comprehensive project audit in French** (1,349 lines)
+  - Complete inventory of all pages, components, translations, and content
+  - Detailed analysis of what exists and what's missing
+  - Prioritized recommendations and roadmap
+- **[RESUME_EN.md](./RESUME_EN.md)** - 📋 **English summary** (321 lines)
+  - Quick overview and key metrics
+  - Critical gaps and priorities
+  - Getting started guide
+
+### Historical Documentation
 For historical context and detailed migration information, see:
 - `MIGRATION_SUMMARY.md` - React to Astro migration details
 - `CONTENT_ENHANCEMENT_SUMMARY.md` - Content collections setup
