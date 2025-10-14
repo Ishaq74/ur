@@ -1,0 +1,678 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Button from '../components/atoms/Button.astro';
+import Icon from '../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.partner')} - Salut Annecy`} 
+  description="Devenez partenaire de Salut Annecy et développez votre activité"
+  lang={lang}
+>
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1>{t('footer.partner')}</h1>
+        <p class="hero-subtitle">
+          Rejoignez notre réseau de partenaires et bénéficiez d'une visibilité unique 
+          auprès de milliers de visiteurs chaque mois.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits-section">
+    <div class="container">
+      <h2 class="section-title">Pourquoi Devenir Partenaire ?</h2>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="trending-up" size="lg" />
+          </div>
+          <h3>Visibilité Accrue</h3>
+          <p>
+            Profitez d'une exposition maximale auprès d'une audience locale et touristique 
+            activement en recherche d'établissements et services.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="users" size="lg" />
+          </div>
+          <h3>Nouveau Clients</h3>
+          <p>
+            Touchez de nouveaux clients qualifiés qui n'auraient peut-être jamais 
+            découvert votre établissement autrement.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="star" size="lg" />
+          </div>
+          <h3>Image de Marque</h3>
+          <p>
+            Renforcez votre réputation en étant associé à la référence locale pour 
+            découvrir Annecy et sa région.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="award" size="lg" />
+          </div>
+          <h3>Badge Partenaire</h3>
+          <p>
+            Obtenez un badge exclusif "Partenaire Officiel" qui renforce votre crédibilité 
+            et votre légitimité.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="bar-chart" size="lg" />
+          </div>
+          <h3>Statistiques</h3>
+          <p>
+            Accédez à des statistiques détaillées sur la performance de votre présence 
+            et mesurez votre ROI.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <Icon name="headphones" size="lg" />
+          </div>
+          <h3>Support Dédié</h3>
+          <p>
+            Bénéficiez d'un accompagnement personnalisé de notre équipe pour optimiser 
+            votre présence.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="types-section">
+    <div class="container">
+      <h2 class="section-title">Types de Partenariats</h2>
+      
+      <div class="types-grid">
+        <div class="type-card">
+          <h3>🏢 Établissements</h3>
+          <p>
+            Restaurants, hôtels, cafés, bars, commerces... Tous les établissements qui 
+            souhaitent développer leur visibilité.
+          </p>
+          <ul>
+            <li>Fiche établissement premium</li>
+            <li>Mise en avant prioritaire</li>
+            <li>Gestion des avis</li>
+            <li>Offres exclusives</li>
+          </ul>
+        </div>
+
+        <div class="type-card">
+          <h3>🎯 Activités & Loisirs</h3>
+          <p>
+            Prestataires d'activités sportives, culturelles, de loisirs et de découverte 
+            de la région.
+          </p>
+          <ul>
+            <li>Page activité détaillée</li>
+            <li>Calendrier d'événements</li>
+            <li>Système de réservation</li>
+            <li>Galerie photos/vidéos</li>
+          </ul>
+        </div>
+
+        <div class="type-card">
+          <h3>🏛️ Institutionnels</h3>
+          <p>
+            Offices de tourisme, collectivités, associations locales et partenaires 
+            institutionnels.
+          </p>
+          <ul>
+            <li>Espace dédié</li>
+            <li>Relais d'information</li>
+            <li>Promotion d'événements</li>
+            <li>Collaboration éditoriale</li>
+          </ul>
+        </div>
+
+        <div class="type-card">
+          <h3>💼 Services Pro</h3>
+          <p>
+            Services aux entreprises et professionnels : agences, consultants, 
+            prestataires B2B.
+          </p>
+          <ul>
+            <li>Annuaire professionnel</li>
+            <li>Articles d'expertise</li>
+            <li>Réseau professionnel</li>
+            <li>Visibilité ciblée</li>
+          </ul>
+        </div>
+
+        <div class="type-card">
+          <h3>🎨 Médias & Création</h3>
+          <p>
+            Médias locaux, créateurs de contenu, influenceurs, photographes, vidéastes.
+          </p>
+          <ul>
+            <li>Collaboration éditoriale</li>
+            <li>Partage d'audience</li>
+            <li>Co-création de contenu</li>
+            <li>Opportunités commerciales</li>
+          </ul>
+        </div>
+
+        <div class="type-card">
+          <h3>🤝 Partenariats Spéciaux</h3>
+          <p>
+            Partenariats sur mesure pour les projets spécifiques et collaborations 
+            stratégiques.
+          </p>
+          <ul>
+            <li>Solutions personnalisées</li>
+            <li>Accords win-win</li>
+            <li>Innovation conjointe</li>
+            <li>Flexibilité maximale</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <h2 class="section-title">Comment Devenir Partenaire ?</h2>
+      
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h3>Premier Contact</h3>
+          <p>
+            Remplissez notre formulaire de contact ou envoyez-nous un email décrivant 
+            votre projet et vos objectifs.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h3>Entretien</h3>
+          <p>
+            Échangeons lors d'un entretien (visio ou physique) pour comprendre vos 
+            besoins et vous présenter nos solutions.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h3>Proposition</h3>
+          <p>
+            Nous vous envoyons une proposition de partenariat personnalisée adaptée 
+            à vos objectifs et votre budget.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h3>Lancement</h3>
+          <p>
+            Signature du partenariat et mise en place rapide de votre présence sur 
+            Salut Annecy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="container">
+      <h2 class="section-title">Nos Partenaires Témoignent</h2>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Le partenariat avec Salut Annecy a transformé notre business. Nous recevons 
+            maintenant des dizaines de réservations chaque semaine via leur plateforme."
+          </p>
+          <div class="testimonial-author">
+            <strong>Le Bistrot du Lac</strong>
+            <span>Restaurant - Annecy</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Un excellent partenaire qui comprend vraiment les enjeux du tourisme local. 
+            L'équipe est professionnelle et réactive."
+          </p>
+          <div class="testimonial-author">
+            <strong>Lac Aventure</strong>
+            <span>Activités Nautiques - Talloires</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Grâce à Salut Annecy, nous avons doublé notre visibilité en ligne et attiré 
+            une clientèle internationale que nous n'aurions jamais touchée seuls."
+          </p>
+          <div class="testimonial-author">
+            <strong>Hôtel Belle Époque</strong>
+            <span>Hébergement - Annecy-le-Vieux</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-form-section">
+    <div class="container">
+      <div class="form-wrapper">
+        <h2>Intéressé par un Partenariat ?</h2>
+        <p class="form-intro">
+          Remplissez ce formulaire et notre équipe vous recontactera dans les 24 heures.
+        </p>
+
+        <form class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nom de l'établissement *</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="type">Type d'activité *</label>
+              <select id="type" name="type" required>
+                <option value="">Sélectionnez</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="hotel">Hôtel</option>
+                <option value="activity">Activité</option>
+                <option value="service">Service</option>
+                <option value="institution">Institution</option>
+                <option value="other">Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">Nom du contact *</label>
+              <input type="text" id="contact-name" name="contact-name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Parlez-nous de votre projet *</label>
+            <textarea id="message" name="message" rows="6" required 
+              placeholder="Quels sont vos objectifs ? Qu'attendez-vous d'un partenariat avec Salut Annecy ?"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <Button type="submit" variant="primary" size="lg">
+              Envoyer la Demande
+            </Button>
+          </div>
+        </form>
+
+        <div class="contact-info">
+          <p>
+            <strong>Vous préférez nous appeler ?</strong><br>
+            +33 (0)4 XX XX XX XX<br>
+            Du lundi au vendredi, 9h-18h
+          </p>
+          <p>
+            <strong>Par email :</strong><br>
+            <a href="mailto:partenaires@salutannecy.fr">partenaires@salutannecy.fr</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero-section {
+    padding: var(--spacing-16) 0 var(--spacing-12);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+
+  .benefits-section,
+  .types-section,
+  .process-section,
+  .testimonials-section,
+  .contact-form-section {
+    padding: var(--spacing-16) 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+    color: var(--color-text-primary);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .benefit-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .benefit-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: 50%;
+    color: white;
+  }
+
+  .benefit-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .benefit-card p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .type-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border-left: 4px solid var(--color-primary-500);
+    border-radius: var(--radius-lg);
+  }
+
+  .type-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .type-card p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .type-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .type-card ul li {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    padding: var(--spacing-2) 0;
+    padding-left: var(--spacing-5);
+    position: relative;
+  }
+
+  .type-card ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-8);
+  }
+
+  .process-step {
+    text-align: center;
+  }
+
+  .step-number {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: 50%;
+    color: white;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .process-step h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .process-step p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .testimonial-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border-left: 4px solid var(--color-primary-500);
+    border-radius: var(--radius-lg);
+  }
+
+  .testimonial-text {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+
+  .testimonial-author strong {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+  }
+
+  .testimonial-author span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  .form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .form-wrapper h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    text-align: center;
+    color: var(--color-text-primary);
+  }
+
+  .form-intro {
+    font-size: var(--font-size-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-5);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: var(--spacing-3);
+    font-size: var(--font-size-base);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-4);
+  }
+
+  .contact-info {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    text-align: center;
+  }
+
+  .contact-info p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .contact-info p:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-info a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .section-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .benefits-grid,
+    .types-grid,
+    .process-steps,
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

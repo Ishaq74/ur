@@ -1,0 +1,172 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.legal_mentions')} - Salut Annecy`} 
+  description="Mentions légales de Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.legal_mentions')}</h1>
+        
+        <div class="content">
+          <h2>1. Éditeur du Site</h2>
+          <p>
+            Le site Salut Annecy est édité par :<br>
+            <strong>Salut Annecy</strong><br>
+            [Adresse]<br>
+            [Code Postal] [Ville]<br>
+            Email : <a href="mailto:contact@salutannecy.fr">contact@salutannecy.fr</a><br>
+            Téléphone : +33 (0)4 XX XX XX XX
+          </p>
+          <p>
+            Numéro SIRET : [Numéro SIRET]<br>
+            Capital social : [Montant]<br>
+            RCS : [Ville]
+          </p>
+
+          <h2>2. Directeur de la Publication</h2>
+          <p>
+            Le directeur de la publication est : [Nom du directeur]
+          </p>
+
+          <h2>3. Hébergement</h2>
+          <p>
+            Le site est hébergé par :<br>
+            <strong>Vercel Inc.</strong><br>
+            340 S Lemon Ave #4133<br>
+            Walnut, CA 91789<br>
+            États-Unis<br>
+            Site web : <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">https://vercel.com</a>
+          </p>
+
+          <h2>4. Propriété Intellectuelle</h2>
+          <p>
+            L'ensemble du contenu de ce site (textes, images, vidéos, logos, graphismes, etc.) 
+            est la propriété exclusive de Salut Annecy ou de ses partenaires. Toute reproduction, 
+            représentation, modification, publication, adaptation de tout ou partie des éléments 
+            du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation 
+            écrite préalable.
+          </p>
+
+          <h2>5. Protection des Données Personnelles</h2>
+          <p>
+            Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi 
+            Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, de 
+            suppression et d'opposition aux données personnelles vous concernant.
+          </p>
+          <p>
+            Pour plus d'informations, consultez notre 
+            <a href="/confidentialite">Politique de Confidentialité</a>.
+          </p>
+
+          <h2>6. Cookies</h2>
+          <p>
+            Le site utilise des cookies pour améliorer l'expérience utilisateur. Pour en savoir 
+            plus, consultez notre <a href="/cookies">Politique de Cookies</a>.
+          </p>
+
+          <h2>7. Crédits</h2>
+          <p>
+            Conception et développement : Salut Annecy<br>
+            Photographies : [Crédits photos]<br>
+            Icônes : [Source des icônes]
+          </p>
+
+          <h2>8. Liens Hypertextes</h2>
+          <p>
+            Le site peut contenir des liens vers d'autres sites internet. Salut Annecy n'exerce 
+            aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.
+          </p>
+
+          <h2>9. Limitation de Responsabilité</h2>
+          <p>
+            Salut Annecy s'efforce d'assurer au mieux l'exactitude et la mise à jour des 
+            informations diffusées sur ce site. Toutefois, nous ne pouvons garantir l'exactitude, 
+            la précision ou l'exhaustivité des informations mises à disposition.
+          </p>
+          <p>
+            En conséquence, Salut Annecy décline toute responsabilité pour toute imprécision, 
+            inexactitude ou omission portant sur des informations disponibles sur le site.
+          </p>
+
+          <h2>10. Droit Applicable</h2>
+          <p>
+            Les présentes mentions légales sont régies par le droit français. En cas de litige 
+            et à défaut de résolution amiable, le litige sera porté devant les tribunaux français 
+            conformément aux règles de compétence en vigueur.
+          </p>
+
+          <h2>11. Contact</h2>
+          <p>
+            Pour toute question concernant les mentions légales, vous pouvez nous contacter :
+          </p>
+          <p>
+            Email : <a href="mailto:legal@salutannecy.fr">legal@salutannecy.fr</a><br>
+            Adresse : [Adresse postale complète]
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-8);
+    color: var(--color-text-primary);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>

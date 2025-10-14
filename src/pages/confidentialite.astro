@@ -1,0 +1,220 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.privacy')} - Salut Annecy`} 
+  description="Politique de confidentialité et protection des données personnelles"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.privacy')}</h1>
+        <p class="last-updated">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+        
+        <div class="content">
+          <h2>1. Introduction</h2>
+          <p>
+            Salut Annecy s'engage à protéger la vie privée de ses utilisateurs. La présente 
+            Politique de Confidentialité décrit comment nous collectons, utilisons et protégeons 
+            vos données personnelles conformément au Règlement Général sur la Protection des 
+            Données (RGPD).
+          </p>
+
+          <h2>2. Responsable du Traitement</h2>
+          <p>
+            Le responsable du traitement des données personnelles est :<br>
+            Salut Annecy<br>
+            Email : <a href="mailto:privacy@salutannecy.fr">privacy@salutannecy.fr</a>
+          </p>
+
+          <h2>3. Données Collectées</h2>
+          <p>
+            Nous collectons les types de données suivants :
+          </p>
+          <ul>
+            <li>Données d'identification : nom, prénom, email</li>
+            <li>Données de connexion : adresse IP, cookies, logs de navigation</li>
+            <li>Données d'utilisation : pages visitées, interactions avec le site</li>
+            <li>Données de contact : messages envoyés via nos formulaires</li>
+          </ul>
+
+          <h2>4. Finalités du Traitement</h2>
+          <p>
+            Vos données sont collectées et traitées pour :
+          </p>
+          <ul>
+            <li>Fournir et améliorer nos services</li>
+            <li>Répondre à vos demandes et questions</li>
+            <li>Vous envoyer des newsletters (avec votre consentement)</li>
+            <li>Analyser l'utilisation du site pour l'améliorer</li>
+            <li>Respecter nos obligations légales</li>
+          </ul>
+
+          <h2>5. Base Légale</h2>
+          <p>
+            Le traitement de vos données repose sur :
+          </p>
+          <ul>
+            <li>Votre consentement</li>
+            <li>L'exécution d'un contrat</li>
+            <li>Nos intérêts légitimes</li>
+            <li>Le respect d'obligations légales</li>
+          </ul>
+
+          <h2>6. Durée de Conservation</h2>
+          <p>
+            Vos données sont conservées pendant la durée nécessaire aux finalités pour 
+            lesquelles elles ont été collectées, et conformément aux obligations légales :
+          </p>
+          <ul>
+            <li>Données de compte : pendant la durée de vie du compte + 1 an</li>
+            <li>Données de navigation : 13 mois maximum</li>
+            <li>Données commerciales : 3 ans après le dernier contact</li>
+          </ul>
+
+          <h2>7. Partage des Données</h2>
+          <p>
+            Nous ne vendons ni ne louons vos données personnelles. Vos données peuvent être 
+            partagées avec :
+          </p>
+          <ul>
+            <li>Nos prestataires techniques (hébergement, analyse)</li>
+            <li>Les autorités légales sur demande</li>
+          </ul>
+
+          <h2>8. Vos Droits</h2>
+          <p>
+            Conformément au RGPD, vous disposez des droits suivants :
+          </p>
+          <ul>
+            <li>Droit d'accès à vos données</li>
+            <li>Droit de rectification</li>
+            <li>Droit à l'effacement ("droit à l'oubli")</li>
+            <li>Droit à la limitation du traitement</li>
+            <li>Droit à la portabilité des données</li>
+            <li>Droit d'opposition au traitement</li>
+            <li>Droit de retirer votre consentement</li>
+          </ul>
+          <p>
+            Pour exercer vos droits, contactez-nous à : 
+            <a href="mailto:privacy@salutannecy.fr">privacy@salutannecy.fr</a>
+          </p>
+
+          <h2>9. Cookies</h2>
+          <p>
+            Nous utilisons des cookies pour améliorer votre expérience. Consultez notre 
+            <a href="/cookies">Politique de Cookies</a> pour plus d'informations.
+          </p>
+
+          <h2>10. Sécurité</h2>
+          <p>
+            Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles 
+            appropriées pour protéger vos données contre tout accès, modification, divulgation 
+            ou destruction non autorisés.
+          </p>
+
+          <h2>11. Réclamation</h2>
+          <p>
+            Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire 
+            une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et 
+            des Libertés).
+          </p>
+
+          <h2>12. Modifications</h2>
+          <p>
+            Nous nous réservons le droit de modifier cette politique de confidentialité. 
+            Les modifications seront publiées sur cette page avec une date de mise à jour.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .last-updated {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-8);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul li {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2);
+    padding-left: var(--spacing-6);
+    position: relative;
+  }
+
+  .content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>

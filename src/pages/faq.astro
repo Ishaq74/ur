@@ -1,0 +1,290 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.faq')} - Salut Annecy`} 
+  description="Questions fréquemment posées sur Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.faq')}</h1>
+        <p class="intro">Trouvez rapidement des réponses à vos questions les plus fréquentes.</p>
+        
+        <div class="content">
+          <div class="faq-category">
+            <h2>Utilisation du Site</h2>
+            
+            <div class="faq-item">
+              <h3>Comment utiliser Salut Annecy ?</h3>
+              <p>
+                Salut Annecy est un guide en ligne gratuit pour découvrir Annecy et sa région. 
+                Parcourez nos sections Restaurants, Hébergements, Activités et Magazine pour 
+                trouver les meilleures adresses et expériences.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Le site est-il gratuit ?</h3>
+              <p>
+                Oui, l'accès à Salut Annecy est totalement gratuit pour tous les utilisateurs. 
+                Vous pouvez consulter tous nos contenus sans frais ni inscription.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Comment rechercher un établissement ?</h3>
+              <p>
+                Utilisez la navigation par catégories (Restaurants, Hébergements, Activités) 
+                ou la fonction de recherche en haut de la page. Vous pouvez filtrer les 
+                résultats selon vos critères.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2>Pour les Professionnels</h2>
+            
+            <div class="faq-item">
+              <h3>Comment ajouter mon établissement ?</h3>
+              <p>
+                Les professionnels peuvent créer un espace pro en visitant notre page 
+                <a href={getLocalizedPath('/espace-pro', lang)}>Espace Pro</a>. 
+                Vous pourrez alors gérer votre fiche et bénéficier de nombreux avantages.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Quels sont les tarifs pour les professionnels ?</h3>
+              <p>
+                Nous proposons plusieurs formules adaptées à vos besoins. Consultez notre 
+                page <a href={getLocalizedPath('/offres', lang)}>Nos Offres</a> pour plus 
+                de détails ou contactez-nous pour un devis personnalisé.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Comment modifier ma fiche établissement ?</h3>
+              <p>
+                Connectez-vous à votre espace pro et accédez à votre tableau de bord. 
+                Vous pourrez y modifier toutes les informations de votre établissement 
+                en temps réel.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2>Contenu et Avis</h2>
+            
+            <div class="faq-item">
+              <h3>Comment sont sélectionnés les établissements ?</h3>
+              <p>
+                Nos établissements sont sélectionnés selon des critères stricts de qualité, 
+                d'authenticité et de service. Notre équipe visite et vérifie chaque lieu 
+                avant de le recommander.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Puis-je proposer un établissement ?</h3>
+              <p>
+                Oui ! Si vous connaissez un lieu qui mérite d'être mis en avant, 
+                <a href={getLocalizedPath('/contact', lang)}>contactez-nous</a> avec 
+                vos suggestions.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Comment sont vérifiés les avis ?</h3>
+              <p>
+                Tous les avis sont modérés par notre équipe pour garantir leur authenticité. 
+                Nous n'acceptons que les avis constructifs et respectueux.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2>Compte Utilisateur</h2>
+            
+            <div class="faq-item">
+              <h3>Dois-je créer un compte ?</h3>
+              <p>
+                Non, la consultation du site ne nécessite pas de compte. Cependant, créer 
+                un compte vous permet de sauvegarder vos favoris et de recevoir nos 
+                recommandations personnalisées.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Mes données sont-elles sécurisées ?</h3>
+              <p>
+                Oui, nous prenons la sécurité de vos données très au sérieux. Consultez 
+                notre <a href={getLocalizedPath('/confidentialite', lang)}>Politique de 
+                Confidentialité</a> pour plus d'informations.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2>Technique</h2>
+            
+            <div class="faq-item">
+              <h3>Le site ne fonctionne pas correctement, que faire ?</h3>
+              <p>
+                Essayez de vider votre cache et vos cookies, ou utilisez un autre navigateur. 
+                Si le problème persiste, <a href={getLocalizedPath('/signaler', lang)}>
+                signalez-le</a> à notre équipe technique.
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>Le site est-il compatible mobile ?</h3>
+              <p>
+                Oui, Salut Annecy est entièrement responsive et optimisé pour tous les 
+                appareils (smartphones, tablettes, ordinateurs).
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-section">
+            <h2>Vous ne trouvez pas votre réponse ?</h2>
+            <p>
+              N'hésitez pas à <a href={getLocalizedPath('/contact', lang)}>nous contacter</a>, 
+              notre équipe se fera un plaisir de vous aider.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+    text-align: center;
+  }
+
+  .intro {
+    font-size: var(--font-size-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-10);
+  }
+
+  .faq-category {
+    margin-bottom: var(--spacing-10);
+  }
+
+  .faq-category h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-6);
+    color: var(--color-primary-600);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .faq-item {
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-5);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .faq-item h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .faq-item p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  .faq-item a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .faq-item a:hover {
+    text-decoration: underline;
+  }
+
+  .contact-section {
+    margin-top: var(--spacing-12);
+    padding: var(--spacing-8);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: var(--radius-xl);
+    text-align: center;
+    color: white;
+  }
+
+  .contact-section h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+    color: white;
+  }
+
+  .contact-section p {
+    font-size: var(--font-size-lg);
+    margin-bottom: 0;
+  }
+
+  .contact-section a {
+    color: white;
+    text-decoration: underline;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .contact-section a:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .intro {
+      font-size: var(--font-size-base);
+    }
+
+    .faq-category h2 {
+      font-size: var(--font-size-xl);
+    }
+
+    .faq-item h3 {
+      font-size: var(--font-size-base);
+    }
+
+    .contact-section h2 {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>

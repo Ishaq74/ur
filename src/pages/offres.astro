@@ -1,0 +1,556 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Button from '../components/atoms/Button.astro';
+import Icon from '../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.offers')} - Salut Annecy`} 
+  description="Découvrez nos offres pour professionnels"
+  lang={lang}
+>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('footer.offers')}</h1>
+      <p class="subtitle">
+        Des formules adaptées à tous les besoins et tous les budgets
+      </p>
+    </div>
+  </section>
+
+  <section class="offers-section">
+    <div class="container">
+      <div class="offers-grid">
+        <!-- Offre Essentielle -->
+        <div class="offer-card">
+          <div class="offer-header">
+            <h2>Essentielle</h2>
+            <div class="offer-price">
+              <span class="price">29€</span>
+              <span class="period">/mois</span>
+            </div>
+          </div>
+          <div class="offer-content">
+            <p class="offer-description">Pour démarrer votre présence en ligne</p>
+            <ul class="offer-features">
+              <li><Icon name="check" size="sm" /> Fiche établissement complète</li>
+              <li><Icon name="check" size="sm" /> Jusqu'à 5 photos</li>
+              <li><Icon name="check" size="sm" /> Informations de contact</li>
+              <li><Icon name="check" size="sm" /> Horaires d'ouverture</li>
+              <li><Icon name="check" size="sm" /> Localisation sur carte</li>
+              <li><Icon name="check" size="sm" /> Statistiques de base</li>
+            </ul>
+            <Button href={getLocalizedPath('/contact', lang)} variant="secondary" size="lg" fullWidth={true}>
+              Choisir cette offre
+            </Button>
+          </div>
+        </div>
+
+        <!-- Offre Premium -->
+        <div class="offer-card featured">
+          <div class="featured-badge">Populaire</div>
+          <div class="offer-header">
+            <h2>Premium</h2>
+            <div class="offer-price">
+              <span class="price">79€</span>
+              <span class="period">/mois</span>
+            </div>
+          </div>
+          <div class="offer-content">
+            <p class="offer-description">Pour maximiser votre visibilité</p>
+            <ul class="offer-features">
+              <li><Icon name="check" size="sm" /> Tout de l'offre Essentielle</li>
+              <li><Icon name="check" size="sm" /> Jusqu'à 20 photos</li>
+              <li><Icon name="check" size="sm" /> Badge "Vérifié"</li>
+              <li><Icon name="check" size="sm" /> Mise en avant dans les résultats</li>
+              <li><Icon name="check" size="sm" /> Gestion des avis</li>
+              <li><Icon name="check" size="sm" /> Offres et promotions</li>
+              <li><Icon name="check" size="sm" /> Statistiques avancées</li>
+              <li><Icon name="check" size="sm" /> Support prioritaire</li>
+            </ul>
+            <Button href={getLocalizedPath('/contact', lang)} variant="primary" size="lg" fullWidth={true}>
+              Choisir cette offre
+            </Button>
+          </div>
+        </div>
+
+        <!-- Offre Pro -->
+        <div class="offer-card">
+          <div class="offer-header">
+            <h2>Pro</h2>
+            <div class="offer-price">
+              <span class="price">149€</span>
+              <span class="period">/mois</span>
+            </div>
+          </div>
+          <div class="offer-content">
+            <p class="offer-description">Pour les établissements exigeants</p>
+            <ul class="offer-features">
+              <li><Icon name="check" size="sm" /> Tout de l'offre Premium</li>
+              <li><Icon name="check" size="sm" /> Photos illimitées</li>
+              <li><Icon name="check" size="sm" /> Vidéo de présentation</li>
+              <li><Icon name="check" size="sm" /> Position #1 garantie</li>
+              <li><Icon name="check" size="sm" /> Gestion événements</li>
+              <li><Icon name="check" size="sm" /> Articles sponsorisés (2/mois)</li>
+              <li><Icon name="check" size="sm" /> Campagnes marketing</li>
+              <li><Icon name="check" size="sm" /> Accompagnement dédié</li>
+            </ul>
+            <Button href={getLocalizedPath('/contact', lang)} variant="secondary" size="lg" fullWidth={true}>
+              Choisir cette offre
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="container">
+      <h2 class="section-title">Services Additionnels</h2>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <Icon name="camera" size="lg" />
+          <h3>Shooting Photo Pro</h3>
+          <p>Photos professionnelles de votre établissement par nos photographes partenaires.</p>
+          <div class="service-price">À partir de 199€</div>
+        </div>
+
+        <div class="service-card">
+          <Icon name="video" size="lg" />
+          <h3>Vidéo Promotionnelle</h3>
+          <p>Vidéo de présentation professionnelle pour mettre en valeur votre établissement.</p>
+          <div class="service-price">À partir de 499€</div>
+        </div>
+
+        <div class="service-card">
+          <Icon name="edit" size="lg" />
+          <h3>Article Sponsorisé</h3>
+          <p>Article dédié rédigé par nos journalistes et publié dans notre magazine.</p>
+          <div class="service-price">À partir de 299€</div>
+        </div>
+
+        <div class="service-card">
+          <Icon name="megaphone" size="lg" />
+          <h3>Campagne Publicitaire</h3>
+          <p>Bannières publicitaires ciblées sur notre site et newsletter.</p>
+          <div class="service-price">Sur devis</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="comparison-section">
+    <div class="container">
+      <h2 class="section-title">Comparatif Détaillé</h2>
+      
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Fonctionnalités</th>
+              <th>Essentielle</th>
+              <th>Premium</th>
+              <th>Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fiche établissement</td>
+              <td><Icon name="check" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+            </tr>
+            <tr>
+              <td>Nombre de photos</td>
+              <td>5</td>
+              <td>20</td>
+              <td>Illimitées</td>
+            </tr>
+            <tr>
+              <td>Badge vérifié</td>
+              <td><Icon name="x" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+            </tr>
+            <tr>
+              <td>Mise en avant résultats</td>
+              <td><Icon name="x" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+            </tr>
+            <tr>
+              <td>Gestion des avis</td>
+              <td><Icon name="x" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+            </tr>
+            <tr>
+              <td>Offres & promotions</td>
+              <td><Icon name="x" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+            </tr>
+            <tr>
+              <td>Vidéo de présentation</td>
+              <td><Icon name="x" size="sm" /></td>
+              <td><Icon name="x" size="sm" /></td>
+              <td><Icon name="check" size="sm" /></td>
+            </tr>
+            <tr>
+              <td>Articles sponsorisés/mois</td>
+              <td>0</td>
+              <td>0</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Support</td>
+              <td>Standard</td>
+              <td>Prioritaire</td>
+              <td>Dédié</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="container">
+      <h2 class="section-title">Questions Fréquentes</h2>
+      
+      <div class="faq-content">
+        <div class="faq-item">
+          <h3>Puis-je changer d'offre en cours d'abonnement ?</h3>
+          <p>
+            Oui, vous pouvez passer à une offre supérieure à tout moment. 
+            Le changement est effectif immédiatement et nous ajustons la facturation au prorata.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Y a-t-il un engagement de durée ?</h3>
+          <p>
+            Nos abonnements sont sans engagement. Vous pouvez résilier à tout moment avec 
+            un préavis de 30 jours.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Quels modes de paiement acceptez-vous ?</h3>
+          <p>
+            Nous acceptons les paiements par carte bancaire et virement SEPA pour les abonnements.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Puis-je essayer avant de m'engager ?</h3>
+          <p>
+            Oui, nous offrons une période d'essai gratuite de 14 jours pour toutes nos offres. 
+            Contactez-nous pour en bénéficier.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à Commencer ?</h2>
+        <p>
+          Contactez-nous pour discuter de vos besoins et trouver l'offre la plus adaptée.
+        </p>
+        <div class="cta-actions">
+          <Button href={getLocalizedPath('/contact', lang)} variant="primary" size="lg">
+            Nous Contacter
+          </Button>
+          <Button href={getLocalizedPath('/espace-pro', lang)} variant="secondary" size="lg">
+            En Savoir Plus
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header {
+    padding: var(--spacing-12) 0 var(--spacing-8);
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-xl);
+    opacity: 0.95;
+  }
+
+  .offers-section {
+    padding: var(--spacing-16) 0;
+  }
+
+  .offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .offer-card {
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    position: relative;
+  }
+
+  .offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .offer-card.featured {
+    border-color: var(--color-primary-500);
+    border-width: 3px;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 16px;
+    right: -32px;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+    padding: var(--spacing-2) var(--spacing-10);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    transform: rotate(45deg);
+    z-index: 1;
+  }
+
+  .offer-header {
+    padding: var(--spacing-8) var(--spacing-6);
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+  }
+
+  .offer-header h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .offer-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--spacing-2);
+  }
+
+  .price {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .period {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+  }
+
+  .offer-content {
+    padding: var(--spacing-6);
+  }
+
+  .offer-description {
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .offer-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-8);
+  }
+
+  .offer-features li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) 0;
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+  }
+
+  .services-section,
+  .comparison-section,
+  .faq-section {
+    padding: var(--spacing-16) 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+    color: var(--color-text-primary);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .service-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .service-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin: var(--spacing-4) 0 var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .service-card p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .service-price {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+  }
+
+  .comparison-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-surface);
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: var(--spacing-4);
+    text-align: center;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .comparison-table th {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .comparison-table td:first-child {
+    text-align: left;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .faq-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: var(--spacing-8);
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .faq-item h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .faq-item p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  .cta-section {
+    padding: var(--spacing-16) 0;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .cta-content p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-8);
+    opacity: 0.95;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .offers-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

@@ -1,0 +1,281 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.cookies')} - Salut Annecy`} 
+  description="Politique de gestion des cookies sur Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.cookies')}</h1>
+        <p class="last-updated">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+        
+        <div class="content">
+          <h2>1. Qu'est-ce qu'un Cookie ?</h2>
+          <p>
+            Un cookie est un petit fichier texte déposé sur votre ordinateur ou appareil 
+            mobile lors de votre visite sur un site web. Les cookies permettent au site 
+            de mémoriser vos actions et préférences pendant une période donnée.
+          </p>
+
+          <h2>2. Comment Utilisons-nous les Cookies ?</h2>
+          <p>
+            Salut Annecy utilise des cookies pour :
+          </p>
+          <ul>
+            <li>Améliorer votre expérience de navigation</li>
+            <li>Mémoriser vos préférences (langue, thème, etc.)</li>
+            <li>Analyser l'utilisation du site</li>
+            <li>Personnaliser le contenu et les recommandations</li>
+            <li>Mesurer l'efficacité de nos campagnes</li>
+          </ul>
+
+          <h2>3. Types de Cookies Utilisés</h2>
+          
+          <h3>Cookies Essentiels</h3>
+          <p>
+            Ces cookies sont nécessaires au fonctionnement du site. Ils vous permettent 
+            de naviguer sur le site et d'utiliser ses fonctionnalités. Sans ces cookies, 
+            certains services ne peuvent pas être fournis.
+          </p>
+          <ul>
+            <li>Cookies de session</li>
+            <li>Cookies de sécurité</li>
+            <li>Cookies de préférences utilisateur</li>
+          </ul>
+
+          <h3>Cookies de Performance</h3>
+          <p>
+            Ces cookies collectent des informations sur la façon dont les visiteurs utilisent 
+            le site, comme les pages les plus visitées. Ces données sont anonymes et nous 
+            aident à améliorer le site.
+          </p>
+          <ul>
+            <li>Google Analytics</li>
+            <li>Cookies de mesure d'audience</li>
+          </ul>
+
+          <h3>Cookies de Fonctionnalité</h3>
+          <p>
+            Ces cookies permettent au site de mémoriser vos choix (nom d'utilisateur, langue, 
+            région) et offrent des fonctionnalités améliorées et personnalisées.
+          </p>
+          <ul>
+            <li>Préférences de langue</li>
+            <li>Choix du thème (clair/sombre)</li>
+            <li>Favoris et listes sauvegardées</li>
+          </ul>
+
+          <h3>Cookies de Ciblage/Publicitaires</h3>
+          <p>
+            Ces cookies sont utilisés pour afficher des publicités pertinentes et suivre 
+            l'efficacité de nos campagnes. Ils peuvent être placés par nous ou par nos 
+            partenaires publicitaires.
+          </p>
+
+          <h2>4. Cookies Tiers</h2>
+          <p>
+            Certains cookies sont placés par des services tiers qui apparaissent sur nos pages :
+          </p>
+          <ul>
+            <li>Google Analytics (analyse d'audience)</li>
+            <li>Réseaux sociaux (partage de contenu)</li>
+            <li>Services de cartographie</li>
+          </ul>
+
+          <h2>5. Durée de Conservation</h2>
+          <p>
+            La durée de conservation des cookies varie selon leur type :
+          </p>
+          <ul>
+            <li>Cookies de session : supprimés à la fermeture du navigateur</li>
+            <li>Cookies persistants : conservés jusqu'à 13 mois maximum</li>
+            <li>Cookies de préférences : jusqu'à leur suppression manuelle</li>
+          </ul>
+
+          <h2>6. Gestion des Cookies</h2>
+          <p>
+            Vous pouvez gérer vos préférences en matière de cookies de plusieurs façons :
+          </p>
+
+          <h3>Via Notre Outil de Gestion</h3>
+          <p>
+            Utilisez notre outil de gestion des cookies accessible depuis le bandeau de 
+            consentement ou via le bouton ci-dessous :
+          </p>
+          <div class="cookie-button">
+            <button class="manage-cookies-btn" onclick="alert('Fonctionnalité de gestion des cookies à implémenter')">
+              Gérer mes préférences cookies
+            </button>
+          </div>
+
+          <h3>Via Votre Navigateur</h3>
+          <p>
+            Vous pouvez également configurer votre navigateur pour :
+          </p>
+          <ul>
+            <li>Bloquer tous les cookies</li>
+            <li>Accepter uniquement les cookies de première partie</li>
+            <li>Supprimer les cookies après chaque session</li>
+            <li>Vous alerter avant d'accepter les cookies</li>
+          </ul>
+
+          <p>
+            Voici les liens vers les pages d'aide des principaux navigateurs :
+          </p>
+          <ul>
+            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Chrome</a></li>
+            <li><a href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies" target="_blank" rel="noopener noreferrer">Firefox</a></li>
+            <li><a href="https://support.apple.com/fr-fr/HT201265" target="_blank" rel="noopener noreferrer">Safari</a></li>
+            <li><a href="https://support.microsoft.com/fr-fr/microsoft-edge" target="_blank" rel="noopener noreferrer">Edge</a></li>
+          </ul>
+
+          <h2>7. Conséquences du Refus des Cookies</h2>
+          <p>
+            Le refus des cookies peut affecter votre expérience sur le site :
+          </p>
+          <ul>
+            <li>Impossibilité de mémoriser vos préférences</li>
+            <li>Certaines fonctionnalités peuvent être limitées</li>
+            <li>Le site peut ne pas fonctionner de manière optimale</li>
+          </ul>
+
+          <h2>8. Modification de la Politique</h2>
+          <p>
+            Nous nous réservons le droit de modifier cette politique de cookies à tout moment. 
+            Les modifications seront publiées sur cette page avec une date de mise à jour.
+          </p>
+
+          <h2>9. Contact</h2>
+          <p>
+            Pour toute question concernant notre politique de cookies :
+            <a href="mailto:privacy@salutannecy.fr">privacy@salutannecy.fr</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .last-updated {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-8);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-6);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul li {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2);
+    padding-left: var(--spacing-6);
+    position: relative;
+  }
+
+  .content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  .cookie-button {
+    margin: var(--spacing-6) 0;
+    text-align: center;
+  }
+
+  .manage-cookies-btn {
+    padding: var(--spacing-4) var(--spacing-8);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: white;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .manage-cookies-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+
+    h3 {
+      font-size: var(--font-size-base);
+    }
+  }
+</style>
