@@ -13,7 +13,7 @@
 3. [Composants Existants](#composants-existants)
 4. [Composants Manquants](#composants-manquants)
 5. [État des Traductions (i18n)](#état-des-traductions-i18n)
-6. [Textes Hardcodés](#textes-hardcodés)
+6. [Textes Codés en Dur (Hardcoded)](#textes-codés-en-dur-hardcoded)
 7. [Collections de Contenu](#collections-de-contenu)
 8. [Base de Données](#base-de-données)
 9. [Fonctionnalités Manquantes](#fonctionnalités-manquantes)
@@ -611,9 +611,9 @@
 
 ---
 
-## 📝 Textes Hardcodés
+## 📝 Textes Codés en Dur (Hardcoded)
 
-### 🔴 Pages avec Beaucoup de Texte Hardcodé
+### 🔴 Pages avec Beaucoup de Texte Codé en Dur
 
 #### `/a-propos.astro`
 ```
@@ -740,15 +740,15 @@
 - Contacts presse
 ```
 
-### 🟡 Pages avec Texte Partiellement Hardcodé
+### 🟡 Pages avec Texte Partiellement Codé en Dur
 
 #### `/index.astro` (Page d'accueil)
-- Description meta hardcodée
-- Textes de sections possiblement hardcodés
+- Description meta codée en dur
+- Textes de sections possiblement codés en dur
 
 #### Pages de listing (`/restaurants/index.astro`, etc.)
-- Descriptions meta hardcodées
-- Textes d'introduction hardcodés
+- Descriptions meta codées en dur
+- Textes d'introduction codés en dur
 
 ### ✅ Pages avec Traductions Correctes
 
@@ -1262,7 +1262,7 @@ reported_content
 - **Clés traduites:** ~40 clés
 - **Clés manquantes (estimé):** ~150-200 clés
 - **Taux de complétion:** ~20-25%
-- **Pages avec texte hardcodé:** ~15 pages importantes
+- **Pages avec texte codé en dur:** ~15 pages importantes
 
 ### Contenu
 - **Restaurants:** 7 (objectif: 50+) - 14%
@@ -1299,7 +1299,7 @@ reported_content
 - Thème clair/sombre/contraste
 
 ### Ce qui Manque Cruellement ❌
-1. **Traductions:** 70-80% du texte est hardcodé en français
+1. **Traductions:** 70-80% du texte est codé en dur en français
 2. **Composants:** Manque de composants réutilisables (formulaires, modales, etc.)
 3. **Base de données:** Aucune BDD configurée
 4. **Authentification:** Pas de système de login
@@ -1321,7 +1321,7 @@ Le projet a de bonnes fondations (structure, design, i18n setup) mais manque de:
 
 ### Cette Semaine
 1. ✅ Créer ce document de résumé
-2. 🔲 Extraire tous les textes hardcodés en traductions
+2. 🔲 Extraire tous les textes codés en dur en traductions
 3. 🔲 Créer les composants de formulaire (Input, Select, Textarea)
 4. 🔲 Configurer Drizzle + PostgreSQL
 
