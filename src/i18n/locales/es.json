@@ -102,5 +102,11 @@
     "all_accommodations": "Todos los alojamientos",
     "all_activities": "Todas las actividades",
     "all_services": "Todos los servicios"
+  },
+  "error": {
+    "404_title": "Página no encontrada",
+    "404_description": "Lo sentimos, la página que busca no existe o ha sido movida.",
+    "back_home": "Volver al inicio",
+    "discover_restaurants": "Descubrir restaurantes"
   }
 }

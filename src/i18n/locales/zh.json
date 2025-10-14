@@ -102,5 +102,11 @@
     "all_accommodations": "所有住宿",
     "all_activities": "所有活动",
     "all_services": "所有服务"
+  },
+  "error": {
+    "404_title": "页面未找到",
+    "404_description": "抱歉，您要查找的页面不存在或已被移动。",
+    "back_home": "返回首页",
+    "discover_restaurants": "发现餐厅"
   }
 }
