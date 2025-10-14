@@ -1,0 +1,10 @@
+{
+  "id": "festival",
+  "name": "مهرجان",
+  "description": "المهرجانات الثقافية والموسيقية",
+  "slug": "festival",
+  "icon": "music",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

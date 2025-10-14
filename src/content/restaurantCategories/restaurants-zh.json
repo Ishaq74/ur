@@ -1,0 +1,10 @@
+{
+  "id": "restaurants",
+  "name": "餐厅",
+  "description": "各类餐厅",
+  "slug": "restaurants",
+  "icon": "silverware-fork-knife",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

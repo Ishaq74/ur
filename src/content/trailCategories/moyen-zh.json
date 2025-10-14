@@ -1,0 +1,10 @@
+{
+  "id": "moyen",
+  "name": "中等",
+  "description": "中等路线，建议有一定经验",
+  "slug": "moyen",
+  "icon": "hiking",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

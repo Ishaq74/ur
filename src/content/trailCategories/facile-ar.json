@@ -1,0 +1,10 @@
+{
+  "id": "facile",
+  "name": "سهل",
+  "description": "مسارات سهلة للجميع",
+  "slug": "facile",
+  "icon": "walk",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

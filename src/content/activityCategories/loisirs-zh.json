@@ -1,0 +1,10 @@
+{
+  "id": "loisirs",
+  "name": "休闲",
+  "description": "休闲和娱乐活动",
+  "slug": "loisirs",
+  "icon": "emoticon-happy",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "moyen",
+  "name": "Moderado",
+  "description": "Senderos moderados, se recomienda algo de experiencia",
+  "slug": "moyen",
+  "icon": "hiking",
+  "order": 2,
+  "published": true,
+  "lang": "es"
+}

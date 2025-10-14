@@ -1,0 +1,10 @@
+{
+  "id": "cafes-the",
+  "name": "Cafés & Teestuben",
+  "description": "Cafés und Teestuben",
+  "slug": "cafes-the",
+  "parentId": "bars-cafes",
+  "order": 2,
+  "published": true,
+  "lang": "de"
+}

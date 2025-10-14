@@ -1,0 +1,10 @@
+{
+  "id": "epiceries",
+  "name": "Lebensmittelgeschäfte",
+  "description": "Lebensmittelgeschäfte und Feinkostläden",
+  "slug": "epiceries",
+  "icon": "shopping",
+  "order": 3,
+  "published": true,
+  "lang": "de"
+}

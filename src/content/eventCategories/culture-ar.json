@@ -1,0 +1,10 @@
+{
+  "id": "culture",
+  "name": "الثقافة والسينما",
+  "description": "الفعاليات الثقافية والسينما",
+  "slug": "culture-cinema",
+  "icon": "movie",
+  "order": 2,
+  "published": true,
+  "lang": "ar"
+}

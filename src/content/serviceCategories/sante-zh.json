@@ -1,0 +1,10 @@
+{
+  "id": "sante",
+  "name": "健康",
+  "description": "健康和医疗服务",
+  "slug": "sante",
+  "icon": "medical-bag",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

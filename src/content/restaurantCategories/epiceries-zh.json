@@ -1,0 +1,10 @@
+{
+  "id": "epiceries",
+  "name": "杂货店",
+  "description": "杂货店和熟食店",
+  "slug": "epiceries",
+  "icon": "shopping",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

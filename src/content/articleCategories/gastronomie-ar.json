@@ -1,0 +1,10 @@
+{
+  "id": "gastronomie",
+  "name": "فن الطهي",
+  "description": "الطعام والفنون الطهوية",
+  "slug": "gastronomie",
+  "icon": "food",
+  "order": 2,
+  "published": true,
+  "lang": "ar"
+}

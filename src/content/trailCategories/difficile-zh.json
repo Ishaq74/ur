@@ -1,0 +1,10 @@
+{
+  "id": "difficile",
+  "name": "困难",
+  "description": "困难路线，需要经验",
+  "slug": "difficile",
+  "icon": "mountain",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

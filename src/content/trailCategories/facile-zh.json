@@ -1,0 +1,10 @@
+{
+  "id": "facile",
+  "name": "简单",
+  "description": "适合所有人的简单路线",
+  "slug": "facile",
+  "icon": "walk",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

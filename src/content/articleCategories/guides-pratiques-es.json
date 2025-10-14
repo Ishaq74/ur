@@ -1,0 +1,10 @@
+{
+  "id": "guides-pratiques",
+  "name": "Guías Prácticas",
+  "description": "Información práctica y guías",
+  "slug": "guides-pratiques",
+  "icon": "map",
+  "order": 4,
+  "published": true,
+  "lang": "es"
+}

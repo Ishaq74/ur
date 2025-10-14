@@ -1,0 +1,10 @@
+{
+  "id": "campings",
+  "name": "Campings",
+  "description": "Campings y zonas de acampada",
+  "slug": "campings",
+  "icon": "campfire",
+  "order": 4,
+  "published": true,
+  "lang": "es"
+}

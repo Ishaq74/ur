@@ -1,0 +1,10 @@
+{
+  "id": "auberges",
+  "name": "青年旅舍",
+  "description": "青年旅舍和经济型住宿",
+  "slug": "auberges",
+  "icon": "home",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

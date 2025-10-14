@@ -1,0 +1,10 @@
+{
+  "id": "cafes-the",
+  "name": "المقاهي وصالونات الشاي",
+  "description": "المقاهي وصالونات الشاي",
+  "slug": "cafes-the",
+  "parentId": "bars-cafes",
+  "order": 2,
+  "published": true,
+  "lang": "ar"
+}

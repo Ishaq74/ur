@@ -1,0 +1,10 @@
+{
+  "id": "maintenance",
+  "name": "الصيانة",
+  "description": "خدمات الصيانة والإصلاح",
+  "slug": "maintenance",
+  "icon": "tools",
+  "order": 3,
+  "published": true,
+  "lang": "ar"
+}

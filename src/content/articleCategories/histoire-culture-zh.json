@@ -1,0 +1,10 @@
+{
+  "id": "histoire-culture",
+  "name": "历史与文化",
+  "description": "历史和当地文化",
+  "slug": "histoire-culture",
+  "icon": "book-open",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

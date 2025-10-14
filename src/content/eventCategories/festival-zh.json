@@ -1,0 +1,10 @@
+{
+  "id": "festival",
+  "name": "节日",
+  "description": "文化和音乐节",
+  "slug": "festival",
+  "icon": "music",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

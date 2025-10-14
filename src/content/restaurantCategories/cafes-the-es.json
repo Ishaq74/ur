@@ -1,0 +1,10 @@
+{
+  "id": "cafes-the",
+  "name": "Cafés y Salones de Té",
+  "description": "Cafés y salones de té",
+  "slug": "cafes-the",
+  "parentId": "bars-cafes",
+  "order": 2,
+  "published": true,
+  "lang": "es"
+}

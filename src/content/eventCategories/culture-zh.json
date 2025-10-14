@@ -1,0 +1,10 @@
+{
+  "id": "culture",
+  "name": "文化与电影",
+  "description": "文化活动和电影",
+  "slug": "culture-cinema",
+  "icon": "movie",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

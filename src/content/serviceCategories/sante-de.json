@@ -1,0 +1,10 @@
+{
+  "id": "sante",
+  "name": "Gesundheit",
+  "description": "Gesundheits- und medizinische Dienstleistungen",
+  "slug": "sante",
+  "icon": "medical-bag",
+  "order": 1,
+  "published": true,
+  "lang": "de"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "bars-pubs",
+  "name": "الحانات والبارات",
+  "description": "الحانات التقليدية والبارات",
+  "slug": "bars-pubs",
+  "parentId": "bars-cafes",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "facile",
+  "name": "Einfach",
+  "description": "Einfache Wanderwege für alle",
+  "slug": "facile",
+  "icon": "walk",
+  "order": 1,
+  "published": true,
+  "lang": "de"
+}

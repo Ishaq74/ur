@@ -1,0 +1,10 @@
+{
+  "id": "hotels",
+  "name": "الفنادق",
+  "description": "الفنادق والإقامة",
+  "slug": "hotels",
+  "icon": "hotel",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

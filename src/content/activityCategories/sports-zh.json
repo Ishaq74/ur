@@ -1,0 +1,10 @@
+{
+  "id": "sports",
+  "name": "体育",
+  "description": "体育和户外活动",
+  "slug": "sports",
+  "icon": "run-fast",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

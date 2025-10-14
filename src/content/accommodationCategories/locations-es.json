@@ -1,0 +1,10 @@
+{
+  "id": "locations",
+  "name": "Alquileres Vacacionales",
+  "description": "Alquileres vacacionales y apartamentos",
+  "slug": "locations",
+  "icon": "home-city",
+  "order": 3,
+  "published": true,
+  "lang": "es"
+}

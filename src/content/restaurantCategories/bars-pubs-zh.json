@@ -1,0 +1,10 @@
+{
+  "id": "bars-pubs",
+  "name": "酒吧和酒馆",
+  "description": "传统酒吧",
+  "slug": "bars-pubs",
+  "parentId": "bars-cafes",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

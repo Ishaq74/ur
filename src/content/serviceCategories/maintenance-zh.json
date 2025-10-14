@@ -1,0 +1,10 @@
+{
+  "id": "maintenance",
+  "name": "维护",
+  "description": "维护和维修服务",
+  "slug": "maintenance",
+  "icon": "tools",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

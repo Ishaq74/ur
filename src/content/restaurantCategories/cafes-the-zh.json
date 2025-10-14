@@ -1,0 +1,10 @@
+{
+  "id": "cafes-the",
+  "name": "咖啡馆和茶室",
+  "description": "咖啡馆和茶室",
+  "slug": "cafes-the",
+  "parentId": "bars-cafes",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

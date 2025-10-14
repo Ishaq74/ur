@@ -1,0 +1,10 @@
+{
+  "id": "festival",
+  "name": "Festival",
+  "description": "Kultur- und Musikfestivals",
+  "slug": "festival",
+  "icon": "music",
+  "order": 1,
+  "published": true,
+  "lang": "de"
+}

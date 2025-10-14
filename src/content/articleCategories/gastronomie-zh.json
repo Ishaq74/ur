@@ -1,0 +1,10 @@
+{
+  "id": "gastronomie",
+  "name": "美食",
+  "description": "美食和烹饪艺术",
+  "slug": "gastronomie",
+  "icon": "food",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

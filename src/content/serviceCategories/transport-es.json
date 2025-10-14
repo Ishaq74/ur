@@ -1,0 +1,10 @@
+{
+  "id": "transport",
+  "name": "Transporte",
+  "description": "Servicios de transporte",
+  "slug": "transport",
+  "icon": "bus",
+  "order": 2,
+  "published": true,
+  "lang": "es"
+}

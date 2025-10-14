@@ -1,0 +1,10 @@
+{
+  "id": "bars-cafes",
+  "name": "酒吧和咖啡馆",
+  "description": "酒吧、咖啡馆和啤酒馆",
+  "slug": "bars-cafes",
+  "icon": "coffee",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

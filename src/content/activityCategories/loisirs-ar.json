@@ -1,0 +1,10 @@
+{
+  "id": "loisirs",
+  "name": "الترفيه",
+  "description": "أنشطة الترفيه والتسلية",
+  "slug": "loisirs",
+  "icon": "emoticon-happy",
+  "order": 3,
+  "published": true,
+  "lang": "ar"
+}
