@@ -286,15 +286,41 @@ Many content items reference images in `/images/` directory that don't exist yet
 - Improved trail difficulty and distance filtering logic
 - Changed trail distance parsing from `parseInt` to `parseFloat` for accuracy
 
-## 📚 Additional Documentation
+## 📚 Documentation
 
-For historical context and detailed migration information, see:
+### 📋 Current Project Status (Start Here!)
+
+**New contributors and stakeholders should start with these comprehensive audit documents:**
+
+- **[RESUME.md](./RESUME.md)** - 📋 **Complete audit in French** (1,349 lines, 35KB)
+  - Full detailed analysis for French-speaking team members
+  - Complete inventory of all pages, components, translations, and content
+  - Comprehensive analysis of what exists and what's missing
+  - Prioritized recommendations and roadmap
+  
+- **[RESUME_EN.md](./RESUME_EN.md)** - 📋 **Executive summary in English** (321 lines, 8.3KB)
+  - Quick overview for international contributors
+  - Key metrics and critical gaps
+  - Priority recommendations and getting started guide
+  - Links to full French document for details
+
+**👉 Choose RESUME.md for complete details in French, or RESUME_EN.md for a quick English overview.**
+
+- **[TASKS.md](./TASKS.md)** - ✅ **Detailed task list** (1,364 lines, 37KB)
+  - 1,100+ detailed frontend tasks organized in 10 sections
+  - Focus on translations, components, pages, content, and optimizations
+  - Timeline: 9-13 weeks of frontend work
+  - Database/Auth intentionally excluded (will come after frontend completion)
+
+### 📜 Migration History (Legacy)
+
+For historical context about the migration from React to Astro:
 - `MIGRATION_SUMMARY.md` - React to Astro migration details
 - `CONTENT_ENHANCEMENT_SUMMARY.md` - Content collections setup
 - `ASTRO_MIGRATION.md` - Technical migration notes
 - Other `*_SUMMARY.md` files - Various implementation details
 
-**Note**: These files will be removed in the next cleanup to keep documentation focused on the current state.
+**Note**: These legacy files will be archived in the next cleanup to focus on current documentation.
 
 ## 🎯 Next Steps
 
