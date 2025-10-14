@@ -286,26 +286,35 @@ Many content items reference images in `/images/` directory that don't exist yet
 - Improved trail difficulty and distance filtering logic
 - Changed trail distance parsing from `parseInt` to `parseFloat` for accuracy
 
-## 📚 Additional Documentation
+## 📚 Documentation
 
-### Project Status & Audit
-- **[RESUME.md](./RESUME.md)** - 📋 **Comprehensive project audit in French** (1,349 lines)
+### 📋 Current Project Status (Start Here!)
+
+**New contributors and stakeholders should start with these comprehensive audit documents:**
+
+- **[RESUME.md](./RESUME.md)** - 📋 **Complete audit in French** (1,349 lines, 35KB)
+  - Full detailed analysis for French-speaking team members
   - Complete inventory of all pages, components, translations, and content
-  - Detailed analysis of what exists and what's missing
+  - Comprehensive analysis of what exists and what's missing
   - Prioritized recommendations and roadmap
-- **[RESUME_EN.md](./RESUME_EN.md)** - 📋 **English summary** (321 lines)
-  - Quick overview and key metrics
-  - Critical gaps and priorities
-  - Getting started guide
+  
+- **[RESUME_EN.md](./RESUME_EN.md)** - 📋 **Executive summary in English** (321 lines, 8.3KB)
+  - Quick overview for international contributors
+  - Key metrics and critical gaps
+  - Priority recommendations and getting started guide
+  - Links to full French document for details
 
-### Historical Documentation
-For historical context and detailed migration information, see:
+**👉 Choose RESUME.md for complete details in French, or RESUME_EN.md for a quick English overview.**
+
+### 📜 Migration History (Legacy)
+
+For historical context about the migration from React to Astro:
 - `MIGRATION_SUMMARY.md` - React to Astro migration details
 - `CONTENT_ENHANCEMENT_SUMMARY.md` - Content collections setup
 - `ASTRO_MIGRATION.md` - Technical migration notes
 - Other `*_SUMMARY.md` files - Various implementation details
 
-**Note**: These files will be removed in the next cleanup to keep documentation focused on the current state.
+**Note**: These legacy files will be archived in the next cleanup to focus on current documentation.
 
 ## 🎯 Next Steps
 
