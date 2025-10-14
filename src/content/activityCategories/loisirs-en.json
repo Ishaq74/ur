@@ -1,10 +1,10 @@
 {
   "id": "loisirs",
-  "name": "Loisirs",
-  "description": "Parcs, jardins et centres de loisirs",
+  "name": "Leisure",
+  "description": "Leisure and entertainment activities",
   "slug": "loisirs",
   "icon": "emoticon-happy",
   "order": 3,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

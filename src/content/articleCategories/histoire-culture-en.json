@@ -1,10 +1,10 @@
 {
   "id": "histoire-culture",
-  "name": "Histoire & Culture",
-  "description": "Découvrez l'histoire et la culture d'Annecy",
+  "name": "History & Culture",
+  "description": "History and local culture",
   "slug": "histoire-culture",
   "icon": "book-open",
   "order": 1,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

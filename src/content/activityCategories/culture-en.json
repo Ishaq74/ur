@@ -1,10 +1,10 @@
 {
   "id": "culture",
   "name": "Culture",
-  "description": "Musées, galeries et patrimoine",
+  "description": "Cultural activities and museums",
   "slug": "culture",
   "icon": "museum",
   "order": 2,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

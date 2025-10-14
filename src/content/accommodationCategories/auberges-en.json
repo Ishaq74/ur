@@ -1,10 +1,10 @@
 {
   "id": "auberges",
-  "name": "Auberges",
-  "description": "Auberges traditionnelles et familiales",
+  "name": "Hostels",
+  "description": "Youth hostels and budget accommodations",
   "slug": "auberges",
   "icon": "home",
   "order": 2,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

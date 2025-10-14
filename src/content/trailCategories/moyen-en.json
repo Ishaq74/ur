@@ -1,0 +1,10 @@
+{
+  "id": "moyen",
+  "name": "Moderate",
+  "description": "Moderate trails, some experience recommended",
+  "slug": "moyen",
+  "icon": "hiking",
+  "order": 2,
+  "published": true,
+  "lang": "en"
+}

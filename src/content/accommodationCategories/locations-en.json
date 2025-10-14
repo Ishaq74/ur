@@ -1,10 +1,10 @@
 {
   "id": "locations",
-  "name": "Locations",
-  "description": "Appartements, maisons et chalets en location",
+  "name": "Vacation Rentals",
+  "description": "Vacation rentals and apartments",
   "slug": "locations",
   "icon": "home-city",
   "order": 3,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

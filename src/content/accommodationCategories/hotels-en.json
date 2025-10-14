@@ -1,10 +1,10 @@
 {
   "id": "hotels",
-  "name": "Hôtels",
-  "description": "Hôtels de toutes catégories",
+  "name": "Hotels",
+  "description": "Hotels and lodging",
   "slug": "hotels",
   "icon": "hotel",
   "order": 1,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

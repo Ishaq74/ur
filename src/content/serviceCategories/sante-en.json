@@ -1,10 +1,10 @@
 {
   "id": "sante",
-  "name": "Santé",
-  "description": "Services de santé et pharmacies",
+  "name": "Health",
+  "description": "Health and medical services",
   "slug": "sante",
   "icon": "medical-bag",
   "order": 1,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

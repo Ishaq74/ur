@@ -1,10 +1,10 @@
 {
   "id": "sport",
-  "name": "Sport",
-  "description": "Événements sportifs",
+  "name": "Sports",
+  "description": "Sports events and competitions",
   "slug": "sport",
   "icon": "run",
   "order": 3,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

@@ -5,7 +5,7 @@ const locationSchema = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string(),
-  categoryId: z.string(),
+  categoryId: z.string().optional(),
   address: z.string().optional(),
   phone: z.string().optional(),
   website: z.string().optional(),
@@ -34,28 +34,36 @@ const locationSchema = z.object({
   updatedAt: z.string().optional(),
 });
 
-// Restaurant collection
+// Restaurant collection with category reference
 const restaurantsCollection = defineCollection({
   type: 'data',
-  schema: locationSchema,
+  schema: locationSchema.extend({
+    category: reference('restaurantCategories').optional(),
+  }),
 });
 
-// Accommodation collection
+// Accommodation collection with category reference
 const accommodationsCollection = defineCollection({
   type: 'data',
-  schema: locationSchema,
+  schema: locationSchema.extend({
+    category: reference('accommodationCategories').optional(),
+  }),
 });
 
-// Activity collection
+// Activity collection with category reference
 const activitiesCollection = defineCollection({
   type: 'data',
-  schema: locationSchema,
+  schema: locationSchema.extend({
+    category: reference('activityCategories').optional(),
+  }),
 });
 
-// Service collection
+// Service collection with category reference
 const servicesCollection = defineCollection({
   type: 'data',
-  schema: locationSchema,
+  schema: locationSchema.extend({
+    category: reference('serviceCategories').optional(),
+  }),
 });
 
 // Category schema
@@ -156,7 +164,8 @@ const eventsCollection = defineCollection({
     date: z.string(),
     endDate: z.string().optional(),
     location: z.string(),
-    category: z.string(),
+    category: reference('eventCategories').optional(),
+    categoryId: z.string().optional(),
     organizer: z.string().optional(),
     website: z.string().optional(),
     price: z.string().optional(),
@@ -181,6 +190,7 @@ const trailsCollection = defineCollection({
     name: z.string(),
     excerpt: z.string(),
     description: z.string(),
+    category: reference('trailCategories').optional(),
     categoryId: z.string().optional(),
     difficulty: z.enum(['facile', 'moyen', 'difficile']),
     distance: z.string(),
@@ -214,7 +224,7 @@ const articlesCollection = defineCollection({
     title: z.string(),
     excerpt: z.string(),
     imageUrl: z.string(),
-    category: z.string(),
+    category: reference('articleCategories').optional(),
     categoryId: z.string().optional(),
     authorId: z.string(),
     date: z.string(),

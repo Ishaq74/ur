@@ -1,0 +1,10 @@
+{
+  "id": "restaurants",
+  "name": "Restaurants",
+  "description": "All types of restaurants",
+  "slug": "restaurants",
+  "icon": "silverware",
+  "order": 6,
+  "published": true,
+  "lang": "en"
+}

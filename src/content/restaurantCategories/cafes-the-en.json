@@ -1,0 +1,10 @@
+{
+  "id": "cafes-the",
+  "name": "Cafés & Tea Rooms",
+  "description": "Cafés and tea rooms",
+  "slug": "cafes-the",
+  "icon": "tea",
+  "order": 3,
+  "published": true,
+  "lang": "en"
+}

@@ -1,10 +1,10 @@
 {
   "id": "maintenance",
   "name": "Maintenance",
-  "description": "Services de maintenance et réparation",
+  "description": "Maintenance and repair services",
   "slug": "maintenance",
   "icon": "tools",
   "order": 3,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }

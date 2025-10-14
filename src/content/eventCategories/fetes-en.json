@@ -1,10 +1,10 @@
 {
   "id": "fetes",
-  "name": "Fêtes et Traditions",
-  "description": "Fêtes traditionnelles et célébrations",
+  "name": "Festivities & Traditions",
+  "description": "Local festivities and traditions",
   "slug": "fetes-traditions",
   "icon": "party-popper",
   "order": 4,
   "published": true,
-  "lang": "fr"
+  "lang": "en"
 }
