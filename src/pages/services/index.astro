@@ -93,6 +93,35 @@ allServices.forEach((s: any) => {
     </div>
   </section>
 
+  <!-- Category Cards Section -->
+  {!categoryFilter && serviceCategories.length > 0 && (
+    <section class="categories-section">
+      <div class="container">
+        <h2 class="section-title">Par catégorie</h2>
+        <div class="categories-grid">
+          {serviceCategories
+            .filter((cat: any) => !cat.data.parentId && cat.data.published)
+            .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+            .map(category => (
+              <Card 
+                href={getLocalizedPath(`/services/${category.data.slug}`, lang)} 
+                hoverable={true}
+                class="category-card"
+              >
+                <div class="category-content">
+                  {category.data.icon && <Icon name={category.data.icon} size="xl" />}
+                  <h3>{category.data.name}</h3>
+                  {category.data.description && (
+                    <p class="category-description">{category.data.description}</p>
+                  )}
+                </div>
+              </Card>
+            ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   <section class="content-section">
     <div class="container">
       {shops.length > 0 ? (
@@ -158,6 +187,49 @@ allServices.forEach((s: any) => {
 
   .subtitle {
     font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .categories-section {
+    padding: var(--spacing-12) 0;
+    background: var(--color-background);
+  }
+
+  .section-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-6);
+    color: var(--color-text-primary);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .category-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .category-content {
+    text-align: center;
+  }
+
+  .category-content h3 {
+    margin: var(--spacing-4) 0 var(--spacing-2);
+    color: var(--color-text-primary);
+  }
+
+  .category-description {
+    font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
   }
 
