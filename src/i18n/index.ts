@@ -67,8 +67,21 @@ export function getLangFromUrl(url: URL): Language {
 }
 
 export function getLocalizedPath(path: string, lang: Language): string {
+  // Remove existing language prefix if present
+  const pathWithoutLang = Object.keys(languages).reduce((acc, l) => {
+    const prefix = `/${l}/`;
+    const prefixNoSlash = `/${l}`;
+    if (acc.startsWith(prefix)) {
+      return acc.substring(prefix.length - 1); // Keep the leading slash
+    } else if (acc === prefixNoSlash) {
+      return '/';
+    }
+    return acc;
+  }, path);
+
+  // Add new language prefix if not default language
   if (lang === defaultLang) {
-    return path;
+    return pathWithoutLang;
   }
-  return `/${lang}${path}`;
+  return `/${lang}${pathWithoutLang}`;
 }
