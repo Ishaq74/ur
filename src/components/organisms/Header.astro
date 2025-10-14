@@ -70,12 +70,12 @@ const serviceCategoriesOrg = organizeCategories(serviceCategories);
                     <h4>{category.data.name}</h4>
                     {category.children && category.children.length > 0 ? (
                       category.children.map((child: any) => (
-                        <a href={getLocalizedPath(`/restaurants?cat=${child.data.slug}`, lang)}>
+                        <a href={getLocalizedPath(`/restaurants/${child.data.slug}`, lang)}>
                           {child.data.name}
                         </a>
                       ))
                     ) : (
-                      <a href={getLocalizedPath(`/restaurants?cat=${category.data.slug}`, lang)}>
+                      <a href={getLocalizedPath(`/restaurants/${category.data.slug}`, lang)}>
                         {category.data.description || 'Voir tout'}
                       </a>
                     )}
@@ -101,12 +101,12 @@ const serviceCategoriesOrg = organizeCategories(serviceCategories);
                   <h4>{category.data.name}</h4>
                   {category.children && category.children.length > 0 ? (
                     category.children.map((child: any) => (
-                      <a href={getLocalizedPath(`/hebergements?cat=${child.data.slug}`, lang)}>
+                      <a href={getLocalizedPath(`/hebergements/${child.data.slug}`, lang)}>
                         {child.data.name}
                       </a>
                     ))
                   ) : (
-                    <a href={getLocalizedPath(`/hebergements?cat=${category.data.slug}`, lang)}>
+                    <a href={getLocalizedPath(`/hebergements/${category.data.slug}`, lang)}>
                       {category.data.description || 'Voir tout'}
                     </a>
                   )}
@@ -131,12 +131,12 @@ const serviceCategoriesOrg = organizeCategories(serviceCategories);
                   <h4>{category.data.name}</h4>
                   {category.children && category.children.length > 0 ? (
                     category.children.map((child: any) => (
-                      <a href={getLocalizedPath(`/activites?cat=${child.data.slug}`, lang)}>
+                      <a href={getLocalizedPath(`/activites/${child.data.slug}`, lang)}>
                         {child.data.name}
                       </a>
                     ))
                   ) : (
-                    <a href={getLocalizedPath(`/activites?cat=${category.data.slug}`, lang)}>
+                    <a href={getLocalizedPath(`/activites/${category.data.slug}`, lang)}>
                       {category.data.description || 'Voir tout'}
                     </a>
                   )}

@@ -1,0 +1,9 @@
+{
+  "id": "sport",
+  "name": "Sport",
+  "description": "Événements sportifs",
+  "slug": "sport",
+  "icon": "run",
+  "order": 3,
+  "published": true
+}

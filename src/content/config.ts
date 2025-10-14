@@ -107,6 +107,11 @@ const trailCategoriesCollection = defineCollection({
   schema: categorySchema,
 });
 
+const eventCategoriesCollection = defineCollection({
+  type: 'data',
+  schema: categorySchema,
+});
+
 // Legacy places collection (deprecated, kept for backward compatibility)
 const placesCollection = defineCollection({
   type: 'data',
@@ -256,6 +261,7 @@ export const collections = {
   'serviceCategories': serviceCategoriesCollection,
   'articleCategories': articleCategoriesCollection,
   'trailCategories': trailCategoriesCollection,
+  'eventCategories': eventCategoriesCollection,
   
   // Legacy collections (kept for backward compatibility)
   'places': placesCollection,
