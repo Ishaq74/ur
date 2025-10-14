@@ -1,0 +1,10 @@
+{
+  "id": "moyen",
+  "name": "Mittel",
+  "description": "Mittelschwere Wege, etwas Erfahrung empfohlen",
+  "slug": "moyen",
+  "icon": "hiking",
+  "order": 2,
+  "published": true,
+  "lang": "de"
+}

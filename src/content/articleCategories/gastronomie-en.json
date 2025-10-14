@@ -1,0 +1,10 @@
+{
+  "id": "gastronomie",
+  "name": "Gastronomy",
+  "description": "Food and culinary arts",
+  "slug": "gastronomie",
+  "icon": "food",
+  "order": 2,
+  "published": true,
+  "lang": "en"
+}

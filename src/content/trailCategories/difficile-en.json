@@ -1,0 +1,10 @@
+{
+  "id": "difficile",
+  "name": "Difficult",
+  "description": "Difficult trails, experience required",
+  "slug": "difficile",
+  "icon": "mountain",
+  "order": 3,
+  "published": true,
+  "lang": "en"
+}

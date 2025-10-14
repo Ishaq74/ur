@@ -1,0 +1,10 @@
+{
+  "id": "culture",
+  "name": "Culture",
+  "description": "Cultural activities and museums",
+  "slug": "culture",
+  "icon": "museum",
+  "order": 2,
+  "published": true,
+  "lang": "en"
+}

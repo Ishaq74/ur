@@ -1,0 +1,10 @@
+{
+  "id": "fetes",
+  "name": "Festivities & Traditions",
+  "description": "Local festivities and traditions",
+  "slug": "fetes-traditions",
+  "icon": "party-popper",
+  "order": 4,
+  "published": true,
+  "lang": "en"
+}

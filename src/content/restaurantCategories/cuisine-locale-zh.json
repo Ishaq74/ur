@@ -1,0 +1,10 @@
+{
+  "id": "cuisine-locale",
+  "name": "本地美食",
+  "description": "传统本地和地区美食",
+  "slug": "locale",
+  "parentId": "restaurants",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

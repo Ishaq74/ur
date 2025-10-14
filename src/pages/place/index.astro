@@ -12,39 +12,11 @@ const t = useTranslations(lang);
 const allPlaces = await getCollection('places');
 
 // For static builds, show all published places
-let places = allPlaces.filter((place: any) => place.data.published);
+let places = allPlaces.filter((place) => place.data.published);
 
-// Define the main categories for places
-const categories = [
-  { 
-    slug: 'restauration', 
-    mainCategory: 'restauration',
-    title: 'Restaurants',
-    description: 'Découvrez les meilleurs restaurants d\'Annecy et ses environs',
-    icon: 'silverware-fork-knife'
-  },
-  { 
-    slug: 'hebergement', 
-    mainCategory: 'hebergement',
-    title: 'Hébergements',
-    description: 'Trouvez l\'hébergement parfait pour votre séjour à Annecy',
-    icon: 'hotel'
-  },
-  { 
-    slug: 'activites', 
-    mainCategory: 'activites',
-    title: 'Activités',
-    description: 'Explorez toutes les activités à Annecy et ses environs',
-    icon: 'run-fast'
-  },
-  { 
-    slug: 'shopping', 
-    mainCategory: 'shopping',
-    title: 'Shopping & Services',
-    description: 'Explorez les commerces et services d\'Annecy',
-    icon: 'shopping-outline'
-  }
-];
+// Get main categories from collection filtered by language
+const allCategories = await getCollection('placeCategories');
+const categories = allCategories.filter((cat) => cat.data.lang === lang);
 ---
 
 <MainLayout 
@@ -66,16 +38,16 @@ const categories = [
       <div class="categories-grid">
         {categories.map(category => (
           <Card 
-            href={getLocalizedPath(`/place/${category.slug}`, lang)} 
+            href={getLocalizedPath(`/place/${category.data.slug}`, lang)} 
             hoverable={true}
             class="category-card"
           >
             <div class="category-content">
-              <Icon name={category.icon} size="xl" />
-              <h3>{category.title}</h3>
-              <p class="category-description">{category.description}</p>
+              <Icon name={category.data.icon} size="xl" />
+              <h3>{category.data.name}</h3>
+              <p class="category-description">{category.data.description}</p>
               <span class="category-count">
-                {places.filter(p => p.data.mainCategory === category.mainCategory).length} lieux
+                {places.filter(p => p.data.mainCategory.id === category.data.id).length} lieux
               </span>
             </div>
           </Card>

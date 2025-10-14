@@ -1,0 +1,10 @@
+{
+  "id": "hotels",
+  "name": "Hotels",
+  "description": "Hotels and lodging",
+  "slug": "hotels",
+  "icon": "hotel",
+  "order": 1,
+  "published": true,
+  "lang": "en"
+}

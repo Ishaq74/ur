@@ -1,0 +1,10 @@
+{
+  "id": "culture",
+  "name": "Culture",
+  "description": "Cultural activities and museums",
+  "slug": "culture-cinema",
+  "icon": "movie",
+  "order": 2,
+  "published": true,
+  "lang": "en"
+}

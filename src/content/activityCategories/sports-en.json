@@ -1,0 +1,10 @@
+{
+  "id": "sports",
+  "name": "Sports",
+  "description": "Sports and outdoor activities",
+  "slug": "sports",
+  "icon": "run-fast",
+  "order": 1,
+  "published": true,
+  "lang": "en"
+}

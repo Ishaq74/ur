@@ -1,0 +1,10 @@
+{
+  "id": "restauration",
+  "name": "Restaurants",
+  "description": "Entdecken Sie die besten Restaurants in Annecy und Umgebung",
+  "slug": "restauration",
+  "icon": "silverware-fork-knife",
+  "order": 1,
+  "published": true,
+  "lang": "de"
+}

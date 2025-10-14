@@ -6,10 +6,13 @@ import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const trailCategories = await getCollection('trailCategories');
+  const allTrailCategories = await getCollection('trailCategories');
   const allTrails = await getCollection('trails');
   
-  return trailCategories.map(category => ({
+  // Only use French categories for routing (default language)
+  const frenchCategories = allTrailCategories.filter((cat: any) => cat.data.lang === 'fr');
+  
+  return frenchCategories.map(category => ({
     params: { category: category.data.slug },
     props: { 
       category,

@@ -1,0 +1,10 @@
+{
+  "id": "culture",
+  "name": "Kultur & Kino",
+  "description": "Kulturelle Veranstaltungen und Kino",
+  "slug": "culture",
+  "icon": "museum",
+  "order": 2,
+  "published": true,
+  "lang": "de"
+}

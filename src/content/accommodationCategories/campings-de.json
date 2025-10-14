@@ -1,0 +1,10 @@
+{
+  "id": "campings",
+  "name": "Campingplätze",
+  "description": "Campingplätze und Zeltplätze",
+  "slug": "campings",
+  "icon": "campfire",
+  "order": 4,
+  "published": true,
+  "lang": "de"
+}

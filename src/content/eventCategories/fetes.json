@@ -5,5 +5,6 @@
   "slug": "fetes-traditions",
   "icon": "party-popper",
   "order": 4,
-  "published": true
+  "published": true,
+  "lang": "fr"
 }

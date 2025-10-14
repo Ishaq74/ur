@@ -1,0 +1,10 @@
+{
+  "id": "cuisine-locale",
+  "name": "Local Cuisine",
+  "description": "Traditional local and regional cuisine",
+  "slug": "locale",
+  "icon": "chef-hat",
+  "order": 4,
+  "published": true,
+  "lang": "en"
+}

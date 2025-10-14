@@ -1,0 +1,10 @@
+{
+  "id": "shopping",
+  "name": "Compras y Servicios",
+  "description": "Explora tiendas y servicios en Annecy",
+  "slug": "shopping",
+  "icon": "shopping-outline",
+  "order": 4,
+  "published": true,
+  "lang": "es"
+}

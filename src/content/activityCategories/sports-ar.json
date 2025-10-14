@@ -1,0 +1,10 @@
+{
+  "id": "sports",
+  "name": "الرياضة",
+  "description": "الرياضة والأنشطة الخارجية",
+  "slug": "sports",
+  "icon": "run-fast",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

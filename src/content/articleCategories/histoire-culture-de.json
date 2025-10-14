@@ -1,0 +1,10 @@
+{
+  "id": "histoire-culture",
+  "name": "Geschichte & Kultur",
+  "description": "Geschichte und lokale Kultur",
+  "slug": "histoire-culture",
+  "icon": "book-open",
+  "order": 1,
+  "published": true,
+  "lang": "de"
+}

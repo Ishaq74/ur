@@ -1,0 +1,10 @@
+{
+  "id": "epiceries",
+  "name": "محلات البقالة",
+  "description": "محلات البقالة والأطعمة الفاخرة",
+  "slug": "epiceries",
+  "icon": "shopping",
+  "order": 3,
+  "published": true,
+  "lang": "ar"
+}

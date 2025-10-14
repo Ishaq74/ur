@@ -1,0 +1,10 @@
+{
+  "id": "facile",
+  "name": "Fácil",
+  "description": "Senderos fáciles para todos",
+  "slug": "facile",
+  "icon": "walk",
+  "order": 1,
+  "published": true,
+  "lang": "es"
+}

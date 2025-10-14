@@ -1,0 +1,10 @@
+{
+  "id": "maintenance",
+  "name": "Wartung",
+  "description": "Wartungs- und Reparaturdienste",
+  "slug": "maintenance",
+  "icon": "tools",
+  "order": 3,
+  "published": true,
+  "lang": "de"
+}

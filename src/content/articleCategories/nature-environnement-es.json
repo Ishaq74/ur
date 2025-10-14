@@ -1,0 +1,10 @@
+{
+  "id": "nature-environnement",
+  "name": "Naturaleza y Medio Ambiente",
+  "description": "Naturaleza y temas ambientales",
+  "slug": "nature-environnement",
+  "icon": "tree",
+  "order": 3,
+  "published": true,
+  "lang": "es"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "hotels",
+  "name": "酒店",
+  "description": "酒店和住宿",
+  "slug": "hotels",
+  "icon": "hotel",
+  "order": 1,
+  "published": true,
+  "lang": "zh"
+}

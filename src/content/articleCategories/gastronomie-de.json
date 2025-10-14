@@ -1,0 +1,10 @@
+{
+  "id": "gastronomie",
+  "name": "Gastronomie",
+  "description": "Essen und kulinarische Künste",
+  "slug": "gastronomie",
+  "icon": "food",
+  "order": 2,
+  "published": true,
+  "lang": "de"
+}

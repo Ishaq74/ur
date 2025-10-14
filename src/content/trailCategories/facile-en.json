@@ -1,0 +1,10 @@
+{
+  "id": "facile",
+  "name": "Easy",
+  "description": "Easy trails for everyone",
+  "slug": "facile",
+  "icon": "walk",
+  "order": 1,
+  "published": true,
+  "lang": "en"
+}

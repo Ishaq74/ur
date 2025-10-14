@@ -1,0 +1,10 @@
+{
+  "id": "auberges",
+  "name": "Albergues",
+  "description": "Albergues juveniles y alojamientos económicos",
+  "slug": "auberges",
+  "icon": "home",
+  "order": 2,
+  "published": true,
+  "lang": "es"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "shopping",
+  "name": "Shopping & Services",
+  "description": "Explorez les commerces et services d'Annecy",
+  "slug": "shopping",
+  "icon": "shopping-outline",
+  "order": 4,
+  "published": true,
+  "lang": "fr"
+}

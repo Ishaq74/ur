@@ -1,0 +1,10 @@
+{
+  "id": "locations",
+  "name": "度假租赁",
+  "description": "度假租赁和公寓",
+  "slug": "locations",
+  "icon": "home-city",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

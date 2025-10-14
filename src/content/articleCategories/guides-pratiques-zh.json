@@ -1,0 +1,10 @@
+{
+  "id": "guides-pratiques",
+  "name": "实用指南",
+  "description": "实用信息和指南",
+  "slug": "guides-pratiques",
+  "icon": "map",
+  "order": 4,
+  "published": true,
+  "lang": "zh"
+}

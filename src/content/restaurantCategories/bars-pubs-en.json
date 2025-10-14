@@ -1,0 +1,10 @@
+{
+  "id": "bars-pubs",
+  "name": "Bars & Pubs",
+  "description": "Traditional pubs and bars",
+  "slug": "bars-pubs",
+  "icon": "beer",
+  "order": 2,
+  "published": true,
+  "lang": "en"
+}

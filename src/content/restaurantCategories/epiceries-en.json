@@ -1,0 +1,10 @@
+{
+  "id": "epiceries",
+  "name": "Grocery Stores",
+  "description": "Grocery stores and delicatessens",
+  "slug": "epiceries",
+  "icon": "store",
+  "order": 5,
+  "published": true,
+  "lang": "en"
+}

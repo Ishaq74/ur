@@ -1,0 +1,10 @@
+{
+  "id": "campings",
+  "name": "المخيمات",
+  "description": "المخيمات ومواقع التخييم",
+  "slug": "campings",
+  "icon": "campfire",
+  "order": 4,
+  "published": true,
+  "lang": "ar"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "moyen",
+  "name": "متوسط",
+  "description": "مسارات متوسطة، يوصى ببعض الخبرة",
+  "slug": "moyen",
+  "icon": "hiking",
+  "order": 2,
+  "published": true,
+  "lang": "ar"
+}

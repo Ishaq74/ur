@@ -1,0 +1,10 @@
+{
+  "id": "cuisine-locale",
+  "name": "Lokale Küche",
+  "description": "Traditionelle lokale und regionale Küche",
+  "slug": "locale",
+  "parentId": "restaurants",
+  "order": 1,
+  "published": true,
+  "lang": "de"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "locations",
+  "name": "Vacation Rentals",
+  "description": "Vacation rentals and apartments",
+  "slug": "locations",
+  "icon": "home-city",
+  "order": 3,
+  "published": true,
+  "lang": "en"
+}

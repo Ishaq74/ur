@@ -1,0 +1,10 @@
+{
+  "id": "auberges",
+  "name": "النزل",
+  "description": "نزل الشباب والإقامة الاقتصادية",
+  "slug": "auberges",
+  "icon": "home",
+  "order": 2,
+  "published": true,
+  "lang": "ar"
+}

@@ -3,68 +3,45 @@ import MainLayout from '../layouts/MainLayout.astro';
 import Card from '../components/molecules/Card.astro';
 import Icon from '../components/atoms/Icon.astro';
 import { useTranslations, getLangFromUrl, getLocalizedPath } from '../i18n';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
+  const allPlaceCategories = await getCollection('placeCategories');
   const allPlaces = await getCollection('places');
   
-  // Define the main categories
-  const categories = [
-    { 
-      slug: 'restauration', 
-      mainCategory: 'restauration',
-      title: 'Restaurants',
-      description: 'Découvrez les meilleurs restaurants d\'Annecy et ses environs',
-      icon: 'silverware-fork-knife'
-    },
-    { 
-      slug: 'hebergement', 
-      mainCategory: 'hebergement',
-      title: 'Hébergements',
-      description: 'Trouvez l\'hébergement parfait pour votre séjour à Annecy',
-      icon: 'hotel'
-    },
-    { 
-      slug: 'activites', 
-      mainCategory: 'activites',
-      title: 'Activités',
-      description: 'Explorez toutes les activités à Annecy et ses environs',
-      icon: 'run-fast'
-    },
-    { 
-      slug: 'shopping', 
-      mainCategory: 'shopping',
-      title: 'Shopping & Services',
-      description: 'Explorez les commerces et services d\'Annecy',
-      icon: 'shopping-outline'
-    }
-  ];
-
-  return categories.map(category => ({
-    params: { category: category.slug },
+  // Only use French categories for routing (default language)
+  const frenchCategories = allPlaceCategories.filter((cat) => cat.data.lang === 'fr');
+  
+  return frenchCategories.map(category => ({
+    params: { category: category.data.slug },
     props: { 
       category,
-      places: allPlaces.filter((place: any) => 
-        place.data.mainCategory === category.mainCategory && place.data.published
+      places: allPlaces.filter((place) => 
+        place.data.mainCategory.id === category.data.id && place.data.published
       )
     },
   }));
 }
 
-const { category, places } = Astro.props;
+type Props = {
+  category: CollectionEntry<'placeCategories'>;
+  places: CollectionEntry<'places'>[];
+};
+
+const { category, places }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
 <MainLayout 
-  title={`${category.title} - Salut Annecy`} 
-  description={category.description}
+  title={`${category.data.name} - Salut Annecy`} 
+  description={category.data.description}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{category.title}</h1>
-      <p class="subtitle">{category.description}</p>
+      <h1>{category.data.name}</h1>
+      <p class="subtitle">{category.data.description}</p>
     </div>
   </section>
 
@@ -110,7 +87,7 @@ const t = useTranslations(lang);
         </div>
       ) : (
         <div class="empty-state">
-          <Icon name={category.icon} size="xl" />
+          <Icon name={category.data.icon} size="xl" />
           <h3>Aucun résultat trouvé</h3>
           <p>Revenez bientôt pour découvrir nos recommandations !</p>
         </div>

@@ -1,0 +1,10 @@
+{
+  "id": "sante",
+  "name": "الصحة",
+  "description": "الخدمات الصحية والطبية",
+  "slug": "sante",
+  "icon": "medical-bag",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "locations",
+  "name": "Ferienwohnungen",
+  "description": "Ferienwohnungen und Apartments",
+  "slug": "locations",
+  "icon": "home-city",
+  "order": 3,
+  "published": true,
+  "lang": "de"
+}

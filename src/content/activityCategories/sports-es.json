@@ -1,0 +1,10 @@
+{
+  "id": "sports",
+  "name": "Deportes",
+  "description": "Deportes y actividades al aire libre",
+  "slug": "sports",
+  "icon": "run-fast",
+  "order": 1,
+  "published": true,
+  "lang": "es"
+}

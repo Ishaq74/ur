@@ -1,0 +1,10 @@
+{
+  "id": "cuisine-locale",
+  "name": "المطبخ المحلي",
+  "description": "المطبخ المحلي والإقليمي التقليدي",
+  "slug": "locale",
+  "parentId": "restaurants",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

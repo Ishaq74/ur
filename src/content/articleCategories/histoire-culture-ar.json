@@ -1,0 +1,10 @@
+{
+  "id": "histoire-culture",
+  "name": "التاريخ والثقافة",
+  "description": "التاريخ والثقافة المحلية",
+  "slug": "histoire-culture",
+  "icon": "book-open",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

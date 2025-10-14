@@ -1,0 +1,10 @@
+{
+  "id": "bars-cafes",
+  "name": "الحانات والمقاهي",
+  "description": "الحانات والمقاهي والمطاعم",
+  "slug": "bars-cafes",
+  "icon": "coffee",
+  "order": 1,
+  "published": true,
+  "lang": "ar"
+}

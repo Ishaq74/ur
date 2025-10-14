@@ -1,0 +1,10 @@
+{
+  "id": "nature-environnement",
+  "name": "自然与环境",
+  "description": "自然和环境主题",
+  "slug": "nature-environnement",
+  "icon": "tree",
+  "order": 3,
+  "published": true,
+  "lang": "zh"
+}

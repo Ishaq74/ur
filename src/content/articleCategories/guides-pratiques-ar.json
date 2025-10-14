@@ -1,0 +1,10 @@
+{
+  "id": "guides-pratiques",
+  "name": "أدلة عملية",
+  "description": "معلومات وأدلة عملية",
+  "slug": "guides-pratiques",
+  "icon": "map",
+  "order": 4,
+  "published": true,
+  "lang": "ar"
+}

@@ -6,16 +6,19 @@ import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const activityCategories = await getCollection('activityCategories');
+  const allActivityCategories = await getCollection('activityCategories');
   const newActivities = await getCollection('activities');
   const legacyPlaces = await getCollection('places');
   
-  return activityCategories.map(category => {
+  // Only use French categories for routing (default language)
+  const frenchCategories = allActivityCategories.filter((cat: any) => cat.data.lang === 'fr');
+  
+  return frenchCategories.map(category => {
     const newItems = newActivities.filter((a: any) => 
       a.data.categoryId === category.data.id && a.data.published
     );
     const legacyItems = legacyPlaces.filter((p: any) => 
-      p.data.mainCategory === 'activites' && 
+      p.data.mainCategory.id === 'activites' && 
       (p.data.category === category.data.name || p.data.categoryId === category.data.id) &&
       p.data.published
     );

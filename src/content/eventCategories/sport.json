@@ -5,5 +5,6 @@
   "slug": "sport",
   "icon": "run",
   "order": 3,
-  "published": true
+  "published": true,
+  "lang": "fr"
 }

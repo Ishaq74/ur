@@ -1,0 +1,10 @@
+{
+  "id": "campings",
+  "name": "露营地",
+  "description": "露营地和露营场所",
+  "slug": "campings",
+  "icon": "campfire",
+  "order": 4,
+  "published": true,
+  "lang": "zh"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "transport",
+  "name": "交通",
+  "description": "交通服务",
+  "slug": "transport",
+  "icon": "bus",
+  "order": 2,
+  "published": true,
+  "lang": "zh"
+}

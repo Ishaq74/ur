@@ -1,0 +1,10 @@
+{
+  "id": "fetes",
+  "name": "庆祝活动与传统",
+  "description": "当地庆祝活动和传统",
+  "slug": "fetes-traditions",
+  "icon": "party-popper",
+  "order": 4,
+  "published": true,
+  "lang": "zh"
+}

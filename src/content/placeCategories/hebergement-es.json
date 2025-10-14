@@ -1,0 +1,10 @@
+{
+  "id": "hebergement",
+  "name": "Alojamientos",
+  "description": "Encuentra el alojamiento perfecto para tu estancia en Annecy",
+  "slug": "hebergement",
+  "icon": "hotel",
+  "order": 2,
+  "published": true,
+  "lang": "es"
+}

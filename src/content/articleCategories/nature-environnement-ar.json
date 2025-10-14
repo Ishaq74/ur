@@ -1,0 +1,10 @@
+{
+  "id": "nature-environnement",
+  "name": "الطبيعة والبيئة",
+  "description": "الطبيعة والمواضيع البيئية",
+  "slug": "nature-environnement",
+  "icon": "tree",
+  "order": 3,
+  "published": true,
+  "lang": "ar"
+}

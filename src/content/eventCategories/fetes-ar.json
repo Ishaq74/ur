@@ -1,0 +1,10 @@
+{
+  "id": "fetes",
+  "name": "الاحتفالات والتقاليد",
+  "description": "الاحتفالات والتقاليد المحلية",
+  "slug": "fetes-traditions",
+  "icon": "party-popper",
+  "order": 4,
+  "published": true,
+  "lang": "ar"
+}
