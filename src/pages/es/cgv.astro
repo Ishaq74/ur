@@ -1,0 +1,194 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.cgv')} - Salut Annecy`} 
+  description="Conditions Générales de Vente de Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.cgv')}</h1>
+        <p class="last-updated">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+        
+        <div class="content">
+          <h2>1. Champ d'Application</h2>
+          <p>
+            Les présentes Conditions Générales de Vente (CGV) s'appliquent à tous les 
+            services payants proposés par Salut Annecy, notamment les espaces publicitaires, 
+            les offres pour professionnels et les partenariats.
+          </p>
+
+          <h2>2. Services Proposés</h2>
+          <p>
+            Salut Annecy propose aux professionnels :
+          </p>
+          <ul>
+            <li>Espace professionnel avec page dédiée</li>
+            <li>Publicité ciblée sur le site</li>
+            <li>Mise en avant dans les résultats de recherche</li>
+            <li>Articles sponsorisés</li>
+            <li>Partenariats personnalisés</li>
+          </ul>
+
+          <h2>3. Tarifs</h2>
+          <p>
+            Les tarifs de nos services sont indiqués en euros hors taxes. La TVA applicable 
+            sera ajoutée au montant hors taxes. Nous nous réservons le droit de modifier 
+            nos tarifs à tout moment, étant entendu que les modifications ne s'appliqueront 
+            pas aux commandes en cours.
+          </p>
+
+          <h2>4. Commande</h2>
+          <p>
+            Toute commande implique l'acceptation des présentes CGV. La validation de la 
+            commande vaut acceptation de ces conditions. Un récapitulatif de la commande 
+            sera envoyé par email.
+          </p>
+
+          <h2>5. Paiement</h2>
+          <p>
+            Le paiement s'effectue par :
+          </p>
+          <ul>
+            <li>Carte bancaire</li>
+            <li>Virement bancaire</li>
+            <li>Prélèvement SEPA (pour les abonnements)</li>
+          </ul>
+          <p>
+            Le paiement est exigible immédiatement à la commande.
+          </p>
+
+          <h2>6. Durée et Renouvellement</h2>
+          <p>
+            Les services sont souscrits pour la durée choisie lors de la commande. 
+            Les abonnements sont renouvelables par tacite reconduction, sauf résiliation 
+            dans les conditions prévues.
+          </p>
+
+          <h2>7. Droit de Rétractation</h2>
+          <p>
+            Conformément à la législation en vigueur, vous disposez d'un délai de 14 jours 
+            pour exercer votre droit de rétractation sans avoir à justifier de motifs ni 
+            à payer de pénalités.
+          </p>
+
+          <h2>8. Responsabilité</h2>
+          <p>
+            Salut Annecy s'engage à mettre en œuvre tous les moyens nécessaires pour assurer 
+            la bonne exécution des services. Notre responsabilité ne saurait être engagée 
+            en cas de force majeure ou de fait indépendant de notre volonté.
+          </p>
+
+          <h2>9. Résiliation</h2>
+          <p>
+            Chaque partie peut résilier le contrat en respectant un préavis de 30 jours. 
+            En cas de manquement grave aux obligations contractuelles, la résiliation 
+            peut être immédiate.
+          </p>
+
+          <h2>10. Droit Applicable</h2>
+          <p>
+            Les présentes CGV sont régies par le droit français. Tout litige relatif à 
+            l'interprétation ou à l'exécution des présentes sera soumis aux tribunaux 
+            compétents français.
+          </p>
+
+          <h2>11. Contact</h2>
+          <p>
+            Pour toute question concernant les présentes CGV :
+            <a href="mailto:commercial@salutannecy.fr">commercial@salutannecy.fr</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .last-updated {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-8);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul li {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2);
+    padding-left: var(--spacing-6);
+    position: relative;
+  }
+
+  .content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>

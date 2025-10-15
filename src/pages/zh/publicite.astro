@@ -1,0 +1,619 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Button from '../../components/atoms/Button.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.ads')} - Salut Annecy`} 
+  description="Solutions publicitaires sur Salut Annecy"
+  lang={lang}
+>
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1>{t('footer.ads')}</h1>
+        <p class="hero-subtitle">
+          Touchez une audience locale et touristique qualifiée avec nos solutions 
+          publicitaires sur mesure
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Visiteurs Mensuels</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15K+</div>
+          <div class="stat-label">Abonnés Newsletter</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">75%</div>
+          <div class="stat-label">Audience Locale</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">25%</div>
+          <div class="stat-label">Touristes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="formats-section">
+    <div class="container">
+      <h2 class="section-title">Formats Publicitaires</h2>
+      
+      <div class="formats-grid">
+        <div class="format-card">
+          <div class="format-icon">
+            <Icon name="layout" size="lg" />
+          </div>
+          <h3>Bannière Premium</h3>
+          <p>
+            Bannière visuelle placée en haut de page ou dans les zones à forte visibilité. 
+            Format : 728x90, 300x250, 970x250
+          </p>
+          <ul>
+            <li>Visibilité maximale</li>
+            <li>Ciblage géographique</li>
+            <li>Statistiques détaillées</li>
+          </ul>
+          <div class="format-price">À partir de 500€/mois</div>
+        </div>
+
+        <div class="format-card">
+          <div class="format-icon">
+            <Icon name="file-text" size="lg" />
+          </div>
+          <h3>Article Sponsorisé</h3>
+          <p>
+            Article rédigé par nos journalistes pour mettre en valeur votre établissement, 
+            produit ou service.
+          </p>
+          <ul>
+            <li>Rédaction professionnelle</li>
+            <li>Publication sur le blog</li>
+            <li>Partage réseaux sociaux</li>
+          </ul>
+          <div class="format-price">À partir de 299€</div>
+        </div>
+
+        <div class="format-card">
+          <div class="format-icon">
+            <Icon name="mail" size="lg" />
+          </div>
+          <h3>Newsletter Sponsorisée</h3>
+          <p>
+            Espace dédié dans notre newsletter hebdomadaire envoyée à plus de 15 000 abonnés.
+          </p>
+          <ul>
+            <li>15K+ destinataires</li>
+            <li>Audience engagée</li>
+            <li>Taux d'ouverture 35%</li>
+          </ul>
+          <div class="format-price">À partir de 400€</div>
+        </div>
+
+        <div class="format-card">
+          <div class="format-icon">
+            <Icon name="video" size="lg" />
+          </div>
+          <h3>Vidéo Promotionnelle</h3>
+          <p>
+            Vidéo mise en avant sur la page d'accueil et les pages catégories pertinentes.
+          </p>
+          <ul>
+            <li>Production incluse</li>
+            <li>Diffusion multi-canaux</li>
+            <li>Durée 30-60 secondes</li>
+          </ul>
+          <div class="format-price">À partir de 999€</div>
+        </div>
+
+        <div class="format-card">
+          <div class="format-icon">
+            <Icon name="search" size="lg" />
+          </div>
+          <h3>Résultats Sponsorisés</h3>
+          <p>
+            Position garantie en tête des résultats de recherche pour les mots-clés de votre choix.
+          </p>
+          <ul>
+            <li>Positionnement #1</li>
+            <li>Badge "Sponsorisé"</li>
+            <li>Ciblage par catégorie</li>
+          </ul>
+          <div class="format-price">À partir de 350€/mois</div>
+        </div>
+
+        <div class="format-card">
+          <div class="format-icon">
+            <Icon name="share-2" size="lg" />
+          </div>
+          <h3>Campagne Réseaux Sociaux</h3>
+          <p>
+            Promotion de votre établissement sur nos comptes réseaux sociaux (Facebook, Instagram).
+          </p>
+          <ul>
+            <li>Post dédié</li>
+            <li>Story Instagram</li>
+            <li>Portée : 20K+ abonnés</li>
+          </ul>
+          <div class="format-price">À partir de 200€</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="advantages-section">
+    <div class="container">
+      <h2 class="section-title">Pourquoi Faire de la Publicité sur Salut Annecy ?</h2>
+      
+      <div class="advantages-grid">
+        <div class="advantage-item">
+          <Icon name="target" size="lg" />
+          <h3>Audience Qualifiée</h3>
+          <p>
+            Nos visiteurs sont activement à la recherche d'établissements, activités et 
+            services dans la région annécienne.
+          </p>
+        </div>
+
+        <div class="advantage-item">
+          <Icon name="map-pin" size="lg" />
+          <h3>Ciblage Local</h3>
+          <p>
+            75% de notre audience est locale, idéal pour développer votre clientèle de proximité.
+          </p>
+        </div>
+
+        <div class="advantage-item">
+          <Icon name="trending-up" size="lg" />
+          <h3>ROI Mesurable</h3>
+          <p>
+            Statistiques détaillées sur les impressions, clics et conversions pour mesurer 
+            votre retour sur investissement.
+          </p>
+        </div>
+
+        <div class="advantage-item">
+          <Icon name="clock" size="lg" />
+          <h3>Flexibilité</h3>
+          <p>
+            Campagnes modulables selon vos besoins et votre budget, sans engagement long terme.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process-section">
+    <div class="container">
+      <h2 class="section-title">Comment ça Marche ?</h2>
+      
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h3>Définition</h3>
+          <p>
+            Échangeons sur vos objectifs, votre cible et votre budget pour définir la 
+            meilleure stratégie publicitaire.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h3>Création</h3>
+          <p>
+            Notre équipe créative conçoit vos visuels, textes et contenus pour maximiser 
+            l'impact de votre campagne.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h3>Diffusion</h3>
+          <p>
+            Lancement de votre campagne avec un suivi en temps réel des performances 
+            et optimisations si nécessaire.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h3>Analyse</h3>
+          <p>
+            Rapport détaillé de votre campagne avec toutes les métriques de performance 
+            et recommandations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="container">
+      <h2 class="section-title">Ils Nous Font Confiance</h2>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Grâce à Salut Annecy, nous avons augmenté notre visibilité locale de 150%. 
+            Les campagnes sont efficaces et le ROI est excellent."
+          </p>
+          <div class="testimonial-author">
+            <strong>Restaurant Le Lac</strong>
+            <span>Annecy</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "L'équipe est très professionnelle et à l'écoute. Nos articles sponsorisés 
+            génèrent beaucoup de trafic qualifié vers notre site."
+          </p>
+          <div class="testimonial-author">
+            <strong>Hôtel des Alpes</strong>
+            <span>Annecy-le-Vieux</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Excellent rapport qualité-prix. Nous renouvelons nos campagnes chaque mois 
+            avec de très bons résultats."
+          </p>
+          <div class="testimonial-author">
+            <strong>Activités Montagne</strong>
+            <span>Talloires</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Lancez Votre Première Campagne</h2>
+        <p>
+          Contactez notre équipe commerciale pour discuter de vos besoins et recevoir 
+          un devis personnalisé gratuit.
+        </p>
+        <div class="cta-actions">
+          <Button href={getLocalizedPath('/contact', lang)} variant="primary" size="lg">
+            Demander un Devis
+          </Button>
+          <Button href="mailto:pub@salutannecy.fr" variant="secondary" size="lg">
+            pub@salutannecy.fr
+          </Button>
+        </div>
+        <p class="cta-note">
+          Ou appelez-nous au : <a href="tel:+33400000000">+33 (0)4 XX XX XX XX</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .hero-section {
+    padding: var(--spacing-16) 0 var(--spacing-12);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+
+  .stats-section {
+    padding: var(--spacing-12) 0;
+    background-color: var(--color-surface);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .stat-card {
+    text-align: center;
+    padding: var(--spacing-6);
+  }
+
+  .stat-number {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary-600);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .stat-label {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+  }
+
+  .formats-section,
+  .advantages-section,
+  .process-section,
+  .testimonials-section {
+    padding: var(--spacing-16) 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+    color: var(--color-text-primary);
+  }
+
+  .formats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .format-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .format-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .format-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: 50%;
+    color: white;
+  }
+
+  .format-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .format-card p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .format-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .format-card ul li {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    padding: var(--spacing-2) 0;
+    padding-left: var(--spacing-5);
+    position: relative;
+  }
+
+  .format-card ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .format-price {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-8);
+  }
+
+  .advantage-item {
+    text-align: center;
+  }
+
+  .advantage-item h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin: var(--spacing-4) 0 var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .advantage-item p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-8);
+  }
+
+  .process-step {
+    text-align: center;
+  }
+
+  .step-number {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    border-radius: 50%;
+    color: white;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .process-step h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .process-step p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .testimonial-card {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border-left: 4px solid var(--color-primary-500);
+    border-radius: var(--radius-lg);
+  }
+
+  .testimonial-text {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+
+  .testimonial-author strong {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+  }
+
+  .testimonial-author span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  .cta-section {
+    padding: var(--spacing-16) 0;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    color: white;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .cta-content > p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-8);
+    opacity: 0.95;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-6);
+  }
+
+  .cta-note {
+    font-size: var(--font-size-base);
+    opacity: 0.9;
+  }
+
+  .cta-note a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .cta-note a:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .section-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .formats-grid,
+    .advantages-grid,
+    .process-steps,
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .cta-content h2 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>

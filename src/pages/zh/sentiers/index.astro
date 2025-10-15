@@ -1,0 +1,499 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Card from '../../../components/molecules/Card.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get filters from URL
+const difficultyFilter = Astro.url.searchParams.get('difficulty');
+const distanceFilter = Astro.url.searchParams.get('distance');
+
+// Get all published trails
+const allTrails = await getCollection('trails');
+const trailCategories = await getCollection('trailCategories');
+
+// For static builds, show all trails and filter client-side
+let trails = allTrails.filter((trail: any) => trail.data.published);
+
+// Get difficulty name if filtering
+let pageTitle = t('header.trails');
+if (difficultyFilter) {
+  const category = trailCategories.find(c => c.data.slug === difficultyFilter || c.data.id === difficultyFilter);
+  if (category) {
+    pageTitle = `${t('header.trails')} - ${category.data.name}`;
+  }
+}
+---
+
+<MainLayout 
+  title={`${pageTitle} - Salut Annecy`} 
+  description="Découvrez les meilleurs sentiers de randonnée autour d'Annecy"
+  lang={lang}
+>
+  <section class="page-header">
+    <div class="container">
+      <h1>{pageTitle}</h1>
+      <p class="subtitle">Explorez les plus beaux sentiers autour d'Annecy</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar">
+          <h2 class="sidebar-title">{t('filters.filter_by')}</h2>
+          
+          <!-- Difficulty Filter -->
+          <div class="filter-section">
+            <h3 class="filter-title">{t('filters.difficulty')}</h3>
+            <div class="filter-options">
+              <a 
+                href={getLocalizedPath('/sentiers', lang)} 
+                class={`filter-option ${!difficultyFilter ? 'active' : ''}`}
+              >
+                {t('filters.all')}
+              </a>
+              {trailCategories.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
+                <a 
+                  href={getLocalizedPath(`/sentiers?difficulty=${category.data.slug}`, lang)} 
+                  class={`filter-option ${difficultyFilter === category.data.slug || difficultyFilter === category.data.id ? 'active' : ''}`}
+                >
+                  <span class={`difficulty-badge ${category.data.slug}`}></span>
+                  {category.data.name}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Distance Filter -->
+          <div class="filter-section">
+            <h3 class="filter-title">{t('filters.distance')}</h3>
+            <div class="filter-options">
+              <a 
+                href={getLocalizedPath(`/sentiers${difficultyFilter ? `?difficulty=${difficultyFilter}` : ''}`, lang)} 
+                class={`filter-option ${!distanceFilter ? 'active' : ''}`}
+              >
+                {t('filters.all')}
+              </a>
+              <a 
+                href={getLocalizedPath(`/sentiers?${difficultyFilter ? `difficulty=${difficultyFilter}&` : ''}distance=short`, lang)} 
+                class={`filter-option ${distanceFilter === 'short' ? 'active' : ''}`}
+              >
+                Courte (&lt; 10 km)
+              </a>
+              <a 
+                href={getLocalizedPath(`/sentiers?${difficultyFilter ? `difficulty=${difficultyFilter}&` : ''}distance=medium`, lang)} 
+                class={`filter-option ${distanceFilter === 'medium' ? 'active' : ''}`}
+              >
+                Moyenne (10-25 km)
+              </a>
+              <a 
+                href={getLocalizedPath(`/sentiers?${difficultyFilter ? `difficulty=${difficultyFilter}&` : ''}distance=long`, lang)} 
+                class={`filter-option ${distanceFilter === 'long' ? 'active' : ''}`}
+              >
+                Longue (&gt; 25 km)
+              </a>
+            </div>
+          </div>
+
+          <!-- Clear Filters -->
+          {(difficultyFilter || distanceFilter) && (
+            <a href={getLocalizedPath('/sentiers', lang)} class="clear-filters">
+              {t('filters.clear_filters')}
+            </a>
+          )}
+        </aside>
+
+        <!-- Trails Grid -->
+        <div class="main-content">
+          <p class="results-count" id="results-count">{trails.length} sentier{trails.length > 1 ? 's' : ''}</p>
+          
+          {trails.length > 0 ? (
+            <div class="trails-grid" id="trails-grid">
+              {trails.map((trail: any) => {
+                const category = trailCategories.find(c => c.data.id === trail.data.difficulty);
+                return (
+                  <Card 
+                    href={getLocalizedPath(`/trail/${trail.data.id}`, lang)} 
+                    hoverable={true}
+                    class="trail-card"
+                    data-difficulty={trail.data.difficulty}
+                    data-distance={trail.data.distance}
+                  >
+                    <div class="trail-image">
+                      <img src={trail.data.imageUrl} alt={trail.data.name} />
+                      <div class="trail-difficulty" data-difficulty={trail.data.difficulty}>
+                        {trail.data.difficulty}
+                      </div>
+                    </div>
+                    <div class="trail-content">
+                      <h3 class="trail-name">{trail.data.name}</h3>
+                      <p class="trail-excerpt">{trail.data.excerpt}</p>
+                      <div class="trail-stats">
+                        <div class="trail-stat">
+                          <Icon name="map-pin" size="sm" />
+                          <span>{trail.data.distance}</span>
+                        </div>
+                        <div class="trail-stat">
+                          <Icon name="clock" size="sm" />
+                          <span>{trail.data.duration}</span>
+                        </div>
+                        {trail.data.elevation && (
+                          <div class="trail-stat">
+                            <Icon name="trending-up" size="sm" />
+                            <span>{trail.data.elevation}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          ) : (
+            <div class="empty-state" id="empty-state">
+              <Icon name="hiking" size="xl" />
+              <h3>Aucun sentier trouvé</h3>
+              <p>Revenez bientôt pour découvrir nos recommandations !</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    padding: var(--spacing-12) 0 var(--spacing-8);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .content-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .content-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-8);
+  }
+
+  /* Sidebar Styles */
+  .filters-sidebar {
+    background-color: var(--color-surface-secondary);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-lg);
+    height: fit-content;
+    position: sticky;
+    top: calc(var(--spacing-20) + var(--spacing-4));
+  }
+
+  .sidebar-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .filter-section {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .filter-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-3);
+  }
+
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .filter-option {
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  .filter-option:hover {
+    background-color: var(--color-surface);
+    color: var(--color-primary-600);
+  }
+
+  .filter-option.active {
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-700);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .difficulty-badge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .difficulty-badge.facile {
+    background-color: var(--color-success-600);
+  }
+
+  .difficulty-badge.moyen {
+    background-color: var(--color-warning-600);
+  }
+
+  .difficulty-badge.difficile {
+    background-color: var(--color-error-600);
+  }
+
+  .clear-filters {
+    display: block;
+    text-align: center;
+    padding: var(--spacing-3);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-base);
+    text-decoration: none;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    margin-top: var(--spacing-4);
+  }
+
+  .clear-filters:hover {
+    background-color: var(--color-primary-50);
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+  }
+
+  .results-count {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .trails-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .trail-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .trail-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background-color: var(--color-surface-secondary);
+  }
+
+  .trail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .trail-difficulty {
+    position: absolute;
+    top: var(--spacing-3);
+    left: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    text-transform: capitalize;
+    color: white;
+  }
+
+  .trail-difficulty[data-difficulty="facile"] {
+    background-color: var(--color-success-600);
+  }
+
+  .trail-difficulty[data-difficulty="moyen"] {
+    background-color: var(--color-warning-600);
+  }
+
+  .trail-difficulty[data-difficulty="difficile"] {
+    background-color: var(--color-error-600);
+  }
+
+  .trail-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .trail-name {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .trail-excerpt {
+    flex: 1;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-3);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .trail-stats {
+    display: flex;
+    gap: var(--spacing-4);
+    padding-top: var(--spacing-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .trail-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-12) var(--spacing-6);
+    color: var(--color-text-secondary);
+  }
+
+  .empty-state h3 {
+    margin: var(--spacing-4) 0 var(--spacing-2);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .content-layout {
+      grid-template-columns: 240px 1fr;
+      gap: var(--spacing-6);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .filters-sidebar {
+      position: static;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .trails-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Client-side filtering for static builds
+  document.addEventListener('DOMContentLoaded', () => {
+    const trailsGrid = document.getElementById('trails-grid');
+    const resultsCount = document.getElementById('results-count');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (!trailsGrid) return;
+    
+    // Get filter parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const difficultyFilter = params.get('difficulty');
+    const distanceFilter = params.get('distance');
+    
+    // If no filters, show all trails
+    if (!difficultyFilter && !distanceFilter) {
+      return;
+    }
+    
+    // Get all trail cards
+    const trails = Array.from(trailsGrid.querySelectorAll('.trail-card'));
+    let visibleCount = 0;
+    
+    // Filter trails based on URL params
+    trails.forEach((trail) => {
+      let show = true;
+      
+      // Difficulty filter
+      if (difficultyFilter) {
+        const difficulty = trail.getAttribute('data-difficulty');
+        if (difficulty !== difficultyFilter) {
+          show = false;
+        }
+      }
+      
+      // Distance filter
+      if (distanceFilter && show) {
+        const distanceStr = trail.getAttribute('data-distance') || '0';
+        // Extract numeric value from distance string (e.g., "3.5 km" -> 3.5)
+        const distance = parseFloat(distanceStr);
+        
+        if (distanceFilter === 'short' && distance > 10) {
+          show = false;
+        } else if (distanceFilter === 'medium' && (distance <= 10 || distance > 25)) {
+          show = false;
+        } else if (distanceFilter === 'long' && distance <= 25) {
+          show = false;
+        }
+      }
+      
+      // Show or hide the trail
+      if (show) {
+        trail.style.display = '';
+        visibleCount++;
+      } else {
+        trail.style.display = 'none';
+      }
+    });
+    
+    // Update results count
+    if (resultsCount) {
+      const plural = visibleCount > 1 ? 's' : '';
+      resultsCount.textContent = `${visibleCount} sentier${plural}`;
+    }
+    
+    // Show/hide empty state
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    if (trailsGrid) {
+      trailsGrid.style.display = visibleCount === 0 ? 'none' : '';
+    }
+  });
+</script>

@@ -1,0 +1,172 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { useTranslations, getLangFromUrl } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.cgu')} - Salut Annecy`} 
+  description="Conditions Générales d'Utilisation de Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.cgu')}</h1>
+        <p class="last-updated">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+        
+        <div class="content">
+          <h2>1. Objet</h2>
+          <p>
+            Les présentes Conditions Générales d'Utilisation (CGU) régissent l'utilisation 
+            du site Salut Annecy et de ses services. En accédant au site, vous acceptez 
+            sans réserve les présentes CGU.
+          </p>
+
+          <h2>2. Accès au Site</h2>
+          <p>
+            Le site Salut Annecy est accessible gratuitement à tout utilisateur disposant 
+            d'un accès à Internet. Tous les frais liés à l'accès au site, que ce soit les 
+            frais matériels, logiciels ou d'accès à Internet sont exclusivement à la charge 
+            de l'utilisateur.
+          </p>
+
+          <h2>3. Utilisation du Site</h2>
+          <p>
+            L'utilisateur s'engage à utiliser le site de manière loyale et conforme à sa 
+            destination. Il est notamment interdit de :
+          </p>
+          <ul>
+            <li>Utiliser le site à des fins illégales ou non autorisées</li>
+            <li>Tenter d'accéder aux zones non publiques du site</li>
+            <li>Diffuser des contenus illicites, diffamatoires ou contraires aux bonnes mœurs</li>
+            <li>Porter atteinte aux droits de propriété intellectuelle de Salut Annecy</li>
+          </ul>
+
+          <h2>4. Propriété Intellectuelle</h2>
+          <p>
+            Tous les contenus présents sur le site (textes, images, logos, vidéos, etc.) 
+            sont protégés par les droits de propriété intellectuelle. Toute reproduction, 
+            distribution ou utilisation non autorisée est strictement interdite.
+          </p>
+
+          <h2>5. Responsabilité</h2>
+          <p>
+            Salut Annecy met tout en œuvre pour assurer la disponibilité et la fiabilité 
+            du site. Toutefois, nous ne pouvons garantir un accès continu et sans interruption 
+            au site. Nous ne saurions être tenus responsables des dommages directs ou indirects 
+            résultant de l'utilisation du site.
+          </p>
+
+          <h2>6. Données Personnelles</h2>
+          <p>
+            Le traitement des données personnelles est régi par notre 
+            <a href="/confidentialite">Politique de Confidentialité</a>.
+          </p>
+
+          <h2>7. Modification des CGU</h2>
+          <p>
+            Salut Annecy se réserve le droit de modifier les présentes CGU à tout moment. 
+            Les nouvelles CGU seront applicables dès leur mise en ligne sur le site.
+          </p>
+
+          <h2>8. Droit Applicable et Juridiction</h2>
+          <p>
+            Les présentes CGU sont régies par le droit français. En cas de litige, et à 
+            défaut de résolution amiable, les tribunaux français seront seuls compétents.
+          </p>
+
+          <h2>9. Contact</h2>
+          <p>
+            Pour toute question concernant les présentes CGU, vous pouvez nous contacter à :
+            <a href="mailto:legal@salutannecy.fr">legal@salutannecy.fr</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .last-updated {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-8);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .content p {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content ul li {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2);
+    padding-left: var(--spacing-6);
+    position: relative;
+  }
+
+  .content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .content a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .content a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>

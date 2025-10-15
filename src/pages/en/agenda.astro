@@ -1,0 +1,207 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Card from '../../components/molecules/Card.astro';
+import Icon from '../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+import { getCollection } from 'astro:content';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get all published events
+const allEvents = await getCollection('events');
+const events = allEvents.filter((event: any) => event.data.published);
+---
+
+<MainLayout 
+  title={`${t('header.agenda')} - Salut Annecy`} 
+  description="Découvrez tous les événements à Annecy et ses environs"
+  lang={lang}
+>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('header.agenda')}</h1>
+      <p class="subtitle">Ne manquez aucun événement à Annecy</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      {events.length > 0 ? (
+        <div class="events-grid">
+          {events.map((event: any) => (
+            <Card 
+              href={getLocalizedPath(`/event/${event.data.id}`, lang)} 
+              hoverable={true}
+              class="event-card"
+            >
+              <div class="event-image">
+                <img src={event.data.imageUrl} alt={event.data.title} />
+                <div class="event-date-badge">
+                  <span class="event-date">{new Date(event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</span>
+                </div>
+              </div>
+              <div class="event-content">
+                <div class="event-header">
+                  <span class="event-category">{event.data.category}</span>
+                </div>
+                <h3 class="event-title">{event.data.title}</h3>
+                <p class="event-description">{event.data.description}</p>
+                <div class="event-footer">
+                  {event.data.location && (
+                    <div class="event-info">
+                      <Icon name="map-pin" size="sm" />
+                      <span>{event.data.location}</span>
+                    </div>
+                  )}
+                  {event.data.price && (
+                    <span class="event-price">{event.data.price}</span>
+                  )}
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <Icon name="calendar" size="xl" />
+          <h3>Aucun événement trouvé</h3>
+          <p>Revenez bientôt pour découvrir les prochains événements !</p>
+        </div>
+      )}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    padding: var(--spacing-12) 0 var(--spacing-8);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .content-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .event-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .event-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background-color: var(--color-surface-secondary);
+  }
+
+  .event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .event-date-badge {
+    position: absolute;
+    top: var(--spacing-3);
+    right: var(--spacing-3);
+    background-color: var(--color-primary-600);
+    color: white;
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+  }
+
+  .event-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .event-header {
+    margin-bottom: var(--spacing-2);
+  }
+
+  .event-category {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .event-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .event-description {
+    flex: 1;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-3);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding-top: var(--spacing-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .event-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .event-price {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-600);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-12) var(--spacing-6);
+    color: var(--color-text-secondary);
+  }
+
+  .empty-state h3 {
+    margin: var(--spacing-4) 0 var(--spacing-2);
+  }
+
+  @media (max-width: 768px) {
+    .events-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

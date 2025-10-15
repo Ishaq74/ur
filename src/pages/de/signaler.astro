@@ -1,0 +1,312 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Button from '../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${t('footer.report')} - Salut Annecy`} 
+  description="Signaler un problème ou une erreur sur Salut Annecy"
+  lang={lang}
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="content-wrapper">
+        <h1>{t('footer.report')}</h1>
+        <p class="intro">
+          Vous avez remarqué une erreur, un contenu inapproprié ou un problème technique ? 
+          Aidez-nous à améliorer Salut Annecy en nous le signalant.
+        </p>
+        
+        <div class="content">
+          <div class="report-types">
+            <div class="report-type-card">
+              <h2>🔍 Erreur d'Information</h2>
+              <p>
+                Horaires incorrects, coordonnées erronées, description inexacte, 
+                établissement fermé définitivement...
+              </p>
+            </div>
+
+            <div class="report-type-card">
+              <h2>⚠️ Contenu Inapproprié</h2>
+              <p>
+                Contenu offensant, spam, fausses informations, violation des droits 
+                d'auteur...
+              </p>
+            </div>
+
+            <div class="report-type-card">
+              <h2>🐛 Problème Technique</h2>
+              <p>
+                Page qui ne s'affiche pas correctement, lien cassé, erreur de 
+                chargement, bug...
+              </p>
+            </div>
+
+            <div class="report-type-card">
+              <h2>💡 Suggestion</h2>
+              <p>
+                Idée d'amélioration, nouvelle fonctionnalité souhaitée, établissement 
+                à ajouter...
+              </p>
+            </div>
+          </div>
+
+          <div class="report-form-section">
+            <h2>Formulaire de Signalement</h2>
+            <p>
+              Remplissez ce formulaire en détaillant le problème rencontré. 
+              Notre équipe traitera votre signalement dans les plus brefs délais.
+            </p>
+            
+            <form class="report-form">
+              <div class="form-group">
+                <label for="type">Type de signalement *</label>
+                <select id="type" name="type" required>
+                  <option value="">Sélectionnez un type</option>
+                  <option value="error">Erreur d'information</option>
+                  <option value="inappropriate">Contenu inapproprié</option>
+                  <option value="technical">Problème technique</option>
+                  <option value="suggestion">Suggestion</option>
+                  <option value="other">Autre</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="url">URL de la page concernée</label>
+                <input type="url" id="url" name="url" placeholder="https://..." />
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Sujet *</label>
+                <input type="text" id="subject" name="subject" required placeholder="Décrivez brièvement le problème" />
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description détaillée *</label>
+                <textarea id="description" name="description" rows="6" required 
+                  placeholder="Décrivez le problème en détail. Plus vous serez précis, plus nous pourrons vous aider rapidement."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Votre email (optionnel)</label>
+                <input type="email" id="email" name="email" 
+                  placeholder="Si vous souhaitez être tenu informé du traitement" />
+                <small>Votre email ne sera utilisé que pour vous tenir informé du traitement de votre signalement.</small>
+              </div>
+
+              <div class="form-actions">
+                <Button type="submit" variant="primary" size="lg">
+                  Envoyer le signalement
+                </Button>
+                <Button href={getLocalizedPath('/', lang)} variant="secondary" size="lg">
+                  Annuler
+                </Button>
+              </div>
+            </form>
+          </div>
+
+          <div class="info-section">
+            <h2>Délai de Traitement</h2>
+            <p>
+              Nous nous engageons à examiner tous les signalements dans un délai de 48 heures 
+              ouvrées. Les problèmes urgents (contenu inapproprié, erreurs critiques) sont 
+              traités en priorité.
+            </p>
+
+            <h2>Contact Direct</h2>
+            <p>
+              Pour les problèmes urgents, vous pouvez également nous contacter directement :
+            </p>
+            <p>
+              Email : <a href="mailto:report@salutannecy.fr">report@salutannecy.fr</a><br>
+              Téléphone : +33 (0)4 XX XX XX XX
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-section {
+    padding: var(--spacing-12) 0;
+    min-height: 60vh;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+    text-align: center;
+  }
+
+  .intro {
+    font-size: var(--font-size-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-10);
+  }
+
+  .report-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-12);
+  }
+
+  .report-type-card {
+    padding: var(--spacing-5);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .report-type-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .report-type-card h2 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .report-type-card p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .report-form-section {
+    margin-bottom: var(--spacing-12);
+  }
+
+  .report-form-section h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-primary);
+  }
+
+  .report-form-section > p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .report-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: var(--spacing-3);
+    font-size: var(--font-size-base);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+  }
+
+  .form-group small {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+  }
+
+  .info-section {
+    padding: var(--spacing-6);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .info-section h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
+  .info-section p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-section a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .info-section a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .intro {
+      font-size: var(--font-size-base);
+    }
+
+    .report-types {
+      grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

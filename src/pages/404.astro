@@ -9,8 +9,8 @@ const t = useTranslations(lang);
 ---
 
 <MainLayout 
-  title="404 - Page introuvable | Salut Annecy" 
-  description="La page que vous recherchez n'existe pas"
+  title={`404 - ${t('error.404_title')} | Salut Annecy`}
+  description={t('error.404_description')}
   lang={lang}
 >
   <section class="error-section">
@@ -20,16 +20,16 @@ const t = useTranslations(lang);
           <Icon name="alert-circle" size="xl" />
         </div>
         <h1 class="error-title">404</h1>
-        <h2 class="error-subtitle">Page introuvable</h2>
+        <h2 class="error-subtitle">{t('error.404_title')}</h2>
         <p class="error-description">
-          Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
+          {t('error.404_description')}
         </p>
         <div class="error-actions">
           <Button href={getLocalizedPath('/', lang)} variant="primary" size="lg">
-            Retour à l'accueil
+            {t('error.back_home')}
           </Button>
           <Button href={getLocalizedPath('/restaurants', lang)} variant="secondary" size="lg">
-            Découvrir les restaurants
+            {t('error.discover_restaurants')}
           </Button>
         </div>
       </div>
