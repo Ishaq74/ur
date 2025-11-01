@@ -8,7 +8,7 @@ const t = useTranslations(lang);
 
 <MainLayout 
   title={`${t('footer.about_us')} - Salut Annecy`} 
-  description="Découvrez Salut Annecy, votre guide pour vivre le meilleur de la région"
+  description={t('about.page_description')}
   lang={lang}
 >
   <section class="page-section">
@@ -17,32 +17,27 @@ const t = useTranslations(lang);
         <h1>{t('footer.about_us')}</h1>
         
         <div class="content">
-          <h2>Notre Mission</h2>
+          <h2>{t('about.mission_title')}</h2>
           <p>
-            Salut Annecy est votre guide de référence pour découvrir et vivre le meilleur 
-            de la région annécienne. Notre mission est de vous aider à explorer les 
-            restaurants, activités, hébergements et événements qui font la richesse de notre territoire.
+            {t('about.mission_text')}
           </p>
 
-          <h2>Qui Sommes-Nous ?</h2>
+          <h2>{t('about.who_title')}</h2>
           <p>
-            Nous sommes une équipe passionnée par notre région et dédiée à partager 
-            les meilleures adresses et expériences avec vous. Que vous soyez résident 
-            ou visiteur, nous vous aidons à découvrir Annecy sous tous ses aspects.
+            {t('about.who_text')}
           </p>
 
-          <h2>Nos Valeurs</h2>
+          <h2>{t('about.values_title')}</h2>
           <ul>
-            <li>Authenticité : Nous privilégions les établissements locaux et authentiques</li>
-            <li>Qualité : Nous sélectionnons avec soin nos recommandations</li>
-            <li>Partage : Nous créons une communauté autour de l'amour de notre région</li>
-            <li>Innovation : Nous utilisons les meilleures technologies pour vous servir</li>
+            <li>{t('about.value_authenticity')}</li>
+            <li>{t('about.value_quality')}</li>
+            <li>{t('about.value_sharing')}</li>
+            <li>{t('about.value_innovation')}</li>
           </ul>
 
-          <h2>Contact</h2>
+          <h2>{t('about.contact_title')}</h2>
           <p>
-            Pour toute question, suggestion ou partenariat, n'hésitez pas à 
-            <a href={getLocalizedPath('/contact', lang)}>nous contacter</a>.
+            {t('about.contact_text')} <a href={getLocalizedPath('/contact', lang)}>{t('about.contact_link')}</a>.
           </p>
         </div>
       </div>

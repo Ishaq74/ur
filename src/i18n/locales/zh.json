@@ -108,5 +108,20 @@
     "404_description": "抱歉，您要查找的页面不存在或已被移动。",
     "back_home": "返回首页",
     "discover_restaurants": "发现餐厅"
+  },
+  "about": {
+    "page_description": "探索你好安纳西，您体验该地区最佳的指南",
+    "mission_title": "我们的使命",
+    "mission_text": "你好安纳西是您探索和体验安纳西地区最佳的参考指南。我们的使命是帮助您探索构成我们地区丰富性的餐厅、活动、住宿和活动。",
+    "who_title": "我们是谁？",
+    "who_text": "我们是一个对我们地区充满热情的团队，致力于与您分享最好的地址和体验。无论您是居民还是游客，我们都帮助您发现安纳西的各个方面。",
+    "values_title": "我们的价值观",
+    "value_authenticity": "真实性：我们优先考虑本地和正宗的场所",
+    "value_quality": "质量：我们精心挑选我们的推荐",
+    "value_sharing": "分享：我们围绕对我们地区的热爱创建社区",
+    "value_innovation": "创新：我们使用最好的技术为您服务",
+    "contact_title": "联系我们",
+    "contact_text": "如有任何问题、建议或合作，请随时",
+    "contact_link": "联系我们"
   }
 }
