@@ -1,6 +1,6 @@
 # Briefing Complet - Salut Annecy (État Vérifié)
 
-**Date de vérification:** 1er Novembre 2025  
+**Date de vérification:** 1ᵉʳ Novembre 2025  
 **Auditeur:** Copilot AI  
 **Statut du site:** ✅ Fonctionnel, Build OK, 227 pages générées
 
@@ -337,11 +337,11 @@ as it conflicts with higher priority route `/ar/activites`.
 
 #### 5. Page Activités Navigation Error
 **Sévérité:** 🟡 Moyenne  
-**Description:** Erreur lors de la navigation vers `/activites`:
+**Description:** Erreur lors de la navigation vers `/activités`:
 ```
-Error: page.goto: net::ERR_ABORTED at http://localhost:4321/activites
+Error: page.goto: net::ERR_ABORTED at http://localhost:4321/activités
 ```
-**Solution:** Vérifier la page `/activites/index.astro` pour erreurs de compilation
+**Solution:** Vérifier la page `/activités/index.astro` pour erreurs de compilation
 
 ---
 
@@ -666,7 +666,7 @@ Avec les corrections suggérées et l'ajout de contenu, ce site peut devenir **l
 
 ---
 
-**Audit réalisé le:** 1er Novembre 2025  
+**Audit réalisé le:** 1ᵉʳ Novembre 2025  
 **Temps d'audit:** ~30 minutes  
 **Méthode:** Navigation manuelle + analyse de code + test de build  
 **Outils:** Playwright (navigation), Astro CLI (build), Visual inspection
