@@ -7,11 +7,11 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Load categories from content collections
-const restaurantCategories = await getCollection('restaurantCategories');
-const accommodationCategories = await getCollection('accommodationCategories');
-const activityCategories = await getCollection('activityCategories');
-const serviceCategories = await getCollection('serviceCategories');
+// Load categories from content collections, filtered by current language
+const restaurantCategories = await getCollection('restaurantCategories', ({ data }: { data: any }) => data.lang === lang);
+const accommodationCategories = await getCollection('accommodationCategories', ({ data }: { data: any }) => data.lang === lang);
+const activityCategories = await getCollection('activityCategories', ({ data }: { data: any }) => data.lang === lang);
+const serviceCategories = await getCollection('serviceCategories', ({ data }: { data: any }) => data.lang === lang);
 
 // Organize categories by parent
 const organizeCategories = (categories: any[]) => {
