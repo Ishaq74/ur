@@ -66,7 +66,10 @@ allArticles.forEach((a: any) => {
               >
                 {t('filters.all')}
               </a>
-              {articleCategories.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
+              {articleCategories
+                .filter((cat: any) => cat.data.lang === lang)
+                .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+                .map((category: any) => (
                 <a 
                   href={getLocalizedPath(`/magazine?cat=${category.data.slug}`, lang)} 
                   class={`filter-option ${categoryFilter === category.data.slug || categoryFilter === category.data.id ? 'active' : ''}`}

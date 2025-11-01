@@ -58,7 +58,10 @@ if (difficultyFilter) {
               >
                 {t('filters.all')}
               </a>
-              {trailCategories.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
+              {trailCategories
+                .filter((cat: any) => cat.data.lang === lang)
+                .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+                .map((category: any) => (
                 <a 
                   href={getLocalizedPath(`/sentiers?difficulty=${category.data.slug}`, lang)} 
                   class={`filter-option ${difficultyFilter === category.data.slug || difficultyFilter === category.data.id ? 'active' : ''}`}
