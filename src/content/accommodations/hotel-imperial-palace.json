@@ -17,5 +17,6 @@
   "attributes": ["Wi-Fi gratuit", "Spa", "Piscine", "Restaurant gastronomique", "Parking", "Vue lac"],
   "hours": "Réception 24h/24",
   "priceRange": "€€€€",
-  "published": true
+  "published": true,
+  "featured": true
 }

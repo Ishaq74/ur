@@ -16,5 +16,6 @@
   "attributes": ["Spécialités savoyardes", "Cave à fromages", "Terrasse", "Réservation recommandée"],
   "hours": "12h-14h, 19h-22h (fermé dimanche)",
   "priceRange": "€€",
-  "published": true
+  "published": true,
+  "featured": true
 }

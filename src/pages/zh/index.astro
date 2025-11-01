@@ -4,9 +4,21 @@ import Button from '../../components/atoms/Button.astro';
 import Icon from '../../components/atoms/Icon.astro';
 import Card from '../../components/molecules/Card.astro';
 import { useTranslations, getLocalizedPath } from '../../i18n';
+import { getCollection } from 'astro:content';
 
 const lang = 'zh';
 const t = useTranslations(lang);
+
+// Load featured content
+const allRestaurants = await getCollection('restaurants');
+const allAccommodations = await getCollection('accommodations');
+const allArticles = await getCollection('articles');
+
+const featuredRestaurants = allRestaurants.filter(r => r.data.featured && r.data.published).slice(0, 2);
+const featuredAccommodations = allAccommodations.filter(a => a.data.featured && a.data.published).slice(0, 1);
+const recentArticles = allArticles.filter(a => a.data.published).sort((a, b) => 
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+).slice(0, 2);
 ---
 
 <MainLayout title={`${t('hero.title')} - ${t('hero.subtitle')}`} description={t('hero.subtitle')} lang={lang}>
@@ -57,30 +69,25 @@ const t = useTranslations(lang);
       </div>
       
       <div class="featured-grid">
-        <!-- Placeholder cards - will be populated from content collections -->
-        <Card href={getLocalizedPath('/place/1', lang)} hoverable={true}>
-          <div class="card-image-placeholder">
-            <Icon name="map-pin" size="lg" />
-          </div>
-          <h3 class="card-title">Featured Place 1</h3>
-          <p class="card-description">Description of the featured place...</p>
-        </Card>
-
-        <Card href={getLocalizedPath('/place/2', lang)} hoverable={true}>
-          <div class="card-image-placeholder">
-            <Icon name="map-pin" size="lg" />
-          </div>
-          <h3 class="card-title">Featured Place 2</h3>
-          <p class="card-description">Description of the featured place...</p>
-        </Card>
-
-        <Card href={getLocalizedPath('/event/1', lang)} hoverable={true}>
-          <div class="card-image-placeholder">
-            <Icon name="calendar" size="lg" />
-          </div>
-          <h3 class="card-title">Featured Event</h3>
-          <p class="card-description">Description of the featured event...</p>
-        </Card>
+        {featuredRestaurants.length > 0 && featuredRestaurants.map((restaurant) => (
+          <Card href={getLocalizedPath(`/restaurants/${restaurant.data.id}`, lang)} hoverable={true}>
+            <div class="card-image-placeholder">
+              <Icon name="utensils" size="lg" />
+            </div>
+            <h3 class="card-title">{restaurant.data.name}</h3>
+            <p class="card-description">{restaurant.data.description}</p>
+          </Card>
+        ))}
+        
+        {featuredAccommodations.length > 0 && featuredAccommodations.map((accommodation) => (
+          <Card href={getLocalizedPath(`/hebergements/${accommodation.data.id}`, lang)} hoverable={true}>
+            <div class="card-image-placeholder">
+              <Icon name="home" size="lg" />
+            </div>
+            <h3 class="card-title">{accommodation.data.name}</h3>
+            <p class="card-description">{accommodation.data.description}</p>
+          </Card>
+        ))}
       </div>
     </div>
   </section>
@@ -126,22 +133,15 @@ const t = useTranslations(lang);
       </div>
       
       <div class="magazine-grid">
-        <!-- Placeholder for magazine articles -->
-        <Card href={getLocalizedPath('/magazine/article-1', lang)} hoverable={true}>
-          <div class="card-image-placeholder">
-            <Icon name="star" size="lg" />
-          </div>
-          <h3 class="card-title">Article Title</h3>
-          <p class="card-description">Article excerpt goes here...</p>
-        </Card>
-
-        <Card href={getLocalizedPath('/magazine/article-2', lang)} hoverable={true}>
-          <div class="card-image-placeholder">
-            <Icon name="star" size="lg" />
-          </div>
-          <h3 class="card-title">Article Title</h3>
-          <p class="card-description">Article excerpt goes here...</p>
-        </Card>
+        {recentArticles.length > 0 && recentArticles.map((article) => (
+          <Card href={getLocalizedPath(`/magazine/${article.data.id}`, lang)} hoverable={true}>
+            <div class="card-image-placeholder">
+              <Icon name="book-open" size="lg" />
+            </div>
+            <h3 class="card-title">{article.data.title}</h3>
+            <p class="card-description">{article.data.excerpt}</p>
+          </Card>
+        ))}
       </div>
 
       <div class="section-footer">
