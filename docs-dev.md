@@ -86,10 +86,303 @@ src/
 
 ### Design System
 
-- **Design Tokens:** Couleurs, typographie, espacements dans `tokens.css`
-- **Thèmes:** Modes clair, sombre et contraste élevé
-- **Composants:** Pattern atomic design (Atoms → Molecules → Organisms)
-- **Responsive:** Mobile-first avec breakpoints (640px, 768px, 1024px, 1280px)
+Le projet utilise un système de design personnalisé avec :
+
+**Design Tokens (`src/styles/tokens.css`):**
+- Variables CSS pour les couleurs, typographie, espacements
+- Définition des thèmes (clair/sombre/contraste)
+- Palette de couleurs cohérente
+- Échelle typographique
+- Échelle d'espacement
+
+**Thèmes disponibles:**
+- **Mode clair** - Thème par défaut
+- **Mode sombre** - Pour réduire la fatigue oculaire
+- **Mode contraste élevé** - Pour l'accessibilité
+
+**Composants (Atomic Design):**
+- **Atoms** (`src/components/atoms/`) - Éléments de base (Button, Icon)
+- **Molecules** (`src/components/molecules/`) - Composants composés (Card)
+- **Organisms** (`src/components/organisms/`) - Composants complexes (Header, Footer)
+
+**Responsive:**
+- Approche mobile-first
+- Breakpoints: 640px (sm), 768px (md), 1024px (lg), 1280px (xl)
+- Grid flexible avec CSS Grid et Flexbox
+
+### Composants et Props
+
+**Atoms (src/components/atoms/):**
+- `Button.astro` - Bouton réutilisable avec variants
+- `Icon.astro` - Composant icône
+
+**Molecules (src/components/molecules/):**
+- `Card.astro` - Carte de contenu réutilisable
+
+**Organisms (src/components/organisms/):**
+- `Header.astro` - En-tête avec navigation multilingue
+- `Footer.astro` - Pied de page avec liens et informations
+
+**Props communes:**
+Les composants utilisent TypeScript pour typer leurs props. Exemples :
+```typescript
+interface Props {
+  title: string;
+  description?: string;
+  variant?: 'primary' | 'secondary';
+  // etc.
+}
+```
+
+### Layouts
+
+**BaseLayout.astro** (`src/layouts/BaseLayout.astro`)
+- Layout de base avec `<html>`, `<head>`, `<body>`
+- Intégration des métadonnées SEO
+- Support des thèmes et du mode RTL
+- Props: `title`, `description`, `lang`, etc.
+
+**MainLayout.astro** (`src/layouts/MainLayout.astro`)
+- Étend BaseLayout
+- Ajoute Header et Footer
+- Structure de page commune
+- Breadcrumb navigation
+
+### Internationalisation (i18n)
+
+**Structure i18n:**
+```
+src/i18n/
+├── locales/
+│   ├── fr.json    # Français (défaut)
+│   ├── en.json    # Anglais
+│   ├── de.json    # Allemand
+│   ├── es.json    # Espagnol
+│   ├── ar.json    # Arabe (RTL)
+│   └── zh.json    # Chinois
+└── index.ts       # Utilitaires i18n
+```
+
+**Langues supportées:**
+- 🇫🇷 Français (langue par défaut)
+- 🇬🇧 Anglais
+- 🇩🇪 Allemand
+- 🇪🇸 Espagnol
+- 🇸🇦 Arabe (avec support RTL)
+- 🇨🇳 Chinois
+
+**Utilisation dans les composants:**
+```astro
+---
+import { useTranslations, getLangFromUrl } from '../i18n';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+<h1>{t('header.title')}</h1>
+<p>{t('hero.subtitle')}</p>
+```
+
+**Fonctions utilitaires (src/i18n/index.ts):**
+- `useTranslations(lang)` - Retourne fonction de traduction `t(key)`
+- `getLangFromUrl(url)` - Extrait la langue de l'URL
+- Support du fallback vers le français si traduction manquante
+
+**Structure des fichiers de traduction:**
+```json
+{
+  "header": {
+    "title": "Salut Annecy",
+    "nav": { ... }
+  },
+  "hero": { ... },
+  "footer": { ... },
+  "filters": { ... },
+  "common": { ... }
+}
+```
+
+### Collections de Contenu
+
+**Configuration (src/content/config.ts):**
+
+Toutes les collections utilisent le système de Content Collections d'Astro avec validation Zod.
+
+**Schema de base (locationSchema):**
+```typescript
+{
+  id: string,
+  name: string,
+  description: string,
+  categoryId?: string,
+  address?: string,
+  phone?: string,
+  website?: string,
+  email?: string,
+  imageUrl: string,
+  rating?: number (0-5),
+  reviewCount?: number,
+  coordinates?: { lat, lng },
+  attributes: string[],
+  hours?: string,
+  priceRange?: string,
+  published: boolean,
+  featured: boolean,
+  accessibility?: string,
+  social?: { facebook, instagram, twitter },
+  tags: string[],
+  createdAt?: string,
+  updatedAt?: string
+}
+```
+
+**Collections disponibles:**
+
+1. **restaurants** (type: data, format: JSON)
+   - Schema: locationSchema + category reference
+   - Catégories: restaurantCategories
+
+2. **accommodations** (type: data, format: JSON)
+   - Schema: locationSchema + category reference
+   - Catégories: accommodationCategories
+
+3. **activities** (type: data, format: JSON)
+   - Schema: locationSchema + category reference
+   - Catégories: activityCategories
+
+4. **services** (type: data, format: JSON)
+   - Schema: locationSchema + category reference
+   - Catégories: serviceCategories
+
+5. **articles** (type: content, format: Markdown)
+   - Schema: frontmatter avec title, excerpt, category, tags, date, etc.
+   - Support Markdown complet
+   - Catégories: articleCategories
+
+6. **trails** (type: data, format: JSON)
+   - Schema: locationSchema + difficulty, distance, elevation
+   - Catégories: trailCategories
+
+7. **events** (type: data, format: JSON)
+   - Schema: locationSchema + startDate, endDate, eventType
+
+8. **listings** (type: data, format: JSON)
+   - Schema: locationSchema + listingType, price
+
+9. **places** (type: data, format: JSON)
+   - Collection legacy pour compatibilité
+
+**Exemple de contenu Restaurant:**
+```json
+{
+  "id": "le-bivouac",
+  "name": "Le Bivouac",
+  "description": "Restaurant de cuisine savoyarde...",
+  "categoryId": "cuisine-locale",
+  "address": "10 Rue du Lac, Annecy",
+  "phone": "+33 4 50 XX XX XX",
+  "website": "https://lebivouac-annecy.fr",
+  "imageUrl": "/images/restaurants/le-bivouac.jpg",
+  "rating": 4.5,
+  "reviewCount": 250,
+  "coordinates": { "lat": 45.8992, "lng": 6.1294 },
+  "attributes": ["Terrasse", "Parking", "Wifi"],
+  "hours": "12h-14h30, 19h-22h",
+  "priceRange": "€€",
+  "published": true,
+  "featured": true,
+  "tags": ["savoyard", "local", "montagne"]
+}
+```
+
+**Exemple d'article (Markdown):**
+```markdown
+---
+id: "vivre-annecy"
+title: "Vivre à Annecy : Le Guide Complet"
+excerpt: "Tout ce qu'il faut savoir..."
+imageUrl: "/images/articles/vivre-annecy.jpg"
+category: "Lifestyle"
+categoryId: "lifestyle"
+authorId: "author-1"
+date: "2025-01-15T10:00:00"
+readTime: "8 min"
+tags: ["lifestyle", "guide", "local"]
+published: true
+---
+
+# Vivre à Annecy
+
+Contenu de l'article en Markdown...
+```
+
+### Base de Données et Authentification (Planifié)
+
+**État actuel:** Pas encore implémenté (mode statique uniquement)
+
+**Plan futur:**
+- **Base de données:** PostgreSQL avec Drizzle ORM
+- **Authentification:** better-auth
+- **Fonctionnalités prévues:**
+  - Comptes utilisateurs
+  - Système de favoris
+  - Avis et commentaires
+  - Réservations
+  - Espace professionnel pour gestion de contenu
+
+Le projet est actuellement construit en mode statique (SSG) pour maximiser les performances. L'ajout de la base de données et de l'authentification se fera dans une phase ultérieure avec migration vers un mode hybride (SSG + SSR).
+
+### Middleware et API
+
+**État actuel:** Pas de middleware custom ou routes API
+
+Le projet fonctionne en mode statique pur sans endpoints API côté serveur. Toutes les fonctionnalités interactives (filtres, recherche future) sont gérées côté client en JavaScript.
+
+**Futur:** 
+- Routes API pour interactions avec la base de données
+- Middleware d'authentification
+- API endpoints pour recherche, favoris, avis
+
+### Configuration du Projet
+
+**astro.config.mjs:**
+```javascript
+{
+  site: 'https://ur-ruddy.vercel.app',
+  
+  build: {
+    inlineStylesheets: 'auto',
+  },
+  
+  integrations: [sitemap()],
+  
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', 'en', 'de', 'es', 'ar', 'zh'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+  
+  adapter: vercel()
+}
+```
+
+**tsconfig.json:**
+- Mode strict activé
+- Path aliases configurés
+- Support Astro et TypeScript
+
+**package.json - Scripts disponibles:**
+- `npm run dev` - Serveur de développement
+- `npm run build` - Build de production
+- `npm run preview` - Prévisualisation du build
+- `npm run check` - Vérification TypeScript
+
+**Dépendances principales:**
+- `astro: ^5.14.4` - Framework
+- `@astrojs/sitemap` - Génération sitemap
+- `@astrojs/vercel` - Adaptateur Vercel
+- `typescript: ~5.8.2` - Support TypeScript
 
 ---
 
