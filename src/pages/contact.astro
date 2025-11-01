@@ -49,6 +49,14 @@ const t = useTranslations(lang);
 
           <div class="contact-form-section">
             <h2>Formulaire de Contact</h2>
+            <div class="coming-soon-notice">
+              <p>
+                <strong>En cours de développement</strong><br>
+                Le formulaire de contact sera bientôt disponible. En attendant, n'hésitez pas à nous contacter par email ou téléphone.
+              </p>
+            </div>
+            
+            <!-- Form temporarily disabled until backend is implemented
             <p>
               Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.
             </p>
@@ -78,6 +86,7 @@ const t = useTranslations(lang);
                 Envoyer le message
               </Button>
             </form>
+            -->
           </div>
         </div>
       </div>
@@ -163,6 +172,23 @@ const t = useTranslations(lang);
     font-size: var(--font-size-base);
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-6);
+  }
+
+  .coming-soon-notice {
+    background-color: var(--color-warning-50);
+    border: 1px solid var(--color-warning-200);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-5);
+    margin: var(--spacing-4) 0;
+  }
+
+  .coming-soon-notice p {
+    margin: 0;
+    color: var(--color-warning-800);
+  }
+
+  .coming-soon-notice strong {
+    color: var(--color-warning-900);
   }
 
   .contact-form {

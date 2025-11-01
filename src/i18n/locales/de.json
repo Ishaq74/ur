@@ -108,5 +108,20 @@
     "404_description": "Entschuldigung, die Seite, die Sie suchen, existiert nicht oder wurde verschoben.",
     "back_home": "Zurück zur Startseite",
     "discover_restaurants": "Restaurants entdecken"
+  },
+  "about": {
+    "page_description": "Entdecken Sie Salut Annecy, Ihren Führer für das Beste der Region",
+    "mission_title": "Unsere Mission",
+    "mission_text": "Salut Annecy ist Ihr Referenzführer, um das Beste der Annecy-Region zu entdecken und zu erleben. Unsere Mission ist es, Ihnen zu helfen, die Restaurants, Aktivitäten, Unterkünfte und Veranstaltungen zu erkunden, die den Reichtum unseres Gebiets ausmachen.",
+    "who_title": "Wer sind wir?",
+    "who_text": "Wir sind ein Team, das von unserer Region begeistert ist und sich dafür einsetzt, die besten Adressen und Erfahrungen mit Ihnen zu teilen. Ob Sie Bewohner oder Besucher sind, wir helfen Ihnen, alle Facetten von Annecy zu entdecken.",
+    "values_title": "Unsere Werte",
+    "value_authenticity": "Authentizität: Wir bevorzugen lokale und authentische Einrichtungen",
+    "value_quality": "Qualität: Wir wählen unsere Empfehlungen sorgfältig aus",
+    "value_sharing": "Teilen: Wir schaffen eine Gemeinschaft rund um die Liebe zu unserer Region",
+    "value_innovation": "Innovation: Wir nutzen die besten Technologien, um Ihnen zu dienen",
+    "contact_title": "Kontakt",
+    "contact_text": "Für Fragen, Anregungen oder Partnerschaften zögern Sie nicht,",
+    "contact_link": "uns zu kontaktieren"
   }
 }

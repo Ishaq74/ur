@@ -279,6 +279,14 @@ const t = useTranslations(lang);
     <div class="container">
       <div class="form-wrapper">
         <h2>Intéressé par un Partenariat ?</h2>
+        <div class="coming-soon-notice">
+          <p>
+            <strong>En cours de développement</strong><br>
+            Le formulaire de partenariat sera bientôt disponible. En attendant, contactez-nous par email à l'adresse partenariats@salutannecy.fr pour discuter de votre projet.
+          </p>
+        </div>
+
+        <!-- Form temporarily disabled until backend is implemented
         <p class="form-intro">
           Remplissez ce formulaire et notre équipe vous recontactera dans les 24 heures.
         </p>
@@ -333,6 +341,7 @@ const t = useTranslations(lang);
             </Button>
           </div>
         </form>
+        -->
 
         <div class="contact-info">
           <p>
@@ -572,6 +581,23 @@ const t = useTranslations(lang);
     text-align: center;
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-8);
+  }
+
+  .coming-soon-notice {
+    background-color: var(--color-warning-50);
+    border: 1px solid var(--color-warning-200);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-5);
+    margin: var(--spacing-4) 0;
+  }
+
+  .coming-soon-notice p {
+    margin: 0;
+    color: var(--color-warning-800);
+  }
+
+  .coming-soon-notice strong {
+    color: var(--color-warning-900);
   }
 
   .contact-form {

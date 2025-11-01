@@ -16,5 +16,6 @@
   "attributes": ["Vue sur lac", "Menu dégustation", "Cave à vin", "Étoilé Michelin"],
   "hours": "12h-14h, 19h-22h (Fermé lundi et mardi)",
   "priceRange": "€€€€",
-  "published": true
+  "published": true,
+  "featured": true
 }

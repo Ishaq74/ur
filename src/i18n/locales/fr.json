@@ -108,5 +108,20 @@
     "404_description": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
     "back_home": "Retour à l'accueil",
     "discover_restaurants": "Découvrir les restaurants"
+  },
+  "about": {
+    "page_description": "Découvrez Salut Annecy, votre guide pour vivre le meilleur de la région",
+    "mission_title": "Notre Mission",
+    "mission_text": "Salut Annecy est votre guide de référence pour découvrir et vivre le meilleur de la région annécienne. Notre mission est de vous aider à explorer les restaurants, activités, hébergements et événements qui font la richesse de notre territoire.",
+    "who_title": "Qui Sommes-Nous ?",
+    "who_text": "Nous sommes une équipe passionnée par notre région et dédiée à partager les meilleures adresses et expériences avec vous. Que vous soyez résident ou visiteur, nous vous aidons à découvrir Annecy sous tous ses aspects.",
+    "values_title": "Nos Valeurs",
+    "value_authenticity": "Authenticité : Nous privilégions les établissements locaux et authentiques",
+    "value_quality": "Qualité : Nous sélectionnons avec soin nos recommandations",
+    "value_sharing": "Partage : Nous créons une communauté autour de l'amour de notre région",
+    "value_innovation": "Innovation : Nous utilisons les meilleures technologies pour vous servir",
+    "contact_title": "Contact",
+    "contact_text": "Pour toute question, suggestion ou partenariat, n'hésitez pas à",
+    "contact_link": "nous contacter"
   }
 }

@@ -108,5 +108,20 @@
     "404_description": "Sorry, the page you are looking for does not exist or has been moved.",
     "back_home": "Back to home",
     "discover_restaurants": "Discover restaurants"
+  },
+  "about": {
+    "page_description": "Discover Salut Annecy, your guide to experiencing the best of the region",
+    "mission_title": "Our Mission",
+    "mission_text": "Salut Annecy is your go-to guide for discovering and experiencing the best of the Annecy region. Our mission is to help you explore the restaurants, activities, accommodations, and events that make our area so rich.",
+    "who_title": "Who Are We?",
+    "who_text": "We are a team passionate about our region and dedicated to sharing the best addresses and experiences with you. Whether you're a resident or a visitor, we help you discover all aspects of Annecy.",
+    "values_title": "Our Values",
+    "value_authenticity": "Authenticity: We prioritize local and authentic establishments",
+    "value_quality": "Quality: We carefully select our recommendations",
+    "value_sharing": "Sharing: We create a community around love for our region",
+    "value_innovation": "Innovation: We use the best technologies to serve you",
+    "contact_title": "Contact",
+    "contact_text": "For any questions, suggestions, or partnerships, feel free to",
+    "contact_link": "contact us"
   }
 }

@@ -100,7 +100,7 @@ allAccommodations.forEach((a: any) => {
         <h2 class="section-title">Par catégorie</h2>
         <div class="categories-grid">
           {accommodationCategories
-            .filter((cat: any) => !cat.data.parentId && cat.data.published)
+            .filter((cat: any) => !cat.data.parentId && cat.data.published && cat.data.lang === lang)
             .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
             .map(category => (
               <Card 
