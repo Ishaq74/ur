@@ -2,16 +2,16 @@
 import Icon from '../atoms/Icon.astro';
 import Button from '../atoms/Button.astro';
 import { useTranslations, getLangFromUrl, getLocalizedPath, type Language, languages } from '../../i18n';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // Load categories from content collections, filtered by current language
-const restaurantCategories = await getCollection('restaurantCategories', ({ data }: { data: any }) => data.lang === lang);
-const accommodationCategories = await getCollection('accommodationCategories', ({ data }: { data: any }) => data.lang === lang);
-const activityCategories = await getCollection('activityCategories', ({ data }: { data: any }) => data.lang === lang);
-const serviceCategories = await getCollection('serviceCategories', ({ data }: { data: any }) => data.lang === lang);
+const restaurantCategories = await getCollection('restaurantCategories', ({ data }: CollectionEntry<'restaurantCategories'>) => data.lang === lang);
+const accommodationCategories = await getCollection('accommodationCategories', ({ data }: CollectionEntry<'accommodationCategories'>) => data.lang === lang);
+const activityCategories = await getCollection('activityCategories', ({ data }: CollectionEntry<'activityCategories'>) => data.lang === lang);
+const serviceCategories = await getCollection('serviceCategories', ({ data }: CollectionEntry<'serviceCategories'>) => data.lang === lang);
 
 // Organize categories by parent
 const organizeCategories = (categories: any[]) => {
