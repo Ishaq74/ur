@@ -47,9 +47,11 @@ Cette analyse a identifié **plusieurs catégories de problèmes** dans le proje
 allRestaurants.filter(r => r.data.featured)
 allArticles.filter(a => a.data.published).sort((a, b) => ...)
 
-// ✅ Code corrigé (avec types)
-allRestaurants.filter((r: any) => r.data.featured)
-// ou mieux avec le type approprié si disponible
+// ✅ Code corrigé (avec types appropriés depuis Astro content collections)
+import type { CollectionEntry } from 'astro:content';
+allRestaurants.filter((r: CollectionEntry<'restaurants'>) => r.data.featured)
+allArticles.filter((a: CollectionEntry<'articles'>) => a.data.published)
+  .sort((a: CollectionEntry<'articles'>, b: CollectionEntry<'articles'>) => ...)
 ```
 
 #### B. Propriétés inexistantes sur types (erreur ts(2339))
