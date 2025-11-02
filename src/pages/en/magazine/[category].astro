@@ -23,11 +23,15 @@ export async function getStaticPaths() {
 const { category, articles } = Astro.props as any;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const allArticleCategories = await getCollection('articleCategories');
+const localizedCategory = allArticleCategories.find((c: any) => c.data.id === category.data.id && c.data.lang === lang);
+const categoryName = localizedCategory?.data.name ?? category.data.name;
+const categoryDescription = localizedCategory?.data.description ?? category.data.description;
 ---
 
 <MainLayout 
-  title={`${category.data.name} - ${t('header.magazine')} - Salut Annecy`} 
-  description={category.data.description || `Discover our articles about ${category.data.name}`}
+  title={`${categoryName} - ${t('header.magazine')} - Salut Annecy`} 
+  description={categoryDescription || `Discover our articles about ${categoryName}`}
   lang={lang}
 >
   <section class="page-header">
@@ -35,11 +39,11 @@ const t = useTranslations(lang);
       <nav class="breadcrumb">
         <a href={getLocalizedPath('/magazine', lang)}>{t('header.magazine')}</a>
         <span>/</span>
-        <span>{category.data.name}</span>
+  <span>{categoryName}</span>
       </nav>
-      <h1>{category.data.name}</h1>
-      {category.data.description && (
-        <p class="subtitle">{category.data.description}</p>
+      <h1>{categoryName}</h1>
+      {categoryDescription && (
+        <p class="subtitle">{categoryDescription}</p>
       )}
     </div>
   </section>
@@ -59,7 +63,7 @@ const t = useTranslations(lang);
               </div>
               <div class="article-content">
                 <div class="article-header">
-                  <span class="article-category">{category.data.name}</span>
+                  <span class="article-category">{categoryName}</span>
                   {article.data.readTime && (
                     <span class="article-read-time">{article.data.readTime}</span>
                   )}

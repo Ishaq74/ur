@@ -22,7 +22,9 @@ let articles = allArticles.filter((article: any) => article.data.published);
 // Get category name if filtering
 let categoryName = t('header.magazine');
 if (categoryFilter) {
-  const category = articleCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const category = articleCategories
+    .filter((c: any) => c.data.lang === lang)
+    .find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
@@ -136,7 +138,17 @@ allArticles.forEach((a: any) => {
                       <h3 class="article-title">{article.data.title}</h3>
                       <p class="article-excerpt">{article.data.excerpt}</p>
                       <div class="article-footer">
-                        <span class="article-date">{new Date(article.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                        <span class="article-date">{
+                          new Date(article.data.date).toLocaleDateString(
+                            (lang === 'fr' && 'fr-FR') ||
+                            (lang === 'en' && 'en-US') ||
+                            (lang === 'de' && 'de-DE') ||
+                            (lang === 'es' && 'es-ES') ||
+                            (lang === 'ar' && 'ar-EG') ||
+                            (lang === 'zh' && 'zh-CN') || 'fr-FR',
+                            { day: 'numeric', month: 'long', year: 'numeric' }
+                          )
+                        }</span>
                         {article.data.tags && article.data.tags.length > 0 && (
                           <div class="article-tags">
                             {article.data.tags.slice(0, 2).map((tag: string) => (

@@ -23,11 +23,15 @@ export async function getStaticPaths() {
 const { category, restaurants } = Astro.props as any;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+// Lokalisierte Kategorie für Anzeige
+const allRestaurantCategories = await getCollection('restaurantCategories');
+const localizedCategory =
+  allRestaurantCategories.find((c: any) => c.data.id === category.data.id && c.data.lang === lang) || category;
 ---
 
 <MainLayout 
-  title={`${category.data.name} - ${t('header.restaurants')} - Salut Annecy`} 
-  description={category.data.description || `Entdecken Sie die besten ${category.data.name} in Annecy`}
+  title={`${localizedCategory.data.name} - ${t('header.restaurants')} - Salut Annecy`} 
+  description={localizedCategory.data.description || `Entdecken Sie die besten ${localizedCategory.data.name} in Annecy`}
   lang={lang}
 >
   <section class="page-header">
@@ -35,11 +39,11 @@ const t = useTranslations(lang);
       <nav class="breadcrumb">
         <a href={getLocalizedPath('/restaurants', lang)}>{t('header.restaurants')}</a>
         <span>/</span>
-        <span>{category.data.name}</span>
+        <span>{localizedCategory.data.name}</span>
       </nav>
-      <h1>{category.data.name}</h1>
-      {category.data.description && (
-        <p class="subtitle">{category.data.description}</p>
+      <h1>{localizedCategory.data.name}</h1>
+      {localizedCategory.data.description && (
+        <p class="subtitle">{localizedCategory.data.description}</p>
       )}
     </div>
   </section>
@@ -59,7 +63,7 @@ const t = useTranslations(lang);
                 </div>
               <div class="place-content">
                 <div class="place-header">
-                  <span class="place-category">{category.data.name}</span>
+                  <span class="place-category">{localizedCategory.data.name}</span>
                   {restaurant.data.rating && (
                     <div class="place-rating">
                       <Icon name="star" size="sm" />
