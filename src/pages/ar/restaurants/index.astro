@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -21,13 +21,12 @@ const restaurantCategories = await getCollection('restaurantCategories');
 // For static builds, show all restaurants and filter client-side
 let restaurants = allRestaurants.filter((r: any) => r.data.published);
 
-// Get category name if filtering  
+// Get category name if filtering (localized)
 let categoryName = t('common.all_restaurants');
 if (categoryFilter) {
-  const category = restaurantCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
-  if (category) {
-    categoryName = category.data.name;
-  }
+  const matched = restaurantCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const localized = matched ? findLocalizedById(restaurantCategories, matched.data.id, lang) : undefined;
+  if (localized) categoryName = localized.data.name;
 }
 
 // Collect all unique attributes and price ranges for filter options
@@ -59,7 +58,7 @@ allRestaurants.forEach((r: any) => {
   {!categoryFilter && restaurantCategories.length > 0 && (
     <section class="categories-section">
       <div class="container">
-        <h2 class="section-title">Par catégorie</h2>
+  <h2 class="section-title">{t('categories.title')}</h2>
         <div class="categories-grid">
           {restaurantCategories
             .filter((cat: any) => !cat.data.parentId && cat.data.published && cat.data.lang === lang)
@@ -169,7 +168,7 @@ allRestaurants.forEach((r: any) => {
       {restaurants.length > 0 ? (
         <div class="places-grid" id="restaurants-grid">
           {restaurants.map((restaurant: any) => {
-            const category = restaurantCategories.find((c: any) => c.data.id === restaurant.data.categoryId);
+            const category = findLocalizedById(restaurantCategories, restaurant.data.categoryId, lang);
             const attrsStr = restaurant.data.attributes ? restaurant.data.attributes.join(',') : '';
             return (
               <Card 

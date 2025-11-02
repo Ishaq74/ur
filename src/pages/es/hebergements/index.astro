@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -59,13 +59,12 @@ if (ratingFilter) {
   accommodations = accommodations.filter((a: any) => a.data.rating && a.data.rating >= minRating);
 }
 
-// Get category name if filtering
+// Get category name if filtering (localized)
 let categoryName = t('common.all_accommodations');
 if (categoryFilter) {
-  const category = accommodationCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
-  if (category) {
-    categoryName = category.data.name;
-  }
+  const matched = accommodationCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const localized = matched ? findLocalizedById(accommodationCategories, matched.data.id, lang) : undefined;
+  if (localized) categoryName = localized.data.name;
 }
 
 // Collect all unique attributes and price ranges for filter options
@@ -97,7 +96,7 @@ allAccommodations.forEach((a: any) => {
   {!categoryFilter && accommodationCategories.length > 0 && (
     <section class="categories-section">
       <div class="container">
-        <h2 class="section-title">Par catégorie</h2>
+  <h2 class="section-title">{t('categories.title')}</h2>
         <div class="categories-grid">
           {accommodationCategories
             .filter((cat: any) => !cat.data.parentId && cat.data.published && cat.data.lang === lang)
@@ -214,7 +213,12 @@ allAccommodations.forEach((a: any) => {
               </div>
               <div class="place-content">
                 <div class="place-header">
-                  <span class="place-category">{place.data.category}</span>
+                  {(() => {
+                    const label = place.isNew
+                      ? (findLocalizedById(accommodationCategories, place.data.categoryId, lang)?.data.name || '')
+                      : (place.data.category || '');
+                    return <span class="place-category">{label}</span>;
+                  })()}
                   {place.data.rating && (
                     <div class="place-rating">
                       <Icon name="star" size="sm" />
@@ -242,8 +246,7 @@ allAccommodations.forEach((a: any) => {
       ) : (
         <div class="empty-state">
           <Icon name="home" size="xl" />
-          <h3>Aucun hébergement trouvé</h3>
-          <p>Revenez bientôt pour découvrir nos recommandations !</p>
+          <h3>{t('filters.no_results')}</h3>
         </div>
       )}
     </div>
