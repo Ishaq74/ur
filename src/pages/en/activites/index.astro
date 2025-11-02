@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -62,10 +62,9 @@ if (ratingFilter) {
 // Get category name if filtering
 let categoryName = t('common.all_activities');
 if (categoryFilter) {
-  const category = activityCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
-  if (category) {
-    categoryName = category.data.name;
-  }
+  const matched = activityCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const localized = matched ? findLocalizedById(activityCategories, matched.data.id, lang) : undefined;
+  if (localized) categoryName = localized.data.name;
 }
 
 // Collect all unique attributes and price ranges for filter options
@@ -83,13 +82,13 @@ allActivities.forEach((a: any) => {
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description="Découvrez les meilleures activités à Annecy et ses environs"
+  description="Discover the best activities in and around Annecy"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <h1>{categoryName}</h1>
-      <p class="subtitle">Explorez toutes les activités à Annecy et ses environs</p>
+      <p class="subtitle">Explore all activities in and around Annecy</p>
     </div>
   </section>
 
@@ -97,10 +96,10 @@ allActivities.forEach((a: any) => {
   {!categoryFilter && activityCategories.length > 0 && (
     <section class="categories-section">
       <div class="container">
-        <h2 class="section-title">Par catégorie</h2>
+        <h2 class="section-title">By category</h2>
         <div class="categories-grid">
           {activityCategories
-            .filter((cat: any) => !cat.data.parentId && cat.data.published)
+            .filter((cat: any) => !cat.data.parentId && cat.data.published && cat.data.lang === lang)
             .sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0))
             .map((category: any) => (
               <Card 
@@ -165,8 +164,8 @@ allActivities.forEach((a: any) => {
       ) : (
         <div class="empty-state">
           <Icon name="hiking" size="xl" />
-          <h3>Aucune activité trouvée</h3>
-          <p>Revenez bientôt pour découvrir nos recommandations !</p>
+          <h3>No activities found</h3>
+          <p>Check back soon to discover our recommendations!</p>
         </div>
       )}
     </div>

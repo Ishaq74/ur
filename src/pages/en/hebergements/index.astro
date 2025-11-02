@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -62,10 +62,9 @@ if (ratingFilter) {
 // Get category name if filtering
 let categoryName = t('common.all_accommodations');
 if (categoryFilter) {
-  const category = accommodationCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
-  if (category) {
-    categoryName = category.data.name;
-  }
+  const matched = accommodationCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const localized = matched ? findLocalizedById(accommodationCategories, matched.data.id, lang) : undefined;
+  if (localized) categoryName = localized.data.name;
 }
 
 // Collect all unique attributes and price ranges for filter options
@@ -97,7 +96,7 @@ allAccommodations.forEach((a: any) => {
   {!categoryFilter && accommodationCategories.length > 0 && (
     <section class="categories-section">
       <div class="container">
-        <h2 class="section-title">Par catégorie</h2>
+  <h2 class="section-title">By category</h2>
         <div class="categories-grid">
           {accommodationCategories
             .filter((cat: any) => !cat.data.parentId && cat.data.published && cat.data.lang === lang)
@@ -242,8 +241,8 @@ allAccommodations.forEach((a: any) => {
       ) : (
         <div class="empty-state">
           <Icon name="home" size="xl" />
-          <h3>Aucun hébergement trouvé</h3>
-          <p>Revenez bientôt pour découvrir nos recommandations !</p>
+          <h3>No accommodations found</h3>
+          <p>Check back soon to discover our recommendations!</p>
         </div>
       )}
     </div>

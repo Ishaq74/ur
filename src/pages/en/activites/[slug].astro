@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Icon from '../../../components/atoms/Icon.astro';
 import Button from '../../../components/atoms/Button.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -26,10 +26,8 @@ type Props = {
 const { activity, category }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-// Resolve localized category name for display
 const allActivityCategories = await getCollection('activityCategories');
-const localizedCategory =
-  allActivityCategories.find((c: any) => c.data.id === (category?.data.id ?? activity.data.categoryId) && c.data.lang === lang) || category;
+const localizedCategory = findLocalizedById(allActivityCategories, category?.data.id, lang) || category;
 ---
 
 <MainLayout 
@@ -49,7 +47,7 @@ const localizedCategory =
             <div class="place-breadcrumb">
               <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
               <span>/</span>
-              <a href={getLocalizedPath('/activites', lang)}>{t('header.activities')}</a>
+              <a href={getLocalizedPath('/activites', lang)}>Activities</a>
               <span>/</span>
               <span>{activity.data.name}</span>
             </div>

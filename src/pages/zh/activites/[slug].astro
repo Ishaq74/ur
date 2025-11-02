@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Icon from '../../../components/atoms/Icon.astro';
 import Button from '../../../components/atoms/Button.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -26,6 +26,8 @@ type Props = {
 const { activity, category }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const allActivityCategories = await getCollection('activityCategories');
+const localizedCategory = findLocalizedById(allActivityCategories, category?.data.id, lang) || category;
 ---
 
 <MainLayout 
@@ -51,7 +53,7 @@ const t = useTranslations(lang);
             </div>
             <h1>{activity.data.name}</h1>
             <div class="place-meta">
-              <span class="place-category-badge">{category?.data.name || t('header.activities')}</span>
+              <span class="place-category-badge">{localizedCategory?.data.name || t('header.activities')}</span>
               {activity.data.rating && (
                 <div class="place-rating">
                   <Icon name="star" size="sm" />

@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -25,11 +25,13 @@ export async function getStaticPaths() {
 const { category, restaurants } = Astro.props as any;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const allRestaurantCategories = await getCollection('restaurantCategories');
+const localizedCategory = findLocalizedById(allRestaurantCategories, category.data.id, lang) || category;
 ---
 
 <MainLayout 
-  title={`${category.data.name} - ${t('header.restaurants')} - Salut Annecy`} 
-  description={category.data.description || `探索安纳西最佳 ${category.data.name} 餐厅`}
+  title={`${localizedCategory.data.name} - ${t('header.restaurants')} - Salut Annecy`} 
+  description={localizedCategory.data.description || `探索安纳西最佳 ${localizedCategory.data.name} 餐厅`}
   lang={lang}
 >
   <section class="page-header">
@@ -37,11 +39,11 @@ const t = useTranslations(lang);
       <nav class="breadcrumb">
         <a href={getLocalizedPath('/restaurants', lang)}>{t('header.restaurants')}</a>
         <span>/</span>
-        <span>{category.data.name}</span>
+        <span>{localizedCategory.data.name}</span>
       </nav>
-      <h1>{category.data.name}</h1>
-      {category.data.description && (
-        <p class="subtitle">{category.data.description}</p>
+      <h1>{localizedCategory.data.name}</h1>
+      {localizedCategory.data.description && (
+        <p class="subtitle">{localizedCategory.data.description}</p>
       )}
     </div>
   </section>
@@ -61,7 +63,7 @@ const t = useTranslations(lang);
               </div>
               <div class="place-content">
                 <div class="place-header">
-                  <span class="place-category">{category.data.name}</span>
+                  <span class="place-category">{localizedCategory.data.name}</span>
                   {restaurant.data.rating && (
                     <div class="place-rating">
                       <Icon name="star" size="sm" />

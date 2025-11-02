@@ -85,3 +85,18 @@ export function getLocalizedPath(path: string, lang: Language): string {
   }
   return `/${lang}${pathWithoutLang}`;
 }
+
+// Find a localized entry (e.g., category) by its stable id and preferred language
+// Falls back to default language, then any matching id.
+export function findLocalizedById<T extends { data: { id: string; lang?: string } }>(
+  entries: T[],
+  id: string,
+  lang: Language
+): T | undefined {
+  if (!id) return undefined;
+  return (
+    entries.find((e) => e.data.id === id && e.data.lang === lang) ||
+    entries.find((e) => e.data.id === id && e.data.lang === defaultLang) ||
+    entries.find((e) => e.data.id === id)
+  );
+}
