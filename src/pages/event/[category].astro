@@ -12,7 +12,7 @@ export async function getStaticPaths() {
   // Only use French categories for routing (default language)
   const frenchCategories = allEventCategories.filter((cat: any) => cat.data.lang === 'fr');
   
-  return frenchCategories.map(category => ({
+  return frenchCategories.map((category: any) => ({
     params: { category: category.data.slug },
     props: { 
       category,
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const { category, events } = Astro.props;
+const { category, events } = Astro.props as any;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -202,7 +202,7 @@ events.forEach((event: any) => {
         .filter((cb: any) => cb.checked)
         .map((cb: any) => cb.value);
       
-      const dateFilter = Array.from(dateRadios)
+      const dateFilter = (Array.from(dateRadios) as any[])
         .find((r: any) => r.checked)?.value || 'all';
       
       const now = new Date();

@@ -36,7 +36,7 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
     <div class="container">
       <h2 class="section-title">Par catégorie</h2>
       <div class="categories-grid">
-        {eventCategories.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).map(category => (
+  {eventCategories.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
           <Card 
             href={getLocalizedPath(`/event/${category.data.slug}`, lang)} 
             hoverable={true}
@@ -47,7 +47,7 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
               <h3>{category.data.name}</h3>
               <p class="category-description">{category.data.description}</p>
               <span class="category-count">
-                {events.filter(e => e.data.category === category.data.name).length} événements
+                {events.filter((e: any) => e.data.category === category.data.name).length} événements
               </span>
             </div>
           </Card>

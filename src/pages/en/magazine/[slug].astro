@@ -1,0 +1,176 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import Button from '../../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('articles');
+  return allArticles.map((article: any) => ({
+    params: { slug: article.data.id },
+    props: { article },
+  }));
+}
+
+type Props = { article: any };
+
+const { article }: Props = Astro.props;
+const { Content } = await article.render();
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const articleDate = new Date(article.data.date);
+---
+
+<MainLayout 
+  title={`${article.data.title} - Salut Annecy`} 
+  description={article.data.excerpt}
+  lang={lang}
+>
+  <article class="article-detail">
+    <section class="article-hero">
+      <div class="article-hero-image">
+        <img src={article.data.imageUrl} alt={article.data.title} />
+      </div>
+      <div class="article-hero-overlay">
+        <div class="container">
+          <div class="article-hero-content">
+            <div class="article-breadcrumb">
+              <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
+              <span>/</span>
+              <a href={getLocalizedPath('/magazine', lang)}>{t('header.magazine')}</a>
+              <span>/</span>
+              <span>{article.data.title}</span>
+            </div>
+            <span class="article-category-badge">{article.data.category}</span>
+            <h1>{article.data.title}</h1>
+            <div class="article-meta">
+              <div class="article-author">
+                <Icon name="user" size="sm" />
+                <span>By {article.data.authorId}</span>
+              </div>
+              <div class="article-date">
+                <Icon name="calendar" size="sm" />
+                <span>{articleDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              </div>
+              {article.data.readTime && (
+                <div class="article-read-time">
+                  <Icon name="clock" size="sm" />
+                  <span>{article.data.readTime}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="article-content-section">
+      <div class="container">
+        <div class="article-layout">
+          <div class="article-main">
+            <div class="article-excerpt-block">
+              <p>{article.data.excerpt}</p>
+            </div>
+
+            <div class="article-content prose">
+              <Content />
+            </div>
+
+            {article.data.tags && article.data.tags.length > 0 && (
+              <div class="article-tags-section">
+                <h3>Tags</h3>
+                <div class="article-tags">
+                  {article.data.tags.map((tag: string) => (
+                    <span class="article-tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <aside class="article-sidebar">
+            <div class="sidebar-card">
+              <h3>About this article</h3>
+              <div class="info-item">
+                <Icon name="calendar" size="sm" />
+                <div>
+                  <strong>Published on</strong>
+                  <p>{articleDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <Icon name="folder" size="sm" />
+                <div>
+                  <strong>Category</strong>
+                  <p>{article.data.category}</p>
+                </div>
+              </div>
+              {article.data.readTime && (
+                <div class="info-item">
+                  <Icon name="clock" size="sm" />
+                  <div>
+                    <strong>Reading time</strong>
+                    <p>{article.data.readTime}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div class="sidebar-actions">
+              <Button href={getLocalizedPath('/magazine', lang)} variant="secondary" size="md" fullWidth={true}>
+                Back to magazine
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </article>
+</MainLayout>
+
+<style>
+  .article-hero { position: relative; height: 500px; overflow: hidden; }
+  .article-hero-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  .article-hero-image img { width: 100%; height: 100%; object-fit: cover; }
+  .article-hero-overlay { position: relative; height: 100%; background: linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.3)); display: flex; align-items: flex-end; padding-bottom: var(--spacing-8); }
+  .article-hero-content { color: white; }
+  .article-breadcrumb { font-size: var(--font-size-sm); margin-bottom: var(--spacing-3); display: flex; gap: var(--spacing-2); align-items: center; }
+  .article-breadcrumb a { color: white; text-decoration: none; opacity: .9; }
+  .article-breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+  .article-category-badge { display: inline-block; padding: var(--spacing-2) var(--spacing-3); background-color: var(--color-primary-600); border-radius: var(--radius-base); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: .05em; margin-bottom: var(--spacing-4); }
+  .article-hero-content h1 { font-size: var(--font-size-4xl); margin-bottom: var(--spacing-4); line-height: 1.2; }
+  .article-meta { display: flex; gap: var(--spacing-4); align-items: center; flex-wrap: wrap; font-size: var(--font-size-sm); }
+  .article-meta > div { display: flex; align-items: center; gap: var(--spacing-2); }
+  .article-content-section { padding: var(--spacing-12) 0; }
+  .article-layout { display: grid; grid-template-columns: 1fr 350px; gap: var(--spacing-8); }
+  .article-excerpt-block { margin-bottom: var(--spacing-8); padding: var(--spacing-6); background-color: var(--color-surface-secondary); border-left: 4px solid var(--color-primary-600); border-radius: var(--radius-base); }
+  .article-excerpt-block p { font-size: var(--font-size-lg); color: var(--color-text-primary); line-height: 1.7; margin: 0; font-style: italic; }
+  .article-content { margin-bottom: var(--spacing-8); }
+  .prose { color: var(--color-text-secondary); line-height: 1.7; }
+  .prose h1,.prose h2,.prose h3,.prose h4 { color: var(--color-text-primary); font-weight: var(--font-weight-bold); margin-top: var(--spacing-8); margin-bottom: var(--spacing-4); }
+  .prose h1 { font-size: var(--font-size-3xl); }
+  .prose h2 { font-size: var(--font-size-2xl); }
+  .prose h3 { font-size: var(--font-size-xl); }
+  .prose p { margin-bottom: var(--spacing-4); }
+  .prose ul,.prose ol { margin-bottom: var(--spacing-4); padding-left: var(--spacing-6); }
+  .prose li { margin-bottom: var(--spacing-2); }
+  .prose a { color: var(--color-primary-600); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+  .prose blockquote { border-left: 4px solid var(--color-primary-600); padding-left: var(--spacing-4); margin: var(--spacing-6) 0; font-style: italic; color: var(--color-text-secondary); }
+  .article-tags-section { margin-top: var(--spacing-8); padding-top: var(--spacing-6); border-top: 1px solid var(--color-border); }
+  .article-tags-section h3 { font-size: var(--font-size-lg); margin-bottom: var(--spacing-3); }
+  .article-tags { display: flex; gap: var(--spacing-2); flex-wrap: wrap; }
+  .article-tag { padding: var(--spacing-2) var(--spacing-3); background-color: var(--color-surface-secondary); border-radius: var(--radius-base); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+  .article-sidebar { display: flex; flex-direction: column; gap: var(--spacing-6); }
+  .sidebar-card { background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--spacing-6); }
+  .sidebar-card h3 { font-size: var(--font-size-xl); margin-bottom: var(--spacing-4); }
+  .info-item { display: flex; gap: var(--spacing-3); margin-bottom: var(--spacing-4); }
+  .info-item:last-child { margin-bottom: 0; }
+  .info-item strong { display: block; margin-bottom: var(--spacing-1); font-size: var(--font-size-sm); }
+  .info-item p { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin: 0; }
+  .sidebar-actions { display: flex; flex-direction: column; gap: var(--spacing-3); }
+  @media (max-width: 1024px) { .article-layout { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { .article-hero { height: 400px; } .article-hero-content h1 { font-size: var(--font-size-3xl); } }
+</style>

@@ -12,7 +12,7 @@ export async function getStaticPaths() {
   // Only use French categories for routing (default language)
   const frenchCategories = allArticleCategories.filter((cat: any) => cat.data.lang === 'fr');
   
-  return frenchCategories.map(category => ({
+  return frenchCategories.map((category: any) => ({
     params: { category: category.data.slug },
     props: { 
       category,
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const { category, articles } = Astro.props;
+const { category, articles } = Astro.props as any;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---

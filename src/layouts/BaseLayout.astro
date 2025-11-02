@@ -87,6 +87,36 @@ const langDir = languages[currentLang]?.dir || 'ltr';
       // Make function globally available
       (window as any).toggleTheme = toggleTheme;
     </script>
+
+    <!-- Global image fallback: if an image fails to load, swap to placeholder once -->
+    <script is:inline>
+      (function attachGlobalImageFallback() {
+        const PLACEHOLDER = '/images/placeholder.svg';
+        const handler = (event) => {
+          const target = event && event.target;
+          if (!target || !(target instanceof HTMLImageElement)) return;
+          const img = target;
+          if (img.dataset && img.dataset.fallbackApplied === '1') return; // avoid loops
+          const fallbackSrc = (img.dataset && img.dataset.fallbackSrc) || PLACEHOLDER;
+          if (img.dataset) img.dataset.fallbackApplied = '1';
+          img.src = fallbackSrc;
+        };
+        // Use capture phase to catch resource load errors
+        window.addEventListener('error', handler, true);
+        // Optional: also handle broken currentSrc after DOM ready (rare)
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('img').forEach((imgEl) => {
+            const img = imgEl;
+            if (!(img instanceof HTMLImageElement)) return;
+            if (!img.complete || img.naturalWidth > 0) return;
+            if (img.dataset && img.dataset.fallbackApplied === '1') return;
+            const fallbackSrc = (img.dataset && img.dataset.fallbackSrc) || PLACEHOLDER;
+            if (img.dataset) img.dataset.fallbackApplied = '1';
+            img.src = fallbackSrc;
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
 

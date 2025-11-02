@@ -12,11 +12,11 @@ const t = useTranslations(lang);
 const allPlaces = await getCollection('places');
 
 // For static builds, show all published places
-let places = allPlaces.filter((place) => place.data.published);
+let places = allPlaces.filter((place: any) => place.data.published);
 
 // Get main categories from collection filtered by language
 const allCategories = await getCollection('placeCategories');
-const categories = allCategories.filter((cat) => cat.data.lang === lang);
+const categories = allCategories.filter((cat: any) => cat.data.lang === lang);
 ---
 
 <MainLayout 
@@ -36,7 +36,7 @@ const categories = allCategories.filter((cat) => cat.data.lang === lang);
     <div class="container">
       <h2 class="section-title">Par catégorie</h2>
       <div class="categories-grid">
-        {categories.map(category => (
+  {categories.map((category: any) => (
           <Card 
             href={getLocalizedPath(`/place/${category.data.slug}`, lang)} 
             hoverable={true}
@@ -47,7 +47,7 @@ const categories = allCategories.filter((cat) => cat.data.lang === lang);
               <h3>{category.data.name}</h3>
               <p class="category-description">{category.data.description}</p>
               <span class="category-count">
-                {places.filter(p => p.data.mainCategory.id === category.data.id).length} lieux
+                {places.filter((p: any) => p.data.mainCategory.id === category.data.id).length} lieux
               </span>
             </div>
           </Card>

@@ -10,13 +10,13 @@ export async function getStaticPaths() {
   const allPlaces = await getCollection('places');
   
   // Only use French categories for routing (default language)
-  const frenchCategories = allPlaceCategories.filter((cat) => cat.data.lang === 'fr');
+  const frenchCategories = allPlaceCategories.filter((cat: any) => cat.data.lang === 'fr');
   
-  return frenchCategories.map(category => ({
+  return frenchCategories.map((category: any) => ({
     params: { category: category.data.slug },
     props: { 
       category,
-      places: allPlaces.filter((place) => 
+      places: allPlaces.filter((place: any) => 
         place.data.mainCategory.id === category.data.id && place.data.published
       )
     },

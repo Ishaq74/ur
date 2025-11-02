@@ -1,0 +1,124 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Card from '../../../components/molecules/Card.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allArticleCategories = await getCollection('articleCategories');
+  const allArticles = await getCollection('articles');
+  const frenchCategories = allArticleCategories.filter((cat: any) => cat.data.lang === 'fr');
+  return frenchCategories.map((category: any) => ({
+    params: { category: category.data.slug },
+    props: {
+      category,
+      articles: allArticles.filter((article: any) =>
+        (article.data.categoryId === category.data.id || (article.data.category && article.data.category.id === category.data.id)) && article.data.published
+      )
+    },
+  }));
+}
+
+const { category, articles } = Astro.props as any;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${category.data.name} - ${t('header.magazine')} - Salut Annecy`} 
+  description={category.data.description || `探索关于 ${category.data.name} 的文章`}
+  lang={lang}
+>
+  <section class="page-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href={getLocalizedPath('/magazine', lang)}>{t('header.magazine')}</a>
+        <span>/</span>
+        <span>{category.data.name}</span>
+      </nav>
+      <h1>{category.data.name}</h1>
+      {category.data.description && (
+        <p class="subtitle">{category.data.description}</p>
+      )}
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      {articles.length > 0 ? (
+        <div class="articles-grid">
+          {articles.map((article: any) => (
+            <Card 
+              href={getLocalizedPath(`/magazine/${article.data.id}`, lang)} 
+              hoverable={true}
+              class="article-card"
+            >
+              <div class="article-image">
+                <img src={article.data.imageUrl} alt={article.data.title} />
+              </div>
+              <div class="article-content">
+                <div class="article-header">
+                  <span class="article-category">{category.data.name}</span>
+                  {article.data.readTime && (
+                    <span class="article-read-time">{article.data.readTime}</span>
+                  )}
+                </div>
+                <h3 class="article-title">{article.data.title}</h3>
+                <p class="article-excerpt">{article.data.excerpt}</p>
+                <div class="article-footer">
+                  <span class="article-date">{new Date(article.data.date).toLocaleDateString('zh-CN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                  {article.data.tags && article.data.tags.length > 0 && (
+                    <div class="article-tags">
+                      {article.data.tags.slice(0, 2).map((tag: string) => (
+                        <span class="article-tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <Icon name="book" size="xl" />
+          <h3>此分类暂无文章</h3>
+          <p>稍后再来查看我们的最新内容。</p>
+          <a href={getLocalizedPath('/magazine', lang)} class="back-link">
+            返回杂志
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header { background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100)); padding: var(--spacing-12) 0 var(--spacing-8); text-align: center; }
+  .breadcrumb { display: flex; justify-content: center; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); margin-bottom: var(--spacing-4); color: var(--color-text-secondary); }
+  .breadcrumb a { color: var(--color-primary-600); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .page-header h1 { font-size: var(--font-size-4xl); margin-bottom: var(--spacing-3); }
+  .subtitle { font-size: var(--font-size-lg); color: var(--color-text-secondary); }
+  .content-section { padding: var(--spacing-12) 0; }
+  .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-6); }
+  .article-card { height: 100%; display: flex; flex-direction: column; }
+  .article-image { width: 100%; height: 200px; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background-color: var(--color-surface-secondary); }
+  .article-image img { width: 100%; height: 100%; object-fit: cover; }
+  .article-content { flex: 1; display: flex; flex-direction: column; }
+  .article-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-2); }
+  .article-category { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-primary-600); text-transform: uppercase; letter-spacing: 0.05em; }
+  .article-read-time { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+  .article-title { font-size: var(--font-size-xl); margin-bottom: var(--spacing-2); }
+  .article-excerpt { flex: 1; color: var(--color-text-secondary); margin-bottom: var(--spacing-3); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .article-footer { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-3); padding-top: var(--spacing-3); border-top: 1px solid var(--color-border); }
+  .article-date { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+  .article-tags { display: flex; gap: var(--spacing-2); }
+  .article-tag { font-size: var(--font-size-xs); padding: var(--spacing-1) var(--spacing-2); background-color: var(--color-surface-secondary); border-radius: var(--radius-sm); color: var(--color-text-secondary); }
+  .empty-state { text-align: center; padding: var(--spacing-12) var(--spacing-6); color: var(--color-text-secondary); }
+  .empty-state h3 { margin: var(--spacing-4) 0 var(--spacing-2); }
+  .back-link { display: inline-block; margin-top: var(--spacing-4); padding: var(--spacing-3) var(--spacing-6); background-color: var(--color-primary-500); color: white; text-decoration: none; border-radius: var(--radius-base); transition: all var(--transition-fast); }
+  .back-link:hover { background-color: var(--color-primary-600); }
+  @media (max-width: 768px) { .articles-grid { grid-template-columns: 1fr; } }
+</style>

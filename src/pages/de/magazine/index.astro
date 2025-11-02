@@ -8,27 +8,22 @@ import { getCollection } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get filters from URL
 const categoryFilter = Astro.url.searchParams.get('cat');
 const tagFilter = Astro.url.searchParams.get('tag');
 
-// Get all published articles (don't filter server-side for static builds)
 const allArticles = await getCollection('articles');
 const articleCategories = await getCollection('articleCategories');
 
-// For static builds, show all articles and filter client-side
 let articles = allArticles.filter((article: any) => article.data.published);
 
-// Get category name if filtering
 let categoryName = t('header.magazine');
 if (categoryFilter) {
-  const category = articleCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const category = articleCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
 }
 
-// Collect all unique tags for filter options
 const allTags = new Set<string>();
 allArticles.forEach((a: any) => {
   if (a.data.tags) {
@@ -39,48 +34,41 @@ allArticles.forEach((a: any) => {
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description="Découvrez nos articles sur Annecy et ses environs"
+  description="Entdecken Sie unsere Artikel über Annecy und Umgebung"
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <h1>{categoryName}</h1>
-      <p class="subtitle">Articles, guides et recommandations</p>
+      <p class="subtitle">Artikel, Leitfäden und Empfehlungen</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="container">
       <div class="content-layout">
-        <!-- Sidebar Filters -->
         <aside class="filters-sidebar">
           <h2 class="sidebar-title">{t('filters.filter_by')}</h2>
-          
-          <!-- Category Filter -->
           <div class="filter-section">
             <h3 class="filter-title">{t('filters.category')}</h3>
             <div class="filter-options">
-              <a 
-                href={getLocalizedPath('/magazine', lang)} 
-                class={`filter-option ${!categoryFilter ? 'active' : ''}`}
-              >
+              <a href={getLocalizedPath('/magazine', lang)} class={`filter-option ${!categoryFilter ? 'active' : ''}`}>
                 {t('filters.all')}
               </a>
               {articleCategories
                 .filter((cat: any) => cat.data.lang === lang)
-                .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+                .sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0))
                 .map((category: any) => (
-                <a 
-                  href={getLocalizedPath(`/magazine?cat=${category.data.slug}`, lang)} 
-                  class={`filter-option ${categoryFilter === category.data.slug || categoryFilter === category.data.id ? 'active' : ''}`}
-                >
-                  {category.data.name}
-                </a>
-              ))}
+                  <a 
+                    href={getLocalizedPath(`/magazine?cat=${category.data.slug}`, lang)} 
+                    class={`filter-option ${categoryFilter === category.data.slug || categoryFilter === category.data.id ? 'active' : ''}`}
+                  >
+                    {category.data.name}
+                  </a>
+                ))}
             </div>
           </div>
 
-          <!-- Tag Filter -->
           {allTags.size > 0 && (
             <div class="filter-section">
               <h3 class="filter-title">{t('filters.tags')}</h3>
@@ -97,7 +85,6 @@ allArticles.forEach((a: any) => {
             </div>
           )}
 
-          <!-- Clear Filters -->
           {(categoryFilter || tagFilter) && (
             <a href={getLocalizedPath('/magazine', lang)} class="clear-filters">
               {t('filters.clear_filters')}
@@ -105,14 +92,12 @@ allArticles.forEach((a: any) => {
           )}
         </aside>
 
-        <!-- Articles Grid -->
         <div class="main-content">
-          <p class="results-count" id="results-count">{articles.length} article{articles.length > 1 ? 's' : ''}</p>
-          
+          <p class="results-count" id="results-count">{articles.length} Artikel</p>
           {articles.length > 0 ? (
             <div class="articles-grid" id="articles-grid">
               {articles.map((article: any) => {
-                const category = articleCategories.find(c => c.data.id === article.data.categoryId);
+                const category = articleCategories.find((c: any) => c.data.id === article.data.categoryId);
                 const tagsStr = article.data.tags ? article.data.tags.join(',') : '';
                 return (
                   <Card 
@@ -136,7 +121,7 @@ allArticles.forEach((a: any) => {
                       <h3 class="article-title">{article.data.title}</h3>
                       <p class="article-excerpt">{article.data.excerpt}</p>
                       <div class="article-footer">
-                        <span class="article-date">{new Date(article.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                        <span class="article-date">{new Date(article.data.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                         {article.data.tags && article.data.tags.length > 0 && (
                           <div class="article-tags">
                             {article.data.tags.slice(0, 2).map((tag: string) => (
@@ -153,8 +138,8 @@ allArticles.forEach((a: any) => {
           ) : (
             <div class="empty-state" id="empty-state">
               <Icon name="book" size="xl" />
-              <h3>Aucun article trouvé</h3>
-              <p>Revenez bientôt pour découvrir nos derniers articles !</p>
+              <h3>Keine Artikel gefunden</h3>
+              <p>Schauen Sie bald wieder vorbei, um unsere neuesten Artikel zu entdecken!</p>
             </div>
           )}
         </div>
@@ -162,7 +147,6 @@ allArticles.forEach((a: any) => {
     </div>
   </section>
 </MainLayout>
-
 <style>
   .page-header {
     background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
@@ -380,10 +364,7 @@ allArticles.forEach((a: any) => {
     border-top: 1px solid var(--color-border);
   }
 
-  .article-date {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-  }
+  .article-date { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
 
   .article-tags {
     display: flex;
@@ -397,6 +378,9 @@ allArticles.forEach((a: any) => {
     border-radius: var(--radius-sm);
     color: var(--color-text-secondary);
   }
+
+  /* Utility */
+  .is-hidden { display: none !important; }
 
   .empty-state {
     text-align: center;
@@ -432,7 +416,7 @@ allArticles.forEach((a: any) => {
   }
 </style>
 
-<script>
+<script is:inline>
   // Client-side filtering for static builds
   document.addEventListener('DOMContentLoaded', () => {
     const articlesGrid = document.getElementById('articles-grid');
@@ -484,25 +468,23 @@ allArticles.forEach((a: any) => {
       
       // Show or hide the article
       if (show) {
-        article.style.display = '';
+        article.classList.remove('is-hidden');
         visibleCount++;
       } else {
-        article.style.display = 'none';
+        article.classList.add('is-hidden');
       }
     });
     
-    // Update results count
     if (resultsCount) {
-      const plural = visibleCount > 1 ? 's' : '';
-      resultsCount.textContent = `${visibleCount} article${plural}`;
+      resultsCount.textContent = `${visibleCount} Artikel`;
     }
     
     // Show/hide empty state
     if (emptyState) {
-      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      emptyState.classList.toggle('is-hidden', visibleCount !== 0);
     }
     if (articlesGrid) {
-      articlesGrid.style.display = visibleCount === 0 ? 'none' : '';
+      articlesGrid.classList.toggle('is-hidden', visibleCount === 0);
     }
   });
 </script>

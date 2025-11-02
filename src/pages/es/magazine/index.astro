@@ -22,7 +22,7 @@ let articles = allArticles.filter((article: any) => article.data.published);
 // Get category name if filtering
 let categoryName = t('header.magazine');
 if (categoryFilter) {
-  const category = articleCategories.find(c => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const category = articleCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
   if (category) {
     categoryName = category.data.name;
   }
@@ -68,7 +68,7 @@ allArticles.forEach((a: any) => {
               </a>
               {articleCategories
                 .filter((cat: any) => cat.data.lang === lang)
-                .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+                .sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0))
                 .map((category: any) => (
                 <a 
                   href={getLocalizedPath(`/magazine?cat=${category.data.slug}`, lang)} 
@@ -112,7 +112,7 @@ allArticles.forEach((a: any) => {
           {articles.length > 0 ? (
             <div class="articles-grid" id="articles-grid">
               {articles.map((article: any) => {
-                const category = articleCategories.find(c => c.data.id === article.data.categoryId);
+                const category = articleCategories.find((c: any) => c.data.id === article.data.categoryId);
                 const tagsStr = article.data.tags ? article.data.tags.join(',') : '';
                 return (
                   <Card 
@@ -398,6 +398,9 @@ allArticles.forEach((a: any) => {
     color: var(--color-text-secondary);
   }
 
+  /* Utility */
+  .is-hidden { display: none !important; }
+
   .empty-state {
     text-align: center;
     padding: var(--spacing-12) var(--spacing-6);
@@ -432,7 +435,7 @@ allArticles.forEach((a: any) => {
   }
 </style>
 
-<script>
+<script is:inline>
   // Client-side filtering for static builds
   document.addEventListener('DOMContentLoaded', () => {
     const articlesGrid = document.getElementById('articles-grid');
@@ -484,10 +487,10 @@ allArticles.forEach((a: any) => {
       
       // Show or hide the article
       if (show) {
-        article.style.display = '';
+        article.classList.remove('is-hidden');
         visibleCount++;
       } else {
-        article.style.display = 'none';
+        article.classList.add('is-hidden');
       }
     });
     
@@ -499,10 +502,10 @@ allArticles.forEach((a: any) => {
     
     // Show/hide empty state
     if (emptyState) {
-      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      emptyState.classList.toggle('is-hidden', visibleCount !== 0);
     }
     if (articlesGrid) {
-      articlesGrid.style.display = visibleCount === 0 ? 'none' : '';
+      articlesGrid.classList.toggle('is-hidden', visibleCount === 0);
     }
   });
 </script>

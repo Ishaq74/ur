@@ -33,7 +33,7 @@ let trails = allTrails.filter((trail: any) => trail.data.published);
     <div class="container">
       <h2 class="section-title">Par difficulté</h2>
       <div class="categories-grid">
-        {trailCategories.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
+  {trailCategories.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
           <Card 
             href={getLocalizedPath(`/trail/${category.data.slug}`, lang)} 
             hoverable={true}

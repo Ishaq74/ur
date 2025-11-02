@@ -14,9 +14,9 @@ const allRestaurants = await getCollection('restaurants');
 const allAccommodations = await getCollection('accommodations');
 const allArticles = await getCollection('articles');
 
-const featuredRestaurants = allRestaurants.filter(r => r.data.featured && r.data.published).slice(0, 2);
-const featuredAccommodations = allAccommodations.filter(a => a.data.featured && a.data.published).slice(0, 1);
-const recentArticles = allArticles.filter(a => a.data.published).sort((a, b) => 
+const featuredRestaurants = allRestaurants.filter((r: any) => r.data.featured && r.data.published).slice(0, 2);
+const featuredAccommodations = allAccommodations.filter((a: any) => a.data.featured && a.data.published).slice(0, 1);
+const recentArticles = allArticles.filter((a: any) => a.data.published).sort((a: any, b: any) => 
   new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 ).slice(0, 2);
 ---
@@ -69,7 +69,7 @@ const recentArticles = allArticles.filter(a => a.data.published).sort((a, b) =>
       </div>
       
       <div class="featured-grid">
-        {featuredRestaurants.length > 0 && featuredRestaurants.map((restaurant) => (
+  {featuredRestaurants.length > 0 && featuredRestaurants.map((restaurant: any) => (
           <Card href={getLocalizedPath(`/restaurants/${restaurant.data.id}`, lang)} hoverable={true}>
             <div class="card-image-placeholder">
               <Icon name="utensils" size="lg" />
@@ -79,7 +79,7 @@ const recentArticles = allArticles.filter(a => a.data.published).sort((a, b) =>
           </Card>
         ))}
         
-        {featuredAccommodations.length > 0 && featuredAccommodations.map((accommodation) => (
+  {featuredAccommodations.length > 0 && featuredAccommodations.map((accommodation: any) => (
           <Card href={getLocalizedPath(`/hebergements/${accommodation.data.id}`, lang)} hoverable={true}>
             <div class="card-image-placeholder">
               <Icon name="home" size="lg" />
@@ -133,7 +133,7 @@ const recentArticles = allArticles.filter(a => a.data.published).sort((a, b) =>
       </div>
       
       <div class="magazine-grid">
-        {recentArticles.length > 0 && recentArticles.map((article) => (
+  {recentArticles.length > 0 && recentArticles.map((article: any) => (
           <Card href={getLocalizedPath(`/magazine/${article.data.id}`, lang)} hoverable={true}>
             <div class="card-image-placeholder">
               <Icon name="book-open" size="lg" />

@@ -12,7 +12,7 @@ export async function getStaticPaths() {
   // Only use French categories for routing (default language)
   const frenchCategories = allRestaurantCategories.filter((cat: any) => cat.data.lang === 'fr');
   
-  return frenchCategories.map(category => ({
+  return frenchCategories.map((category: any) => ({
     params: { category: category.data.slug },
     props: { 
       category,
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const { category, restaurants } = Astro.props;
+const { category, restaurants } = Astro.props as any;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
@@ -57,9 +57,9 @@ const t = useTranslations(lang);
               hoverable={true}
               class="place-card"
             >
-              <div class="place-image">
-                <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
-              </div>
+                <div class="place-image">
+                  <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
+                </div>
               <div class="place-content">
                 <div class="place-header">
                   <span class="place-category">{category.data.name}</span>

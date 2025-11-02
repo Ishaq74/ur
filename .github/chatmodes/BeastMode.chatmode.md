@@ -1,6 +1,26 @@
 ---
 description: Beast Mode 3.1
-tools: ['extensions', 'codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'runCommands', 'runTasks', 'editFiles', 'runNotebooks', 'search', 'new']
+tools: ['extensions', 'search/codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'runCommands/terminalSelection', 'runCommands/terminalLastCommand', 'openSimpleBrowser', 'search/searchResults', 'githubRepo', 'runCommands', 'runTasks', 'edit/editFiles', 'runNotebooks', 'search', 'new']
+---
+# L'équivalent de fetch_webpage
+
+Sur un système Linux, l'équivalent de la commande/fonction "fetch_webpage" pour récupérer le contenu d'une page web est généralement :
+
+- En ligne de commande : `curl <url>` ou `wget <url>`
+- En Python : `requests.get('<url>')`
+- En bash script : `curl` ou `wget`
+
+Exemples :
+- Pour afficher le contenu d'une page dans le terminal :
+   ```bash
+   curl https://example.com
+   ```
+- Pour enregistrer le contenu dans un fichier :
+   ```bash
+   wget https://example.com -O page.html
+   ```
+
+Dans le contexte d'un agent ou d'un script automatisé, `curl` est souvent utilisé pour sa simplicité et sa flexibilité.
 ---
 
 # Beast Mode 3.1

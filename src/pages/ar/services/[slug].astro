@@ -1,0 +1,195 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import Button from '../../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allServices = await getCollection('services');
+  const serviceCategories = await getCollection('serviceCategories');
+  return allServices.map((service: any) => {
+    const category = serviceCategories.find((c: any) => c.data.id === service.data.categoryId);
+    return { params: { slug: service.data.id }, props: { service, category } };
+  });
+}
+
+type Props = { service: any; category: any };
+
+const { service, category }: Props = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${service.data.name} - Salut Annecy`} 
+  description={service.data.description}
+  lang={lang}
+>
+  <article class="place-detail">
+    <section class="place-hero">
+      <div class="place-hero-image">
+  <img src={service.data.imageUrl} alt={service.data.name} />
+      </div>
+      <div class="place-hero-overlay">
+        <div class="container">
+          <div class="place-hero-content">
+            <div class="place-breadcrumb">
+              <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
+              <span>/</span>
+              <a href={getLocalizedPath('/services', lang)}>{t('header.shop')}</a>
+              <span>/</span>
+              <span>{service.data.name}</span>
+            </div>
+            <h1>{service.data.name}</h1>
+            <div class="place-meta">
+              <span class="place-category-badge">{category?.data.name || t('header.shop')}</span>
+              {service.data.rating && (
+                <div class="place-rating">
+                  <Icon name="star" size="sm" />
+                  <span>{service.data.rating.toFixed(1)}</span>
+                  {service.data.reviewCount && (
+                    <span class="review-count">({service.data.reviewCount} مراجعات)</span>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="place-content-section">
+      <div class="container">
+        <div class="place-layout">
+          <div class="place-main">
+            <div class="content-block">
+              <h2>الوصف</h2>
+              <p>{service.data.description}</p>
+            </div>
+            {service.data.attributes && service.data.attributes.length > 0 && (
+              <div class="content-block">
+                <h2>الميزات</h2>
+                <div class="attributes-grid">
+                  {service.data.attributes.map((attr: string) => (
+                    <div class="attribute-item">
+                      <Icon name="check-circle" size="sm" />
+                      <span>{attr}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <aside class="place-sidebar">
+            <div class="sidebar-card">
+              <h3>معلومات</h3>
+              {service.data.address && (
+                <div class="info-item">
+                  <Icon name="map-pin" size="sm" />
+                  <div>
+                    <strong>العنوان</strong>
+                    <p>{service.data.address}</p>
+                  </div>
+                </div>
+              )}
+              {service.data.phone && (
+                <div class="info-item">
+                  <Icon name="phone" size="sm" />
+                  <div>
+                    <strong>الهاتف</strong>
+                    <p><a href={`tel:${service.data.phone}`}>{service.data.phone}</a></p>
+                  </div>
+                </div>
+              )}
+              {service.data.email && (
+                <div class="info-item">
+                  <Icon name="mail" size="sm" />
+                  <div>
+                    <strong>البريد الإلكتروني</strong>
+                    <p><a href={`mailto:${service.data.email}`}>{service.data.email}</a></p>
+                  </div>
+                </div>
+              )}
+              {service.data.website && (
+                <div class="info-item">
+                  <Icon name="globe" size="sm" />
+                  <div>
+                    <strong>الموقع الإلكتروني</strong>
+                    <p><a href={service.data.website} target="_blank" rel="noopener noreferrer">زيارة الموقع</a></p>
+                  </div>
+                </div>
+              )}
+              {service.data.hours && (
+                <div class="info-item">
+                  <Icon name="clock" size="sm" />
+                  <div>
+                    <strong>ساعات العمل</strong>
+                    <p>{service.data.hours}</p>
+                  </div>
+                </div>
+              )}
+              {service.data.priceRange && (
+                <div class="info-item">
+                  <Icon name="credit-card" size="sm" />
+                  <div>
+                    <strong>السعر</strong>
+                    <p>{service.data.priceRange}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div class="sidebar-actions">
+              {service.data.phone && (
+                <Button variant="primary" fullWidth={true} href={`tel:${service.data.phone}`}>
+                  <Icon name="phone" size="sm" />
+                  اتصال
+                </Button>
+              )}
+              {service.data.address && (
+                <Button variant="secondary" fullWidth={true}>
+                  <Icon name="map-pin" size="sm" />
+                  الاتجاهات
+                </Button>
+              )}
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </article>
+</MainLayout>
+
+<style>
+  .place-hero { position: relative; height: 400px; overflow: hidden; }
+  .place-hero-image { width: 100%; height: 100%; }
+  .place-hero-image img { width: 100%; height: 100%; object-fit: cover; }
+  .place-hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); color: white; padding: var(--spacing-8) 0 var(--spacing-6); }
+  .place-breadcrumb { display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); margin-bottom: var(--spacing-3); opacity: .9; }
+  .place-breadcrumb a { color: white; text-decoration: none; transition: opacity var(--transition-fast); }
+  .place-breadcrumb a:hover { opacity: .7; }
+  .place-hero-content h1 { font-size: var(--font-size-4xl); margin-bottom: var(--spacing-4); color: white; }
+  .place-meta { display: flex; align-items: center; gap: var(--spacing-4); }
+  .place-category-badge { background-color: var(--color-primary-500); color: white; padding: var(--spacing-2) var(--spacing-3); border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); }
+  .place-rating { display: flex; align-items: center; gap: var(--spacing-2); color: white; }
+  .review-count { opacity: .8; font-size: var(--font-size-sm); }
+  .place-content-section { padding: var(--spacing-12) 0; }
+  .place-layout { display: grid; grid-template-columns: 1fr 350px; gap: var(--spacing-8); }
+  .content-block { margin-bottom: var(--spacing-8); }
+  .content-block h2 { font-size: var(--font-size-2xl); margin-bottom: var(--spacing-4); }
+  .content-block p { color: var(--color-text-secondary); line-height: 1.7; }
+  .attributes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--spacing-3); }
+  .attribute-item { display: flex; align-items: center; gap: var(--spacing-2); padding: var(--spacing-3); background-color: var(--color-surface-secondary); border-radius: var(--radius-base); }
+  .sidebar-card { background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--spacing-6); margin-bottom: var(--spacing-4); }
+  .sidebar-card h3 { font-size: var(--font-size-lg); margin-bottom: var(--spacing-4); }
+  .info-item { display: flex; gap: var(--spacing-3); padding: var(--spacing-3) 0; border-bottom: 1px solid var(--color-border); }
+  .info-item:last-child { border-bottom: none; }
+  .info-item strong { display: block; margin-bottom: var(--spacing-1); font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
+  .info-item p { margin: 0; color: var(--color-text-primary); }
+  .info-item a { color: var(--color-primary-600); text-decoration: none; }
+  .info-item a:hover { text-decoration: underline; }
+  .sidebar-actions { display: flex; flex-direction: column; gap: var(--spacing-3); }
+  @media (max-width: 1024px) { .place-layout { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { .place-hero { height: 300px; } .place-hero-content h1 { font-size: var(--font-size-2xl); } .attributes-grid { grid-template-columns: 1fr; } }
+</style>

@@ -10,7 +10,7 @@ export async function getStaticPaths() {
   const accommodationCategories = await getCollection('accommodationCategories');
   
   return allAccommodations.map((accommodation: any) => {
-    const category = accommodationCategories.find(c => c.data.id === accommodation.data.categoryId);
+    const category = accommodationCategories.find((c: any) => c.data.id === accommodation.data.categoryId);
     return {
       params: { slug: accommodation.data.id },
       props: { accommodation, category },

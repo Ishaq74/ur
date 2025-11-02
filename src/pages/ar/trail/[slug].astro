@@ -1,0 +1,115 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import Button from '../../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const trails = await getCollection('trails');
+  const published = trails.filter((t: any) => t.data.published);
+  return published.map((trail: any) => ({
+    params: { slug: trail.data.id },
+    props: { trail },
+  }));
+}
+
+const { trail } = Astro.props as any;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout title={`${trail.data.name} - مسارات آنسي`} description={trail.data.excerpt || `اكتشف مسار ${trail.data.name}`} lang={lang}>
+  <section class="page-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href={getLocalizedPath('/trail', lang)}>{t('header.trails')}</a>
+        <span>/</span>
+        <a href={getLocalizedPath(`/trail/${trail.data.difficulty}`, lang)}>{trail.data.difficulty}</a>
+        <span>/</span>
+        <span>{trail.data.name}</span>
+      </nav>
+      <h1>{trail.data.name}</h1>
+      {trail.data.excerpt && <p class="subtitle">{trail.data.excerpt}</p>}
+    </div>
+  </section>
+
+  <section class="hero-media">
+    <div class="container">
+      <div class="media-wrapper">
+  <img src={trail.data.imageUrl} alt={trail.data.name} />
+        <div class="badges">
+          <span class="badge" data-type="difficulty">{trail.data.difficulty}</span>
+          {trail.data.distance && <span class="badge"><Icon name="map-pin" size="sm" /> {trail.data.distance}</span>}
+          {trail.data.duration && <span class="badge"><Icon name="clock" size="sm" /> {trail.data.duration}</span>}
+          {trail.data.elevation && <span class="badge"><Icon name="trending-up" size="sm" /> {trail.data.elevation}</span>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-layout">
+        <main class="main-content">
+          {trail.data.description && <article class="prose" set:html={trail.data.description} />}
+
+          {trail.data.attributes && trail.data.attributes.length > 0 && (
+            <div class="attributes">
+              {trail.data.attributes.map((attr: string) => (
+                <span class="attribute-tag">{attr}</span>
+              ))}
+            </div>
+          )}
+
+          {trail.data.gpxUrl && (
+            <div class="actions">
+              <a class="button" href={trail.data.gpxUrl} target="_blank" rel="noopener">تحميل GPX</a>
+            </div>
+          )}
+        </main>
+
+        <aside class="sidebar">
+          <div class="card">
+            <h3>معلومات عملية</h3>
+            <ul class="info-list">
+              {trail.data.distance && <li><Icon name="map-pin" size="sm" /> <span>{trail.data.distance}</span></li>}
+              {trail.data.duration && <li><Icon name="clock" size="sm" /> <span>{trail.data.duration}</span></li>}
+              {trail.data.elevation && <li><Icon name="trending-up" size="sm" /> <span>{trail.data.elevation}</span></li>}
+              {trail.data.difficulty && <li><Icon name="activity" size="sm" /> <span>{trail.data.difficulty}</span></li>}
+            </ul>
+            <div class="cta">
+              <Button href={getLocalizedPath('/trail', lang)} variant="primary">عرض جميع المسارات</Button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header{background:linear-gradient(135deg,var(--color-primary-100),var(--color-secondary-100));padding:var(--spacing-12) 0 var(--spacing-8);text-align:center}
+  .breadcrumb{display:flex;justify-content:center;align-items:center;gap:var(--spacing-2);font-size:var(--font-size-sm);margin-bottom:var(--spacing-4);color:var(--color-text-secondary)}
+  .breadcrumb a{color:var(--color-primary-600);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .page-header h1{font-size:var(--font-size-4xl);margin-bottom:var(--spacing-2);color:var(--color-text-primary)}
+  .subtitle{font-size:var(--font-size-lg);color:var(--color-text-secondary);max-width:700px;margin:0 auto}
+  .hero-media{padding:var(--spacing-8) 0}
+  .media-wrapper{position:relative;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-md)}
+  .media-wrapper img{width:100%;height:420px;object-fit:cover;display:block}
+  .badges{position:absolute;bottom:var(--spacing-4);left:var(--spacing-4);display:flex;gap:var(--spacing-2);flex-wrap:wrap}
+  .badge{background:rgba(255,255,255,.9);backdrop-filter:blur(4px);padding:var(--spacing-2) var(--spacing-3);border-radius:var(--radius-full);display:inline-flex;align-items:center;gap:var(--spacing-2);font-size:var(--font-size-sm)}
+  .badge[data-type="difficulty"]{font-weight:700}
+  .content-section{padding:var(--spacing-8) 0 var(--spacing-16)}
+  .content-layout{display:grid;grid-template-columns:3fr 1fr;gap:var(--spacing-8)}
+  .main-content{min-width:0}
+  .prose{color:var(--color-text-primary);line-height:1.75}
+  .attributes{margin-top:var(--spacing-6);display:flex;gap:var(--spacing-2);flex-wrap:wrap}
+  .attribute-tag{font-size:var(--font-size-xs);padding:var(--spacing-1) var(--spacing-2);background:var(--color-primary-100);color:var(--color-primary-600);border-radius:var(--radius-sm)}
+  .sidebar .card{position:sticky;top:var(--spacing-8);background:var(--color-surface);padding:var(--spacing-6);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+  .info-list{list-style:none;padding:0;margin:0 0 var(--spacing-6);display:flex;flex-direction:column;gap:var(--spacing-3)}
+  .info-list li{display:flex;align-items:center;gap:var(--spacing-2);color:var(--color-text-secondary)}
+  .cta .button{width:100%}
+  @media (max-width:1024px){.content-layout{grid-template-columns:1fr}.sidebar .card{position:static}}
+</style>

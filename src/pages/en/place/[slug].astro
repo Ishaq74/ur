@@ -1,0 +1,374 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import Button from '../../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPlaces = await getCollection('places');
+  return allPlaces.map((place: any) => ({
+    params: { slug: place.data.id },
+    props: { place },
+  }));
+}
+
+type Props = {
+  place: any;
+};
+
+const { place }: Props = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${place.data.name} - Salut Annecy`} 
+  description={place.data.description}
+  lang={lang}
+>
+  <article class="place-detail">
+    <!-- Header Image -->
+    <section class="place-hero">
+      <div class="place-hero-image">
+        <img src={place.data.imageUrl} alt={place.data.name} />
+      </div>
+      <div class="place-hero-overlay">
+        <div class="container">
+          <div class="place-hero-content">
+            <div class="place-breadcrumb">
+              <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
+              <span>/</span>
+              <a href={getLocalizedPath(`/${place.data.mainCategory === 'restauration' ? 'restaurants' : place.data.mainCategory === 'hebergement' ? 'hebergements' : place.data.mainCategory === 'shopping' ? 'shopping' : 'activites'}`, lang)}>
+                {place.data.mainCategory === 'restauration' ? t('header.eat') : place.data.mainCategory === 'hebergement' ? t('header.sleep') : place.data.mainCategory === 'shopping' ? 'Shopping' : t('header.do')}
+              </a>
+              <span>/</span>
+              <span>{place.data.name}</span>
+            </div>
+            <h1>{place.data.name}</h1>
+            <div class="place-meta">
+              <span class="place-category-badge">{place.data.category}</span>
+              {place.data.rating && (
+                <div class="place-rating">
+                  <Icon name="star" size="sm" />
+                  <span>{place.data.rating.toFixed(1)}</span>
+                  {place.data.reviewCount && (
+                    <span class="review-count">({place.data.reviewCount} avis)</span>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="place-content-section">
+      <div class="container">
+        <div class="place-layout">
+          <!-- Main Content -->
+          <div class="place-main">
+            <!-- Description -->
+            <div class="content-block">
+              <h2>Description</h2>
+              <p>{place.data.description}</p>
+            </div>
+
+            <!-- Attributes -->
+            {place.data.attributes && place.data.attributes.length > 0 && (
+              <div class="content-block">
+                <h2>Caractéristiques</h2>
+                <div class="attributes-grid">
+                  {place.data.attributes.map((attr: string) => (
+                    <div class="attribute-item">
+                      <Icon name="check-circle" size="sm" />
+                      <span>{attr}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="place-sidebar">
+            <!-- Contact Info -->
+            <div class="sidebar-card">
+              <h3>Informations</h3>
+              {place.data.address && (
+                <div class="info-item">
+                  <Icon name="map-pin" size="sm" />
+                  <div>
+                    <strong>Adresse</strong>
+                    <p>{place.data.address}</p>
+                  </div>
+                </div>
+              )}
+              {place.data.phone && (
+                <div class="info-item">
+                  <Icon name="phone" size="sm" />
+                  <div>
+                    <strong>Téléphone</strong>
+                    <p><a href={`tel:${place.data.phone}`}>{place.data.phone}</a></p>
+                  </div>
+                </div>
+              )}
+              {place.data.email && (
+                <div class="info-item">
+                  <Icon name="mail" size="sm" />
+                  <div>
+                    <strong>Email</strong>
+                    <p><a href={`mailto:${place.data.email}`}>{place.data.email}</a></p>
+                  </div>
+                </div>
+              )}
+              {place.data.website && (
+                <div class="info-item">
+                  <Icon name="globe" size="sm" />
+                  <div>
+                    <strong>Site web</strong>
+                    <p><a href={place.data.website} target="_blank" rel="noopener noreferrer">Visiter le site</a></p>
+                  </div>
+                </div>
+              )}
+              {place.data.hours && (
+                <div class="info-item">
+                  <Icon name="clock" size="sm" />
+                  <div>
+                    <strong>Horaires</strong>
+                    <p>{place.data.hours}</p>
+                  </div>
+                </div>
+              )}
+              {place.data.priceRange && (
+                <div class="info-item">
+                  <Icon name="credit-card" size="sm" />
+                  <div>
+                    <strong>Prix</strong>
+                    <p>{place.data.priceRange}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="sidebar-actions">
+              {place.data.website && (
+                <Button href={place.data.website} variant="primary" size="md" fullWidth={true} target="_blank">
+                  Réserver
+                </Button>
+              )}
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </article>
+</MainLayout>
+
+<style>
+  .place-hero {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .place-hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .place-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .place-hero-overlay {
+    position: relative;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: var(--spacing-8);
+  }
+
+  .place-hero-content {
+    color: white;
+  }
+
+  .place-breadcrumb {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-3);
+    display: flex;
+    gap: var(--spacing-2);
+    align-items: center;
+  }
+
+  .place-breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .place-breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .place-hero-content h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .place-meta {
+    display: flex;
+    gap: var(--spacing-4);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .place-category-badge {
+    padding: var(--spacing-2) var(--spacing-3);
+    background-color: var(--color-primary-600);
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .place-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .review-count {
+    opacity: 0.8;
+    font-weight: var(--font-weight-normal);
+  }
+
+  .place-content-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .place-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--spacing-8);
+  }
+
+  .place-main {
+    min-width: 0;
+  }
+
+  .content-block {
+    margin-bottom: var(--spacing-8);
+  }
+
+  .content-block h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content-block p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  .attribute-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    background-color: var(--color-surface-secondary);
+    border-radius: var(--radius-base);
+  }
+
+  .attribute-item span {
+    font-size: var(--font-size-sm);
+  }
+
+  .place-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .sidebar-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+  }
+
+  .sidebar-card h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-item {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-item strong {
+    display: block;
+    margin-bottom: var(--spacing-1);
+    font-size: var(--font-size-sm);
+  }
+
+  .info-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .info-item a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .info-item a:hover {
+    text-decoration: underline;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  @media (max-width: 1024px) {
+    .place-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .place-hero {
+      height: 300px;
+    }
+
+    .place-hero-content h1 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>

@@ -10,7 +10,7 @@ export async function getStaticPaths() {
   const restaurantCategories = await getCollection('restaurantCategories');
   
   return allRestaurants.map((restaurant: any) => {
-    const category = restaurantCategories.find(c => c.data.id === restaurant.data.categoryId);
+    const category = restaurantCategories.find((c: any) => c.data.id === restaurant.data.categoryId);
     return {
       params: { slug: restaurant.data.id },
       props: { restaurant, category },

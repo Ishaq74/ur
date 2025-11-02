@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import Card from '../../components/molecules/Card.astro';
 import Icon from '../../components/atoms/Icon.astro';
 import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const allActivityCategories = await getCollection('activityCategories');
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   // Only use French categories for routing (default language)
   const frenchCategories = allActivityCategories.filter((cat: any) => cat.data.lang === 'fr');
   
-  return frenchCategories.map(category => {
+  return frenchCategories.map((category: any) => {
     const newItems = newActivities.filter((a: any) => 
       a.data.categoryId === category.data.id && a.data.published
     );
@@ -33,7 +33,12 @@ export async function getStaticPaths() {
   });
 }
 
-const { category, activities } = Astro.props;
+type Props = {
+  category: CollectionEntry<'activityCategories'> | any;
+  activities: any[];
+};
+
+const { category, activities }: Props = Astro.props as Props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---

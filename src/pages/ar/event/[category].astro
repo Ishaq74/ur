@@ -1,0 +1,214 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Card from '../../../components/molecules/Card.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allEventCategories = await getCollection('eventCategories');
+  const allEvents = await getCollection('events');
+  const frenchCategories = allEventCategories.filter((cat: any) => cat.data.lang === 'fr');
+  return frenchCategories.map((category: any) => ({
+    params: { category: category.data.slug },
+    props: {
+      category,
+      events: allEvents.filter((event: any) =>
+        event.data.category && event.data.category.id === category.data.id && event.data.published
+      )
+    },
+  }));
+}
+
+const { category, events } = Astro.props as any;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sortedEvents = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
+
+const allLocations = new Set<string>();
+const allPriceRanges = new Set<string>();
+events.forEach((event: any) => {
+  if (event.data.location) allLocations.add(event.data.location);
+  if (event.data.price) allPriceRanges.add(event.data.price);
+});
+---
+
+<MainLayout title={`${category.data.name} - الفعاليات - Salut Annecy`} description={category.data.description || `اكتشف فعاليات ${category.data.name} في آنسي`} lang={lang}>
+  <section class="page-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href={getLocalizedPath('/event', lang)}>الفعاليات</a>
+        <span>/</span>
+        <span>{category.data.name}</span>
+      </nav>
+      <h1>{category.data.name}</h1>
+      {category.data.description && (<p class="subtitle">{category.data.description}</p>)}
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-layout">
+        {(allLocations.size > 0 || allPriceRanges.size > 0) && (
+          <aside class="filters-sidebar">
+            <h2 class="sidebar-title">{t('filters.filter_by')}</h2>
+            {allLocations.size > 0 && (
+              <div class="filter-section">
+                <h3 class="filter-title">الموقع</h3>
+                <div class="filter-options">
+                  {Array.from(allLocations).sort().map((location: string) => (
+                    <label class="filter-checkbox">
+                      <input type="checkbox" value={location} class="location-filter" />
+                      <span>{location}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+            {allPriceRanges.size > 0 && (
+              <div class="filter-section">
+                <h3 class="filter-title">السعر</h3>
+                <div class="filter-options">
+                  {Array.from(allPriceRanges).sort().map((price: string) => (
+                    <label class="filter-checkbox">
+                      <input type="checkbox" value={price} class="price-filter" />
+                      <span>{price}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div class="filter-section">
+              <h3 class="filter-title">التاريخ</h3>
+              <div class="filter-options">
+                <label class="filter-checkbox">
+                  <input type="radio" name="date-filter" value="all" class="date-filter" checked />
+                  <span>الكل</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="radio" name="date-filter" value="upcoming" class="date-filter" />
+                  <span>القادمة</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="radio" name="date-filter" value="this-month" class="date-filter" />
+                  <span>هذا الشهر</span>
+                </label>
+              </div>
+            </div>
+          </aside>
+        )}
+
+        <div class="main-content">
+          {sortedEvents.length > 0 ? (
+            <div class="events-grid" id="events-grid">
+              {sortedEvents.map((event: any) => (
+                <Card href={getLocalizedPath(`/event/${event.data.id}`, lang)} hoverable={true} class="event-card" data-location={event.data.location || ''} data-price={event.data.price || ''} data-date={event.data.date}>
+                  <div class="event-image">
+                    <img src={event.data.imageUrl} alt={event.data.title} />
+                    <div class="event-date">{new Date(event.data.date).toLocaleDateString('ar-EG', { day: 'numeric', month: 'short' })}</div>
+                  </div>
+                  <div class="event-content">
+                    <h3 class="event-title">{event.data.title}</h3>
+                    <p class="event-description">{event.data.description}</p>
+                    <div class="event-footer">
+                      <div class="event-info"><Icon name="map-pin" size="sm" /><span>{event.data.location}</span></div>
+                      {event.data.price && (<span class="event-price">{event.data.price}</span>)}
+                    </div>
+                    {event.data.organizer && (<div class="event-organizer"><Icon name="account" size="sm" /><span>{event.data.organizer}</span></div>)}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div class="empty-state">
+              <Icon name={category.data.icon || 'calendar'} size="xl" />
+              <h3>لا توجد فعاليات في هذه الفئة</h3>
+              <p>عُد لاحقًا للاطلاع على الفعاليات القادمة</p>
+              <a href={getLocalizedPath('/event', lang)} class="back-link">العودة إلى الفعاليات</a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const locationCheckboxes = document.querySelectorAll('.location-filter');
+    const priceCheckboxes = document.querySelectorAll('.price-filter');
+    const dateRadios = document.querySelectorAll('.date-filter');
+    const eventsGrid = document.getElementById('events-grid');
+    if (!eventsGrid) return;
+    const applyFilters = () => {
+      const selectedLocations = Array.from(locationCheckboxes)
+        .filter((cb: any) => (cb as HTMLInputElement).checked)
+        .map((cb: any) => (cb as HTMLInputElement).value);
+      const selectedPrices = Array.from(priceCheckboxes)
+        .filter((cb: any) => (cb as HTMLInputElement).checked)
+        .map((cb: any) => (cb as HTMLInputElement).value);
+      const dateFilter = (Array.from(dateRadios) as any[])
+        .find((r: any) => (r as HTMLInputElement).checked)?.value || 'all';
+      const now = new Date();
+      const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      const thisMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      const events = eventsGrid.querySelectorAll('.event-card');
+      events.forEach((event: any) => {
+        const eventLocation = event.getAttribute('data-location') || '';
+        const eventPrice = event.getAttribute('data-price') || '';
+        const eventDate = new Date(event.getAttribute('data-date') || '');
+        let show = true;
+        if (selectedLocations.length > 0 && !selectedLocations.includes(eventLocation)) show = false;
+        if (selectedPrices.length > 0 && !selectedPrices.includes(eventPrice)) show = false;
+        if (dateFilter === 'upcoming' && eventDate < now) show = false;
+        else if (dateFilter === 'this-month' && (eventDate < thisMonthStart || eventDate > thisMonthEnd)) show = false;
+        (event as HTMLElement).style.display = show ? '' : 'none';
+      });
+    };
+    locationCheckboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+    priceCheckboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+    dateRadios.forEach(r => r.addEventListener('change', applyFilters));
+  });
+</script>
+
+<style>
+  .page-header{background:linear-gradient(135deg,var(--color-primary-100),var(--color-secondary-100));padding:var(--spacing-12) 0 var(--spacing-8);text-align:center}
+  .breadcrumb{display:flex;justify-content:center;align-items:center;gap:var(--spacing-2);font-size:var(--font-size-sm);margin-bottom:var(--spacing-4);color:var(--color-text-secondary)}
+  .breadcrumb a{color:var(--color-primary-600);text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .page-header h1{font-size:var(--font-size-4xl);margin-bottom:var(--spacing-4);color:var(--color-text-primary)}
+  .subtitle{font-size:var(--font-size-lg);color:var(--color-text-secondary);max-width:600px;margin:0 auto}
+  .content-section{padding:var(--spacing-12) 0}
+  .content-layout{display:grid;grid-template-columns:280px 1fr;gap:var(--spacing-8)}
+  .filters-sidebar{background:var(--color-surface);padding:var(--spacing-6);border-radius:var(--radius-lg);height:fit-content;position:sticky;top:var(--spacing-8)}
+  .sidebar-title{font-size:var(--font-size-lg);margin-bottom:var(--spacing-4);color:var(--color-text-primary)}
+  .filter-section{margin-bottom:var(--spacing-6)}
+  .filter-title{font-size:var(--font-size-md);font-weight:600;margin-bottom:var(--spacing-3);color:var(--color-text-primary)}
+  .filter-options{display:flex;flex-direction:column;gap:var(--spacing-2)}
+  .filter-checkbox{display:flex;align-items:center;gap:var(--spacing-2);padding:var(--spacing-2);cursor:pointer}
+  .filter-checkbox:hover{background:var(--color-primary-50);border-radius:var(--radius-md)}
+  .filter-checkbox input{cursor:pointer}
+  .main-content{min-width:0}
+  .events-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--spacing-6)}
+  .event-card{background:var(--color-surface);border-radius:var(--radius-lg);overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .event-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .event-image{position:relative;width:100%;height:200px;overflow:hidden}
+  .event-image img{width:100%;height:100%;object-fit:cover}
+  .event-date{position:absolute;top:var(--spacing-4);left:var(--spacing-4);padding:var(--spacing-2) var(--spacing-4);background:rgba(255,255,255,.95);border-radius:var(--radius-md);font-size:var(--font-size-sm);font-weight:600;color:var(--color-primary-600)}
+  .event-content{padding:var(--spacing-6)}
+  .event-title{font-size:var(--font-size-lg);margin-bottom:var(--spacing-2);color:var(--color-text-primary)}
+  .event-description{font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--spacing-4);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .event-footer{display:flex;justify-content:space-between;align-items:center;gap:var(--spacing-3);padding-top:var(--spacing-3);border-top:1px solid var(--color-border);margin-bottom:var(--spacing-3)}
+  .event-info{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--font-size-sm);color:var(--color-text-secondary);flex:1;min-width:0}
+  .event-info span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .event-price{font-size:var(--font-size-sm);color:var(--color-success-600);font-weight:600;white-space:nowrap}
+  .event-organizer{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--font-size-xs);color:var(--color-text-secondary)}
+  .empty-state{text-align:center;padding:var(--spacing-16) var(--spacing-6)}
+  .empty-state h3{font-size:var(--font-size-xl);margin:var(--spacing-4) 0 var(--spacing-2);color:var(--color-text-primary)}
+  .empty-state p{color:var(--color-text-secondary);margin-bottom:var(--spacing-4)}
+  .back-link{display:inline-block;padding:var(--spacing-3) var(--spacing-6);background:var(--color-primary-600);color:#fff;border-radius:var(--radius-md);text-decoration:none;transition:background-color .2s}
+  .back-link:hover{background:var(--color-primary-700)}
+  @media (max-width:1024px){.content-layout{grid-template-columns:1fr}.filters-sidebar{position:static}}
+  @media (max-width:768px){.page-header h1{font-size:var(--font-size-3xl)}.events-grid{grid-template-columns:1fr}}
+</style>

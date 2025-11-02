@@ -1,0 +1,357 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import Button from '../../../components/atoms/Button.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allTrails = await getCollection('trails');
+  return allTrails.map((trail: any) => ({
+    params: { slug: trail.data.id },
+    props: { trail },
+  }));
+}
+
+type Props = {
+  trail: any;
+};
+
+const { trail }: Props = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${trail.data.name} - Salut Annecy`} 
+  description={trail.data.excerpt}
+  lang={lang}
+>
+  <article class="trail-detail">
+    <!-- Header Image -->
+    <section class="trail-hero">
+      <div class="trail-hero-image">
+        <img src={trail.data.imageUrl} alt={trail.data.name} />
+      </div>
+      <div class="trail-hero-overlay">
+        <div class="container">
+          <div class="trail-hero-content">
+            <div class="trail-breadcrumb">
+              <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
+              <span>/</span>
+              <a href={getLocalizedPath('/trail', lang)}>{t('header.trails')}</a>
+              <span>/</span>
+              <span>{trail.data.name}</span>
+            </div>
+            <h1>{trail.data.name}</h1>
+            <div class="trail-meta">
+              <span class="trail-difficulty-badge" data-difficulty={trail.data.difficulty}>
+                {trail.data.difficulty}
+              </span>
+              <div class="trail-stat">
+                <Icon name="map-pin" size="sm" />
+                <span>{trail.data.distance}</span>
+              </div>
+              <div class="trail-stat">
+                <Icon name="clock" size="sm" />
+                <span>{trail.data.duration}</span>
+              </div>
+              {trail.data.elevation && (
+                <div class="trail-stat">
+                  <Icon name="trending-up" size="sm" />
+                  <span>{trail.data.elevation}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="trail-content-section">
+      <div class="container">
+        <div class="trail-layout">
+          <!-- Main Content -->
+          <div class="trail-main">
+            <!-- Excerpt -->
+            <div class="content-block">
+              <p class="trail-excerpt">{trail.data.excerpt}</p>
+            </div>
+
+            <!-- Description -->
+            <div class="content-block">
+              <h2>Route description</h2>
+              <p>{trail.data.description}</p>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="trail-sidebar">
+            <!-- Trail Info -->
+            <div class="sidebar-card">
+              <h3>Information</h3>
+              
+              <div class="info-item">
+                <Icon name="gauge" size="sm" />
+                <div>
+                  <strong>Difficulty</strong>
+                  <p class="difficulty-text" data-difficulty={trail.data.difficulty}>
+                    {trail.data.difficulty === 'facile' ? 'Easy - Suitable for all' : 
+                     trail.data.difficulty === 'moyen' ? 'Medium - Good fitness level' : 
+                     'Hard - Experience required'}
+                  </p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <Icon name="map-pin" size="sm" />
+                <div>
+                  <strong>Distance</strong>
+                  <p>{trail.data.distance}</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <Icon name="clock" size="sm" />
+                <div>
+                  <strong>Estimated time</strong>
+                  <p>{trail.data.duration}</p>
+                </div>
+              </div>
+
+              {trail.data.elevation && (
+                <div class="info-item">
+                  <Icon name="trending-up" size="sm" />
+                  <div>
+                    <strong>Elevation</strong>
+                    <p>{trail.data.elevation}</p>
+                  </div>
+                </div>
+              )}
+
+              {trail.data.startPoint && (
+                <div class="info-item">
+                  <Icon name="navigation" size="sm" />
+                  <div>
+                    <strong>Starting point</strong>
+                    <p>{trail.data.startPoint}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="sidebar-actions">
+              <Button href={getLocalizedPath('/trail', lang)} variant="secondary" size="md" fullWidth={true}>
+                Back to trails
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </article>
+</MainLayout>
+
+<style>
+  .trail-hero {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .trail-hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .trail-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .trail-hero-overlay {
+    position: relative;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: var(--spacing-8);
+  }
+
+  .trail-hero-content {
+    color: white;
+  }
+
+  .trail-breadcrumb {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-3);
+    display: flex;
+    gap: var(--spacing-2);
+    align-items: center;
+  }
+
+  .trail-breadcrumb a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .trail-breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .trail-hero-content h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .trail-meta {
+    display: flex;
+    gap: var(--spacing-4);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .trail-difficulty-badge {
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: capitalize;
+  }
+
+  .trail-difficulty-badge[data-difficulty="facile"] {
+    background-color: var(--color-success-600);
+  }
+
+  .trail-difficulty-badge[data-difficulty="moyen"] {
+    background-color: var(--color-warning-600);
+  }
+
+  .trail-difficulty-badge[data-difficulty="difficile"] {
+    background-color: var(--color-error-600);
+  }
+
+  .trail-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .trail-content-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .trail-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--spacing-8);
+  }
+
+  .trail-main {
+    min-width: 0;
+  }
+
+  .content-block {
+    margin-bottom: var(--spacing-8);
+  }
+
+  .trail-excerpt {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    line-height: 1.7;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .content-block h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .content-block p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .trail-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .sidebar-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+  }
+
+  .sidebar-card h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-item {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .info-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-item strong {
+    display: block;
+    margin-bottom: var(--spacing-1);
+    font-size: var(--font-size-sm);
+  }
+
+  .info-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .difficulty-text[data-difficulty="facile"] {
+    color: var(--color-success-700);
+  }
+
+  .difficulty-text[data-difficulty="moyen"] {
+    color: var(--color-warning-700);
+  }
+
+  .difficulty-text[data-difficulty="difficile"] {
+    color: var(--color-error-700);
+  }
+
+  .sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  @media (max-width: 1024px) {
+    .trail-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .trail-hero {
+      height: 300px;
+    }
+
+    .trail-hero-content h1 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>
