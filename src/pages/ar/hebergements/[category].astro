@@ -1,0 +1,151 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Card from '../../../components/molecules/Card.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allAccommodationCategories = await getCollection('accommodationCategories');
+  const newAccommodations = await getCollection('accommodations');
+  const legacyPlaces = await getCollection('places');
+  
+  // Utiliser uniquement les catégories FR pour le routage (langue par défaut)
+  const frenchCategories = allAccommodationCategories.filter((cat: any) => cat.data.lang === 'fr');
+  
+  return frenchCategories.map((category: any) => {
+    const newItems = newAccommodations.filter((a: any) => 
+      a.data.categoryId === category.data.id && a.data.published
+    );
+    const legacyItems = legacyPlaces.filter((p: any) => 
+      p.data.mainCategory.id === 'hebergement' && 
+      (p.data.category === category.data.name || p.data.categoryId === category.data.id) &&
+      p.data.published
+    );
+    
+    return {
+      params: { category: category.data.slug },
+      props: { 
+        category,
+        accommodations: [
+          ...newItems.map((a: any) => ({ ...a, isNew: true })),
+          ...legacyItems.map((p: any) => ({ ...p, isNew: false }))
+        ]
+      },
+    };
+  });
+}
+
+const { category, accommodations } = Astro.props as any;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${category.data.name} - ${t('header.accommodations')} - Salut Annecy`} 
+  description={category.data.description || `اكتشف أفضل ${category.data.name} في آنسي`}
+  lang={lang}
+>
+  <section class="page-header" dir="rtl">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href={getLocalizedPath('/hebergements', lang)}>{t('header.accommodations')}</a>
+        <span>/</span>
+        <span>{category.data.name}</span>
+      </nav>
+      <h1>{category.data.name}</h1>
+      {category.data.description && (
+        <p class="subtitle">{category.data.description}</p>
+      )}
+    </div>
+  </section>
+
+  <section class="content-section" dir="rtl">
+    <div class="container">
+      {accommodations.length > 0 ? (
+        <div class="places-grid">
+          {accommodations.map((accommodation: any) => {
+            const href = accommodation.isNew 
+              ? getLocalizedPath(`/hebergements/${accommodation.data.id}`, lang)
+              : getLocalizedPath(`/place/${accommodation.data.id}`, lang);
+            return (
+              <Card 
+                href={href} 
+                hoverable={true}
+                class="place-card"
+              >
+                <div class="place-image">
+                  <img src={accommodation.data.imageUrl} alt={accommodation.data.name} />
+                </div>
+                <div class="place-content">
+                  <div class="place-header">
+                    <span class="place-category">{category.data.name}</span>
+                    {accommodation.data.rating && (
+                      <div class="place-rating">
+                        <Icon name="star" size="sm" />
+                        <span>{accommodation.data.rating.toFixed(1)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <h3 class="place-name">{accommodation.data.name}</h3>
+                  <p class="place-description">{accommodation.data.description}</p>
+                  {accommodation.data.priceRange && (
+                    <div class="place-meta">
+                      <span class="price-range">{accommodation.data.priceRange}</span>
+                    </div>
+                  )}
+                  <div class="place-footer">
+                    {accommodation.data.address && (
+                      <div class="place-info">
+                        <Icon name="map-pin" size="sm" />
+                        <span>{accommodation.data.address}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <Icon name="hotel" size="xl" />
+          <h3>لا توجد أماكن إقامة في هذه الفئة</h3>
+          <p>عودوا قريبًا لاكتشاف توصياتنا!</p>
+          <a href={getLocalizedPath('/hebergements', lang)} class="back-link">
+            العودة إلى أماكن الإقامة
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header { background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100)); padding: var(--spacing-12) 0 var(--spacing-8); text-align: center; }
+  .breadcrumb { display: flex; justify-content: center; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); margin-bottom: var(--spacing-4); color: var(--color-text-secondary); }
+  .breadcrumb a { color: var(--color-primary-600); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .page-header h1 { font-size: var(--font-size-4xl); margin-bottom: var(--spacing-3); }
+  .subtitle { font-size: var(--font-size-lg); color: var(--color-text-secondary); }
+  .content-section { padding: var(--spacing-12) 0; }
+  .places-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-6); }
+  .place-card { height: 100%; display: flex; flex-direction: column; }
+  .place-image { width: 100%; height: 200px; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background-color: var(--color-surface-secondary); }
+  .place-image img { width: 100%; height: 100%; object-fit: cover; }
+  .place-content { flex: 1; display: flex; flex-direction: column; }
+  .place-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-2); }
+  .place-category { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-primary-600); letter-spacing: 0.05em; }
+  .place-rating { display: flex; align-items: center; gap: var(--spacing-1); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-warning-600); }
+  .place-name { font-size: var(--font-size-xl); margin-bottom: var(--spacing-2); }
+  .place-description { flex: 1; color: var(--color-text-secondary); margin-bottom: var(--spacing-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .place-meta { display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--spacing-3); }
+  .price-range { font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+  .place-footer { padding-top: var(--spacing-3); border-top: 1px solid var(--color-border); }
+  .place-info { display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+  .empty-state { text-align: center; padding: var(--spacing-12) var(--spacing-6); color: var(--color-text-secondary); }
+  .empty-state h3 { margin: var(--spacing-4) 0 var(--spacing-2); }
+  .back-link { display: inline-block; margin-top: var(--spacing-4); padding: var(--spacing-3) var(--spacing-6); background-color: var(--color-primary-500); color: white; text-decoration: none; border-radius: var(--radius-base); transition: all var(--transition-fast); }
+  .back-link:hover { background-color: var(--color-primary-600); }
+  @media (max-width: 768px) { .places-grid { grid-template-columns: 1fr; } }
+</style>

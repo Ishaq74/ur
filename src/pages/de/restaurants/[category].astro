@@ -1,0 +1,140 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+import Card from '../../../components/molecules/Card.astro';
+import Icon from '../../../components/atoms/Icon.astro';
+import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allRestaurantCategories = await getCollection('restaurantCategories');
+  const allRestaurants = await getCollection('restaurants');
+  const frenchCategories = allRestaurantCategories.filter((cat: any) => cat.data.lang === 'fr');
+  return frenchCategories.map((category: any) => ({
+    params: { category: category.data.slug },
+    props: { 
+      category,
+      restaurants: allRestaurants.filter((restaurant: any) => 
+        restaurant.data.categoryId === category.data.id && restaurant.data.published
+      )
+    },
+  }));
+}
+
+const { category, restaurants } = Astro.props as any;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<MainLayout 
+  title={`${category.data.name} - ${t('header.restaurants')} - Salut Annecy`} 
+  description={category.data.description || `Entdecken Sie die besten ${category.data.name} in Annecy`}
+  lang={lang}
+>
+  <section class="page-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href={getLocalizedPath('/restaurants', lang)}>{t('header.restaurants')}</a>
+        <span>/</span>
+        <span>{category.data.name}</span>
+      </nav>
+      <h1>{category.data.name}</h1>
+      {category.data.description && (
+        <p class="subtitle">{category.data.description}</p>
+      )}
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      {restaurants.length > 0 ? (
+        <div class="places-grid">
+          {restaurants.map((restaurant: any) => (
+            <Card 
+              href={getLocalizedPath(`/restaurants/${restaurant.data.id}`, lang)} 
+              hoverable={true}
+              class="place-card"
+            >
+                <div class="place-image">
+                  <img src={restaurant.data.imageUrl} alt={restaurant.data.name} />
+                </div>
+              <div class="place-content">
+                <div class="place-header">
+                  <span class="place-category">{category.data.name}</span>
+                  {restaurant.data.rating && (
+                    <div class="place-rating">
+                      <Icon name="star" size="sm" />
+                      <span>{restaurant.data.rating.toFixed(1)}</span>
+                    </div>
+                  )}
+                </div>
+                <h3 class="place-name">{restaurant.data.name}</h3>
+                <p class="place-description">{restaurant.data.description}</p>
+                {restaurant.data.priceRange && (
+                  <div class="place-meta">
+                    <span class="price-range">{restaurant.data.priceRange}</span>
+                    {restaurant.data.attributes.length > 0 && (
+                      <>
+                        <span class="separator">•</span>
+                        {restaurant.data.attributes.slice(0, 2).map((attr: string) => (
+                          <span class="attribute">{attr}</span>
+                        ))}
+                      </>
+                    )}
+                  </div>
+                )}
+                <div class="place-footer">
+                  {restaurant.data.address && (
+                    <div class="place-info">
+                      <Icon name="map-pin" size="sm" />
+                      <span>{restaurant.data.address}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <Icon name="silverware-fork-knife" size="xl" />
+          <h3>Keine Restaurants in dieser Kategorie</h3>
+          <p>Schauen Sie bald wieder vorbei, um unsere Empfehlungen zu entdecken!</p>
+          <a href={getLocalizedPath('/restaurants', lang)} class="back-link">
+            Zurück zu Restaurants
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header { background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500)); color: white; padding: var(--spacing-12) 0 var(--spacing-8); text-align: center; }
+  .breadcrumb { display: flex; justify-content: center; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); margin-bottom: var(--spacing-4); color: rgba(255, 255, 255, 0.8); }
+  .breadcrumb a { color: white; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .page-header h1 { font-size: var(--font-size-4xl); margin-bottom: var(--spacing-3); color: white; }
+  .subtitle { font-size: var(--font-size-lg); opacity: 0.95; margin: 0; color: white; }
+  .content-section { padding: var(--spacing-12) 0; }
+  .places-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-6); }
+  .place-card { height: 100%; display: flex; flex-direction: column; }
+  .place-image { width: 100%; height: 200px; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background-color: var(--color-surface-secondary); }
+  .place-image img { width: 100%; height: 100%; object-fit: cover; }
+  .place-content { flex: 1; display: flex; flex-direction: column; }
+  .place-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-2); }
+  .place-category { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-primary-600); text-transform: uppercase; letter-spacing: 0.05em; }
+  .place-rating { display: flex; align-items: center; gap: var(--spacing-1); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-warning-600); }
+  .place-name { font-size: var(--font-size-xl); margin-bottom: var(--spacing-2); }
+  .place-description { flex: 1; color: var(--color-text-secondary); margin-bottom: var(--spacing-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .place-meta { display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--spacing-3); }
+  .price-range { font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+  .separator { color: var(--color-border); }
+  .attribute { padding: var(--spacing-1) var(--spacing-2); background-color: var(--color-surface-secondary); border-radius: var(--radius-sm); }
+  .place-footer { padding-top: var(--spacing-3); border-top: 1px solid var(--color-border); }
+  .place-info { display: flex; align-items: center; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+  .empty-state { text-align: center; padding: var(--spacing-12) var(--spacing-6); color: var(--color-text-secondary); }
+  .empty-state h3 { margin: var(--spacing-4) 0 var(--spacing-2); }
+  .back-link { display: inline-block; margin-top: var(--spacing-4); padding: var(--spacing-3) var(--spacing-6); background-color: var(--color-primary-500); color: white; text-decoration: none; border-radius: var(--radius-base); transition: all var(--transition-fast); }
+  .back-link:hover { background-color: var(--color-primary-600); }
+  @media (max-width: 768px) { .places-grid { grid-template-columns: 1fr; } }
+</style>
