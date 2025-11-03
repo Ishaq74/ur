@@ -146,5 +146,24 @@
     "contact_title": "Contact",
     "contact_text": "Pour toute question, suggestion ou partenariat, n'hésitez pas à",
     "contact_link": "nous contacter"
+  },
+  "seo": {
+    "cookies_description": "Politique de gestion des cookies sur Salut Annecy",
+    "faq_description": "Questions fréquemment posées sur Salut Annecy",
+    "magazine_description": "Découvrez nos articles sur Annecy et ses environs",
+    "contact_description": "Contactez l'équipe de Salut Annecy",
+    "pro_description": "Espace professionnel pour les établissements et commerces d'Annecy",
+    "ads_description": "Solutions publicitaires sur Salut Annecy",
+    "agenda_description": "Découvrez tous les événements à Annecy et ses environs",
+    "privacy_description": "Politique de confidentialité et protection des données personnelles",
+    "report_description": "Signaler un problème ou une erreur sur Salut Annecy",
+    "legal_mentions_description": "Mentions légales de Salut Annecy",
+    "offers_description": "Découvrez nos offres pour professionnels",
+    "press_description": "Espace presse et informations médias de Salut Annecy",
+    "cgv_description": "Conditions Générales de Vente de Salut Annecy",
+    "partner_description": "Devenez partenaire de Salut Annecy et développez votre activité",
+    "cgu_description": "Conditions Générales d'Utilisation de Salut Annecy",
+    "live_description": "Suivez en direct ce qui se passe à Annecy",
+    "trails_description": "Découvrez les meilleurs sentiers de randonnée autour d'Annecy"
   }
 }

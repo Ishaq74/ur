@@ -146,5 +146,24 @@
     "contact_title": "联系我们",
     "contact_text": "如有任何问题、建议或合作，请随时",
     "contact_link": "联系我们"
+  },
+  "seo": {
+    "cookies_description": "Salut Annecy 的 Cookie 政策",
+    "faq_description": "关于你好安纳西的常见问题",
+    "magazine_description": "探索关于安纳西及周边的文章",
+    "contact_description": "联系你好安纳西团队",
+    "pro_description": "面向安纳西商家和场所的专业空间",
+    "ads_description": "你好安纳西的广告解决方案",
+    "agenda_description": "发现安纳西及周边的所有活动",
+    "privacy_description": "隐私政策与个人数据保护",
+    "report_description": "在你好安纳西上报告问题或错误",
+    "legal_mentions_description": "你好安纳西的法律声明",
+    "offers_description": "探索我们面向专业人士的优惠",
+    "press_description": "你好安纳西新闻与媒体信息区",
+    "cgv_description": "你好安纳西的销售通用条款",
+    "partner_description": "成为你好安纳西的合作伙伴并发展您的业务",
+    "cgu_description": "你好安纳西的使用通用条款",
+    "live_description": "实时关注安纳西正在发生的事",
+    "trails_description": "发现安纳西周边的最佳徒步路线"
   }
 }

@@ -146,5 +146,24 @@
     "contact_title": "Kontakt",
     "contact_text": "Für Fragen, Anregungen oder Partnerschaften zögern Sie nicht,",
     "contact_link": "uns zu kontaktieren"
+  },
+  "seo": {
+    "cookies_description": "Cookie-Richtlinie von Salut Annecy",
+    "faq_description": "Häufig gestellte Fragen zu Salut Annecy",
+    "magazine_description": "Entdecken Sie unsere Artikel über Annecy und Umgebung",
+    "contact_description": "Kontaktieren Sie das Team von Salut Annecy",
+    "pro_description": "Professioneller Bereich für Unternehmen und Einrichtungen in Annecy",
+    "ads_description": "Werbelösungen auf Salut Annecy",
+    "agenda_description": "Entdecken Sie alle Veranstaltungen in Annecy und Umgebung",
+    "privacy_description": "Datenschutzrichtlinie und Schutz personenbezogener Daten",
+    "report_description": "Ein Problem oder einen Fehler auf Salut Annecy melden",
+    "legal_mentions_description": "Impressum von Salut Annecy",
+    "offers_description": "Entdecken Sie unsere Angebote für Profis",
+    "press_description": "Pressebereich und Medieninformationen von Salut Annecy",
+    "cgv_description": "Allgemeine Verkaufsbedingungen von Salut Annecy",
+    "partner_description": "Werden Sie Partner von Salut Annecy und wachsen Sie mit Ihrem Unternehmen",
+    "cgu_description": "Allgemeine Nutzungsbedingungen von Salut Annecy",
+    "live_description": "Verfolgen Sie live, was in Annecy passiert",
+    "trails_description": "Entdecken Sie die besten Wanderwege rund um Annecy"
   }
 }

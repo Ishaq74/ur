@@ -146,5 +146,24 @@
     "contact_title": "اتصل بنا",
     "contact_text": "لأي أسئلة أو اقتراحات أو شراكات، لا تتردد في",
     "contact_link": "الاتصال بنا"
+  },
+  "seo": {
+    "cookies_description": "سياسة ملفات تعريف الارتباط على سالو آنسي",
+    "faq_description": "الأسئلة الشائعة حول سالو آنسي",
+    "magazine_description": "اكتشف مقالاتنا حول آنسي ومحيطها",
+    "contact_description": "اتصل بفريق سالو آنسي",
+    "pro_description": "منطقة المحترفين للمؤسسات والمتاجر في آنسي",
+    "ads_description": "حلول إعلانية على سالو آنسي",
+    "agenda_description": "اكتشف جميع الأحداث في آنسي ومحيطها",
+    "privacy_description": "سياسة الخصوصية وحماية البيانات الشخصية",
+    "report_description": "الإبلاغ عن مشكلة أو خطأ على سالو آنسي",
+    "legal_mentions_description": "الإشعار القانوني لسالو آنسي",
+    "offers_description": "اكتشف عروضنا للمحترفين",
+    "press_description": "منطقة الصحافة ومعلومات وسائل الإعلام لسالو آنسي",
+    "cgv_description": "الشروط العامة للبيع لسالو آنسي",
+    "partner_description": "كن شريكًا لسالو آنسي ونمّ نشاطك",
+    "cgu_description": "الشروط العامة لاستخدام سالو آنسي",
+    "live_description": "تابع مباشرة ما يحدث في آنسي",
+    "trails_description": "اكتشف أجمل مسارات المشي حول آنسي"
   }
 }
