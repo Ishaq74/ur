@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     params: { category: category.data.slug },
     props: { 
       category,
-      places: allPlaces.filter((place: any) => place.data.mainCategory.id === category.data.id && place.data.published)
+  places: allPlaces.filter((place: any) => place.data.mainCategory === category.data.id && place.data.published)
     },
   }));
 }
@@ -22,6 +22,8 @@ type Props = { category: CollectionEntry<'placeCategories'>; places: CollectionE
 const { category, places }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const allPlaceCategories = await getCollection('placeCategories');
+const localizedCategory = findLocalizedById(allPlaceCategories as any, category.data.id, lang) || category;
 
 const allAttributes = new Set<string>();
 const allPriceRanges = new Set<string>();
@@ -32,19 +34,19 @@ places.forEach((place) => {
 ---
 
 <MainLayout 
-  title={`${category.data.name} - Salut Annecy`} 
-  description={category.data.description}
+  title={`${localizedCategory.data.name} - Salut Annecy`} 
+  description={localizedCategory.data.description}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <nav class="breadcrumb">
-        <a href={getLocalizedPath('/place', lang)}>Lugares</a>
+        <a href={getLocalizedPath('/place', lang)}>{t('places.title')}</a>
         <span>/</span>
-        <span>{category.data.name}</span>
+        <span>{localizedCategory.data.name}</span>
       </nav>
-      <h1>{category.data.name}</h1>
-      <p class="subtitle">{category.data.description}</p>
+      <h1>{localizedCategory.data.name}</h1>
+      <p class="subtitle">{localizedCategory.data.description}</p>
     </div>
   </section>
 
@@ -69,7 +71,7 @@ places.forEach((place) => {
             )}
             {allPriceRanges.size > 0 && (
               <div class="filter-section">
-                <h3 class="filter-title">Rango de precios</h3>
+                <h3 class="filter-title">{t('filters.price_range')}</h3>
                 <div class="filter-options">
                   {Array.from(allPriceRanges).sort().map((price: string) => (
                     <label class="filter-checkbox">
@@ -133,9 +135,9 @@ places.forEach((place) => {
             </div>
           ) : (
             <div class="empty-state">
-              <Icon name={category.data.icon} size="xl" />
-              <h3>No se encontraron resultados</h3>
-              <p>¡Vuelve pronto para ver nuestras recomendaciones!</p>
+              <Icon name={localizedCategory.data.icon} size="xl" />
+              <h3>{t('filters.no_results')}</h3>
+              <p>{t('places.empty_desc')}</p>
               <a href={getLocalizedPath('/place', lang)} class="back-link">Volver a lugares</a>
             </div>
           )}

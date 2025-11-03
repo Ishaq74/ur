@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
     props: { 
       category,
       places: allPlaces.filter((place: any) => 
-        place.data.mainCategory.id === category.data.id && place.data.published
+        place.data.mainCategory === category.data.id && place.data.published
       )
     },
   }));
@@ -28,6 +28,8 @@ type Props = {
 const { category, places }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const allPlaceCategories = await getCollection('placeCategories');
+const localizedCategory = findLocalizedById(allPlaceCategories as any, category.data.id, lang) || category;
 
 const allAttributes = new Set<string>();
 const allPriceRanges = new Set<string>();
@@ -42,19 +44,19 @@ places.forEach((place) => {
 ---
 
 <MainLayout 
-  title={`${category.data.name} - Salut Annecy`} 
-  description={category.data.description}
+  title={`${localizedCategory.data.name} - Salut Annecy`} 
+  description={localizedCategory.data.description}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <nav class="breadcrumb">
-        <a href={getLocalizedPath('/place', lang)}>地点</a>
+        <a href={getLocalizedPath('/place', lang)}>{t('places.title')}</a>
         <span>/</span>
-        <span>{category.data.name}</span>
+        <span>{localizedCategory.data.name}</span>
       </nav>
-      <h1>{category.data.name}</h1>
-      <p class="subtitle">{category.data.description}</p>
+      <h1>{localizedCategory.data.name}</h1>
+      <p class="subtitle">{localizedCategory.data.description}</p>
     </div>
   </section>
 
@@ -143,11 +145,11 @@ places.forEach((place) => {
             </div>
           ) : (
             <div class="empty-state">
-              <Icon name={category.data.icon} size="xl" />
-              <h3>未找到结果</h3>
-              <p>稍后回来发现我们的推荐！</p>
+              <Icon name={localizedCategory.data.icon} size="xl" />
+              <h3>{t('filters.no_results')}</h3>
+              <p>{t('places.empty_desc')}</p>
               <a href={getLocalizedPath('/place', lang)} class="back-link">
-                返回地点
+                {t('places.back')}
               </a>
             </div>
           )}

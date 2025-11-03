@@ -33,7 +33,7 @@ const t = useTranslations(lang);
               <a href={getLocalizedPath('/', lang)}>{t('header.discover')}</a>
               <span>/</span>
               <a href={getLocalizedPath(`/${place.data.mainCategory === 'restauration' ? 'restaurants' : place.data.mainCategory === 'hebergement' ? 'hebergements' : place.data.mainCategory === 'shopping' ? 'shopping' : 'activites'}`, lang)}>
-                {place.data.mainCategory === 'restauration' ? t('header.eat') : place.data.mainCategory === 'hebergement' ? t('header.sleep') : place.data.mainCategory === 'shopping' ? 'Shopping' : t('header.do')}
+                {place.data.mainCategory === 'restauration' ? t('header.eat') : place.data.mainCategory === 'hebergement' ? t('header.sleep') : place.data.mainCategory === 'shopping' ? t('header.shop') : t('header.do')}
               </a>
               <span>/</span>
               <span>{place.data.name}</span>
@@ -46,7 +46,7 @@ const t = useTranslations(lang);
                   <Icon name="star" size="sm" />
                   <span>{place.data.rating.toFixed(1)}</span>
                   {place.data.reviewCount && (
-                    <span class="review-count">({place.data.reviewCount} opiniones)</span>
+                    <span class="review-count">({place.data.reviewCount} {t('place.reviews')})</span>
                   )}
                 </div>
               )}
@@ -61,12 +61,12 @@ const t = useTranslations(lang);
         <div class="place-layout">
           <div class="place-main">
             <div class="content-block">
-              <h2>Descripción</h2>
+              <h2>{t('place.description')}</h2>
               <p>{place.data.description}</p>
             </div>
             {place.data.attributes && place.data.attributes.length > 0 && (
               <div class="content-block">
-                <h2>Características</h2>
+                <h2>{t('place.features')}</h2>
                 <div class="attributes-grid">
                   {place.data.attributes.map((attr: string) => (
                     <div class="attribute-item">
@@ -81,12 +81,12 @@ const t = useTranslations(lang);
 
           <aside class="place-sidebar">
             <div class="sidebar-card">
-              <h3>Información</h3>
+              <h3>{t('place.information')}</h3>
               {place.data.address && (
                 <div class="info-item">
                   <Icon name="map-pin" size="sm" />
                   <div>
-                    <strong>Dirección</strong>
+                    <strong>{t('place.address')}</strong>
                     <p>{place.data.address}</p>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ const t = useTranslations(lang);
                 <div class="info-item">
                   <Icon name="phone" size="sm" />
                   <div>
-                    <strong>Teléfono</strong>
+                    <strong>{t('place.phone')}</strong>
                     <p><a href={`tel:${place.data.phone}`}>{place.data.phone}</a></p>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ const t = useTranslations(lang);
                 <div class="info-item">
                   <Icon name="mail" size="sm" />
                   <div>
-                    <strong>Email</strong>
+                    <strong>{t('place.email')}</strong>
                     <p><a href={`mailto:${place.data.email}`}>{place.data.email}</a></p>
                   </div>
                 </div>
@@ -113,8 +113,8 @@ const t = useTranslations(lang);
                 <div class="info-item">
                   <Icon name="globe" size="sm" />
                   <div>
-                    <strong>Sitio web</strong>
-                    <p><a href={place.data.website} target="_blank" rel="noopener noreferrer">Visitar el sitio</a></p>
+                    <strong>{t('place.website')}</strong>
+                    <p><a href={place.data.website} target="_blank" rel="noopener noreferrer">{t('place.visit_site')}</a></p>
                   </div>
                 </div>
               )}
@@ -122,7 +122,7 @@ const t = useTranslations(lang);
                 <div class="info-item">
                   <Icon name="clock" size="sm" />
                   <div>
-                    <strong>Horario</strong>
+                    <strong>{t('place.hours')}</strong>
                     <p>{place.data.hours}</p>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ const t = useTranslations(lang);
                 <div class="info-item">
                   <Icon name="credit-card" size="sm" />
                   <div>
-                    <strong>Precio</strong>
+                    <strong>{t('place.price')}</strong>
                     <p>{place.data.priceRange}</p>
                   </div>
                 </div>
@@ -141,7 +141,7 @@ const t = useTranslations(lang);
             <div class="sidebar-actions">
               {place.data.website && (
                 <Button href={place.data.website} variant="primary" size="md" fullWidth={true} target="_blank">
-                  Reservar
+                  {t('place.book')}
                 </Button>
               )}
             </div>
