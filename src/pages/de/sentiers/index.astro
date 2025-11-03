@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -19,25 +19,25 @@ const trailCategories = await getCollection('trailCategories');
 // For static builds, show all trails and filter client-side
 let trails = allTrails.filter((trail: any) => trail.data.published);
 
-// Get difficulty name if filtering
+// Get difficulty name if filtering (localized)
 let pageTitle = t('header.trails');
 if (difficultyFilter) {
-  const category = trailCategories.find((c: any) => c.data.slug === difficultyFilter || c.data.id === difficultyFilter);
-  if (category) {
-    pageTitle = `${t('header.trails')} - ${category.data.name}`;
-  }
+  const matched = trailCategories.find((c: any) => c.data.slug === difficultyFilter || c.data.id === difficultyFilter);
+  const localized = matched ? findLocalizedById(trailCategories, matched.data.id, lang) : undefined;
+  if (localized) pageTitle = `${t('header.trails')} - ${localized.data.name}`;
 }
+const resultsTemplate = t('filters.results_count');
 ---
 
 <MainLayout 
   title={`${pageTitle} - Salut Annecy`} 
-  description="Découvrez les meilleurs sentiers de randonnée autour d'Annecy"
+  description={t('hero.subtitle')}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>{pageTitle}</h1>
-      <p class="subtitle">Explorez les plus beaux sentiers autour d'Annecy</p>
+  <h1>{pageTitle}</h1>
+  <p class="subtitle">{t('categories.subtitle')}</p>
     </div>
   </section>
 
@@ -87,19 +87,19 @@ if (difficultyFilter) {
                 href={getLocalizedPath(`/sentiers?${difficultyFilter ? `difficulty=${difficultyFilter}&` : ''}distance=short`, lang)} 
                 class={`filter-option ${distanceFilter === 'short' ? 'active' : ''}`}
               >
-                Courte (&lt; 10 km)
+                &lt; 10 km
               </a>
               <a 
                 href={getLocalizedPath(`/sentiers?${difficultyFilter ? `difficulty=${difficultyFilter}&` : ''}distance=medium`, lang)} 
                 class={`filter-option ${distanceFilter === 'medium' ? 'active' : ''}`}
               >
-                Moyenne (10-25 km)
+                10–25 km
               </a>
               <a 
                 href={getLocalizedPath(`/sentiers?${difficultyFilter ? `difficulty=${difficultyFilter}&` : ''}distance=long`, lang)} 
                 class={`filter-option ${distanceFilter === 'long' ? 'active' : ''}`}
               >
-                Longue (&gt; 25 km)
+                &gt; 25 km
               </a>
             </div>
           </div>
@@ -114,7 +114,9 @@ if (difficultyFilter) {
 
         <!-- Trails Grid -->
         <div class="main-content">
-          <p class="results-count" id="results-count">{trails.length} sentier{trails.length > 1 ? 's' : ''}</p>
+          <p class="results-count" id="results-count" data-results-template={resultsTemplate}>
+            {resultsTemplate.replace('{count}', String(trails.length))}
+          </p>
           
           {trails.length > 0 ? (
             <div class="trails-grid" id="trails-grid">
@@ -131,7 +133,7 @@ if (difficultyFilter) {
                     <div class="trail-image">
                       <img src={trail.data.imageUrl} alt={trail.data.name} />
                       <div class="trail-difficulty" data-difficulty={trail.data.difficulty}>
-                        {trail.data.difficulty}
+                        {findLocalizedById(trailCategories, trail.data.difficulty, lang)?.data.name || trail.data.difficulty}
                       </div>
                     </div>
                     <div class="trail-content">
@@ -161,8 +163,7 @@ if (difficultyFilter) {
           ) : (
             <div class="empty-state" id="empty-state">
               <Icon name="hiking" size="xl" />
-              <h3>Aucun sentier trouvé</h3>
-              <p>Revenez bientôt pour découvrir nos recommandations !</p>
+              <h3>{t('filters.no_results')}</h3>
             </div>
           )}
         </div>
@@ -490,8 +491,8 @@ if (difficultyFilter) {
     
     // Update results count
     if (resultsCount) {
-      const plural = visibleCount > 1 ? 's' : '';
-      resultsCount.textContent = `${visibleCount} sentier${plural}`;
+      const template = resultsCount.getAttribute('data-results-template') || '{count}';
+      resultsCount.textContent = template.replace('{count}', String(visibleCount));
     }
     
     // Show/hide empty state

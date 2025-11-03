@@ -2,7 +2,7 @@
 import MainLayout from '../../../layouts/MainLayout.astro';
 import Card from '../../../components/molecules/Card.astro';
 import Icon from '../../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../../i18n';
 import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
@@ -38,10 +38,11 @@ if (ratingFilter) {
   shops = shops.filter((s: any) => s.data.rating && s.data.rating >= minRating);
 }
 
-let categoryName = 'Alle Dienste';
+let categoryName = t('common.all_services');
 if (categoryFilter) {
-  const category = serviceCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
-  if (category) categoryName = category.data.name;
+  const matched = serviceCategories.find((c: any) => c.data.slug === categoryFilter || c.data.id === categoryFilter);
+  const localized = matched ? findLocalizedById(serviceCategories, matched.data.id, lang) : undefined;
+  if (localized) categoryName = localized.data.name;
 }
 
 const allAttributes = new Set<string>();
@@ -54,16 +55,16 @@ allServices.forEach((s: any) => {
 
 <MainLayout 
   title={`${categoryName} - Salut Annecy`} 
-  description="Entdecken Sie die besten Geschäfte und Dienste in Annecy"
+  description={t('hero.subtitle')}
   lang={lang}
 >
   {!categoryFilter && serviceCategories.length > 0 && (
     <section class="categories-section">
       <div class="container">
-        <h2 class="section-title">Nach Kategorie</h2>
+  <h2 class="section-title">{t('categories.title')}</h2>
         <div class="categories-grid">
           {serviceCategories
-            .filter((cat: any) => !cat.data.parentId && cat.data.published)
+            .filter((cat: any) => !cat.data.parentId && cat.data.published && cat.data.lang === lang)
             .sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0))
             .map((category: any) => (
               <Card 
@@ -100,7 +101,12 @@ allServices.forEach((s: any) => {
               </div>
               <div class="place-content">
                 <div class="place-header">
-                  <span class="place-category">{place.data.category}</span>
+                  {(() => {
+                    const label = place.isNew
+                      ? (findLocalizedById(serviceCategories, place.data.categoryId, lang)?.data.name || '')
+                      : (place.data.category || '');
+                    return <span class="place-category">{label}</span>;
+                  })()}
                   {place.data.rating && (
                     <div class="place-rating">
                       <Icon name="star" size="sm" />
@@ -128,8 +134,7 @@ allServices.forEach((s: any) => {
       ) : (
         <div class="empty-state">
           <Icon name="briefcase" size="xl" />
-          <h3>Keine Dienste gefunden</h3>
-          <p>Kommen Sie bald wieder, um unsere Empfehlungen zu entdecken!</p>
+          <h3>{t('filters.no_results')}</h3>
         </div>
       )}
     </div>
