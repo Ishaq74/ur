@@ -60,6 +60,29 @@
     "subtitle": "Geschichten, Porträts und Geheimnisse von Annecy, erzählt von denen, die dort leben.",
     "read_all": "Das ganze Magazin lesen"
   },
+  "places": {
+    "title": "Alle Orte",
+    "subtitle": "Entdecke die besten Orte in Annecy",
+    "by_category": "Nach Kategorie",
+    "all": "Alle Orte",
+    "empty_title": "Keine Orte verfügbar",
+    "empty_desc": "Schau bald wieder vorbei für unsere Empfehlungen!",
+    "back": "Zurück zu den Orten"
+  },
+  "place": {
+    "information": "Informationen",
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "website": "Website",
+    "visit_site": "Website besuchen",
+    "hours": "Öffnungszeiten",
+    "price": "Preis",
+    "book": "Buchen",
+    "description": "Beschreibung",
+    "features": "Merkmale",
+    "reviews": "Bewertungen"
+  },
   "footer": {
     "subtitle": "Ihr Führer, um das Beste der Region zu erleben.",
     "about": "Über uns",

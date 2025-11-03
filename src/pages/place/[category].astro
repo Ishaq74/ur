@@ -2,7 +2,7 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import Card from '../../components/molecules/Card.astro';
 import Icon from '../../components/atoms/Icon.astro';
-import { useTranslations, getLangFromUrl, getLocalizedPath } from '../../i18n';
+import { useTranslations, getLangFromUrl, getLocalizedPath, findLocalizedById } from '../../i18n';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
     props: { 
       category,
       places: allPlaces.filter((place: any) => 
-        place.data.mainCategory.id === category.data.id && place.data.published
+        place.data.mainCategory === category.data.id && place.data.published
       )
     },
   }));
@@ -31,6 +31,8 @@ type Props = {
 const { category, places }: Props = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const allPlaceCategories = await getCollection('placeCategories');
+const localizedCategory = findLocalizedById(allPlaceCategories as any, category.data.id, lang) || category;
 
 // Collect all unique attributes for filter options
 const allAttributes = new Set<string>();
@@ -46,19 +48,19 @@ places.forEach((place) => {
 ---
 
 <MainLayout 
-  title={`${category.data.name} - Salut Annecy`} 
-  description={category.data.description}
+  title={`${localizedCategory.data.name} - Salut Annecy`} 
+  description={localizedCategory.data.description}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
       <nav class="breadcrumb">
-        <a href={getLocalizedPath('/place', lang)}>Lieux</a>
+        <a href={getLocalizedPath('/place', lang)}>{t('places.title')}</a>
         <span>/</span>
-        <span>{category.data.name}</span>
+        <span>{localizedCategory.data.name}</span>
       </nav>
-      <h1>{category.data.name}</h1>
-      <p class="subtitle">{category.data.description}</p>
+      <h1>{localizedCategory.data.name}</h1>
+      <p class="subtitle">{localizedCategory.data.description}</p>
     </div>
   </section>
 
@@ -88,7 +90,7 @@ places.forEach((place) => {
             <!-- Price Range Filter -->
             {allPriceRanges.size > 0 && (
               <div class="filter-section">
-                <h3 class="filter-title">Gamme de prix</h3>
+                <h3 class="filter-title">{t('filters.price_range')}</h3>
                 <div class="filter-options">
                   {Array.from(allPriceRanges).sort().map((price: string) => (
                     <label class="filter-checkbox">
@@ -153,11 +155,11 @@ places.forEach((place) => {
             </div>
           ) : (
             <div class="empty-state">
-              <Icon name={category.data.icon} size="xl" />
-              <h3>Aucun résultat trouvé</h3>
-              <p>Revenez bientôt pour découvrir nos recommandations !</p>
+              <Icon name={localizedCategory.data.icon} size="xl" />
+              <h3>{t('filters.no_results')}</h3>
+              <p>{t('places.empty_desc')}</p>
               <a href={getLocalizedPath('/place', lang)} class="back-link">
-                Retour aux lieux
+                {t('places.back')}
               </a>
             </div>
           )}

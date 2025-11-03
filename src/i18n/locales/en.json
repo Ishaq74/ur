@@ -60,6 +60,29 @@
     "subtitle": "Stories, portraits, and secrets of Annecy, told by those who live there.",
     "read_all": "Read the entire magazine"
   },
+  "places": {
+    "title": "All places",
+    "subtitle": "Discover the best spots in Annecy",
+    "by_category": "By category",
+    "all": "All places",
+    "empty_title": "No places available",
+    "empty_desc": "Check back soon to see our recommendations!",
+    "back": "Back to places"
+  },
+  "place": {
+    "information": "Information",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "visit_site": "Visit website",
+    "hours": "Hours",
+    "price": "Price",
+    "book": "Book",
+    "description": "Description",
+    "features": "Features",
+    "reviews": "reviews"
+  },
   "footer": {
     "subtitle": "Your guide to experience the best of the region.",
     "about": "About",

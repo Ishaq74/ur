@@ -60,6 +60,29 @@
     "subtitle": "Histoires, portraits et secrets d'Annecy, racontés par ceux qui y vivent.",
     "read_all": "Lire tout le magazine"
   },
+  "places": {
+    "title": "Tous les lieux",
+    "subtitle": "Découvrez les meilleurs endroits à Annecy",
+    "by_category": "Par catégorie",
+    "all": "Tous les lieux",
+    "empty_title": "Aucun lieu disponible",
+    "empty_desc": "Revenez bientôt pour découvrir nos recommandations !",
+    "back": "Retour aux lieux"
+  },
+  "place": {
+    "information": "Informations",
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "email": "Email",
+    "website": "Site web",
+    "visit_site": "Visiter le site",
+    "hours": "Horaires",
+    "price": "Prix",
+    "book": "Réserver",
+    "description": "Description",
+    "features": "Caractéristiques",
+    "reviews": "avis"
+  },
   "footer": {
     "subtitle": "Votre guide pour vivre le meilleur de la région.",
     "about": "À propos",

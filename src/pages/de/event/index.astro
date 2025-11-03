@@ -16,22 +16,25 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
 ---
 
 <MainLayout 
-  title="Events - Salut Annecy" 
-  description="Discover all events in and around Annecy"
+  title={`${t('header.events')} - Salut Annecy`} 
+  description={t('hero.subtitle')}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>Events</h1>
-      <p class="subtitle">Don’t miss any event in Annecy</p>
+  <h1>{t('header.events')}</h1>
+  <p class="subtitle">{t('agenda.subtitle')}</p>
     </div>
   </section>
 
   <section class="categories-section">
     <div class="container">
-      <h2 class="section-title">By category</h2>
+      <h2 class="section-title">{t('categories.title')}</h2>
       <div class="categories-grid">
-        {eventCategories.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)).map((category: any) => (
+        {eventCategories
+          .filter((cat: any) => cat.data.published && cat.data.lang === lang)
+          .sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0))
+          .map((category: any) => (
           <Card 
             href={getLocalizedPath(`/event/${category.data.slug}`, lang)} 
             hoverable={true}
@@ -41,9 +44,6 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
               <Icon name={category.data.icon || 'calendar'} size="xl" />
               <h3>{category.data.name}</h3>
               <p class="category-description">{category.data.description}</p>
-              <span class="category-count">
-                {events.filter((e: any) => e.data.category === category.data.name).length} events
-              </span>
             </div>
           </Card>
         ))}
@@ -53,7 +53,7 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
 
   <section class="content-section">
     <div class="container">
-      <h2 class="section-title">All events</h2>
+  <h2 class="section-title">{t('header.events')}</h2>
       {events.length > 0 ? (
         <div class="events-grid">
           {events.map((event: any) => (
@@ -65,7 +65,7 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
               <div class="event-image">
                 <img src={event.data.imageUrl} alt={event.data.title} />
                 <div class="event-date">
-                  {new Date(event.data.date).toLocaleDateString('de-DE', { 
+                  {new Date(event.data.date).toLocaleDateString(lang, { 
                     day: 'numeric', 
                     month: 'short' 
                   })}
@@ -93,8 +93,7 @@ events = events.sort((a: any, b: any) => new Date(a.data.date).getTime() - new D
       ) : (
         <div class="empty-state">
           <Icon name="calendar" size="xl" />
-          <h3>No events available</h3>
-          <p>Check back soon for upcoming events!</p>
+          <h3>{t('filters.no_results')}</h3>
         </div>
       )}
     </div>

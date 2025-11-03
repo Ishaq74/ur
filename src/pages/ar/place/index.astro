@@ -20,23 +20,23 @@ const categories = allCategories.filter((cat: any) => cat.data.lang === lang);
 ---
 
 <MainLayout 
-  title="جميع الأماكن - Salut Annecy" 
-  description="اكتشف جميع الأماكن في آنسي ومحيطها"
+  title={`${t('places.title')} - Salut Annecy`} 
+  description={t('places.subtitle')}
   lang={lang}
 >
   <section class="page-header">
     <div class="container">
-      <h1>جميع الأماكن</h1>
-      <p class="subtitle">اكتشف أفضل الأماكن في آنسي</p>
+  <h1>{t('places.title')}</h1>
+  <p class="subtitle">{t('places.subtitle')}</p>
     </div>
   </section>
 
   <!-- Category Cards Section -->
   <section class="categories-section">
     <div class="container">
-      <h2 class="section-title">حسب الفئة</h2>
+      <h2 class="section-title">{t('places.by_category')}</h2>
       <div class="categories-grid">
-        {categories.map((category: any) => (
+        {categories.filter((c: any) => c.data.published).map((category: any) => (
           <Card 
             href={getLocalizedPath(`/place/${category.data.slug}`, lang)} 
             hoverable={true}
@@ -47,7 +47,7 @@ const categories = allCategories.filter((cat: any) => cat.data.lang === lang);
               <h3>{category.data.name}</h3>
               <p class="category-description">{category.data.description}</p>
               <span class="category-count">
-                {places.filter((p: any) => p.data.mainCategory.id === category.data.id).length} أماكن
+                {places.filter((p: any) => p.data.mainCategory === category.data.id).length}
               </span>
             </div>
           </Card>
@@ -59,7 +59,7 @@ const categories = allCategories.filter((cat: any) => cat.data.lang === lang);
   <!-- All Places Section -->
   <section class="content-section">
     <div class="container">
-      <h2 class="section-title">جميع الأماكن</h2>
+  <h2 class="section-title">{t('places.all')}</h2>
       {places.length > 0 ? (
         <div class="places-grid">
           {places.map((place: any) => (
@@ -101,8 +101,8 @@ const categories = allCategories.filter((cat: any) => cat.data.lang === lang);
       ) : (
         <div class="empty-state">
           <Icon name="map-marker" size="xl" />
-          <h3>لا توجد أماكن متاحة</h3>
-          <p>عودوا قريبًا لاكتشاف توصياتنا!</p>
+          <h3>{t('places.empty_title')}</h3>
+          <p>{t('places.empty_desc')}</p>
         </div>
       )}
     </div>
