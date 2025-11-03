@@ -13,7 +13,7 @@ const trailCategories = await getCollection('trailCategories');
 let trails = allTrails.filter((trail: any) => trail.data.published);
 ---
 
-<MainLayout title={`${t('header.trails')} - Salut Annecy`} description="Descubre las mejores rutas de senderismo alrededor de Annecy" lang={lang}>
+<MainLayout title={`${t('header.trails')} - Salut Annecy`} description={t('seo.trails_description')} lang={lang}>
   <section class="page-header">
     <div class="container">
       <h1>{t('header.trails')}</h1>
